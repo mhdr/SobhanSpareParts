@@ -1,13 +1,14 @@
 ﻿CREATE TABLE [dbo].[Parts]
 (
 	[PartId] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [ResolutionPartName] NVARCHAR(50) NULL, 
+	[Location] NVARCHAR(50) NULL, 
     [TagName] NVARCHAR(50) NULL, 
-    [PartNo] NVARCHAR(50) NOT NULL, 
-    [PartName] NVARCHAR(50) NOT NULL, 
+	[ResolutionPartNo] NVARCHAR(50) NULL, 
+    [PartNo] NVARCHAR(50) NULL, 
+    [PartName] NVARCHAR(50) NULL, 
     [PartNoOrignal] NVARCHAR(50) NULL, 
-    [BrandId] INT NOT NULL, 
-    [MachineId] INT NOT NULL, 
+    [BrandId] INT NULL, 
+    [MachineId] INT NULL, 
     [TimeStamp] TIMESTAMP NOT NULL, 
     CONSTRAINT [FK_Parts_Brands] FOREIGN KEY ([BrandId]) REFERENCES [Brands]([BrandId]), 
     CONSTRAINT [FK_Parts_Machines] FOREIGN KEY ([MachineId]) REFERENCES [Machines]([MachineId])

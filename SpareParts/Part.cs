@@ -15,13 +15,14 @@ namespace SpareParts
     public partial class Part
     {
         public int PartId { get; set; }
-        public string ResolutionPartName { get; set; }
+        public string Location { get; set; }
         public string TagName { get; set; }
+        public string ResolutionPartNo { get; set; }
         public string PartNo { get; set; }
         public string PartName { get; set; }
         public string PartNoOrignal { get; set; }
-        public int BrandId { get; set; }
-        public int MachineId { get; set; }
+        public Nullable<int> BrandId { get; set; }
+        public Nullable<int> MachineId { get; set; }
         public byte[] TimeStamp { get; set; }
     
         public virtual Brand Brand { get; set; }

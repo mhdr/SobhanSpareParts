@@ -45,16 +45,23 @@
                                  EnableColumnVirtualization="False" EnableRowVirtualization="True"
                                  RowDetailsVisibilityMode="Collapsed" HorizontalContentAlignment="Stretch" ShowGroupPanel="True">
                 <telerik:RadGridView.Columns>
+
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
-                        DataMemberBinding="{Binding ResolutionPartName}"
-                        MinWidth="100" Header="Resolution" HeaderTextAlignment="Center">
+                        DataMemberBinding="{Binding Location}"
+                        MinWidth="100" Header="Location" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
-
+                    
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding TagName}"
                         MinWidth="100" Header="Tag Name" HeaderTextAlignment="Center">
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        TextAlignment="Center"
+                        DataMemberBinding="{Binding ResolutionPartName}"
+                        MinWidth="100" Header="Resolution" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"

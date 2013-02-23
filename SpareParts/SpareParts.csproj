@@ -211,14 +211,6 @@
     <Compile Include="Machine.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="WindowBrands.xaml.cs">
-      <DependentUpon>WindowBrands.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WindowParts.xaml.cs">
-      <DependentUpon>WindowParts.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -237,6 +229,14 @@
     <Compile Include="Part.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="WindowBrands.xaml.cs">
+      <DependentUpon>WindowBrands.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowParts.xaml.cs">
+      <DependentUpon>WindowParts.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
