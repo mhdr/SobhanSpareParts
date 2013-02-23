@@ -51,7 +51,7 @@
                         DataMemberBinding="{Binding Location}"
                         MinWidth="100" Header="Location" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
-                    
+
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding TagName}"
