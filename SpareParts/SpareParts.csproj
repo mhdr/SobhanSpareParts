@@ -208,6 +208,7 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Lib\ObservableBrands.cs" />
     <Compile Include="Machine.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -234,6 +235,9 @@
     </Compile>
     <Compile Include="WindowBrands.xaml.cs">
       <DependentUpon>WindowBrands.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowMachines.xaml.cs">
+      <DependentUpon>WindowMachines.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowParts.xaml.cs">
       <DependentUpon>WindowParts.xaml</DependentUpon>
@@ -293,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowBrands.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowMachines.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

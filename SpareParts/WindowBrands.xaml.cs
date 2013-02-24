@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -21,6 +22,8 @@ namespace SpareParts
     {
         private SparePartsEntities _entities = new SparePartsEntities();
         private Brand _currentBrand = null;
+        private Lib.ObservableBrands _brandsCollection;
+        private ListCollectionView _view;
 
         public WindowBrands()
         {
@@ -39,19 +42,24 @@ namespace SpareParts
             set { _currentBrand = value; }
         }
 
+        public ObservableBrands BrandsCollection
+        {
+            get { return _brandsCollection; }
+            set { _brandsCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
+        }
+
         private void WindowBrands_OnLoaded(object sender, RoutedEventArgs e)
         {
-            BindGridView();
-        }
-
-        public void BindGridView()
-        {
-            GridViewBrands.ItemsSource = Entities.Brands;
-        }
-
-        public void BindGridView(Func<Brand, bool> predicate)
-        {
-            GridViewBrands.ItemsSource = Entities.Brands.Where(predicate);
+            BrandsCollection=new ObservableBrands(Entities.Brands,Entities);
+            var brandSource = (CollectionViewSource) this.FindResource("BrandSource");
+            brandSource.Source = BrandsCollection;
+            View = (ListCollectionView) brandSource.View;
         }
 
         private void GridViewBrands_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangeEventArgs e)
@@ -72,11 +80,8 @@ namespace SpareParts
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            Entities.Brands.Remove(CurrentBrand);
+            View.RemoveAt(View.CurrentPosition);
             Entities.SaveChanges();
-
-            Entities = new SparePartsEntities();
-            BindGridView();
         }
     }
 }

@@ -34,7 +34,7 @@
 
                     <telerik:RadRibbonGroup>
                         <telerik:RadRibbonButton Name="RibbonButtonMachines" Content="Machines" MinWidth="75" HorizontalContentAlignment="Center"
-                                                 />
+                                                 Click="RibbonButtonMachines_OnClick"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
             </telerik:RadRibbonView>

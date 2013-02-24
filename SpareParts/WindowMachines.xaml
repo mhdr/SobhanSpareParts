@@ -1,0 +1,18 @@
+﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="SpareParts.WindowMachines"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WindowMachines" Height="600" Width="600" Loaded="WindowMachines_OnLoaded">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="DataFormMachinesDataTemplate">
+                <Grid>
+                    <telerik:DataFormDataField Label="Machine" DataMemberBinding="{Binding MachineName,Mode=TwoWay}"/>
+                </Grid>
+            </DataTemplate>
+        </Grid.Resources>
+        <telerik:RadDataForm Name="DataFormMachines" Header="Machines" AutoGenerateFields="False"
+                             ReadOnlyTemplate="{StaticResource DataFormMachinesDataTemplate}"
+                             EditTemplate="{StaticResource DataFormMachinesDataTemplate}"
+                             NewItemTemplate="{StaticResource DataFormMachinesDataTemplate}"/>
+    </Grid>
+</Window>

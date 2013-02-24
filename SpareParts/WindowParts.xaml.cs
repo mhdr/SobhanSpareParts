@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace SpareParts
     public partial class WindowParts : Window
     {
         private SparePartsEntities _entities=new SparePartsEntities();
+        private ObservableCollection<Part> _itemSource;  
 
         public WindowParts()
         {
@@ -37,9 +39,14 @@ namespace SpareParts
             set { _entities = value; }
         }
 
+        public ObservableCollection<Part> ItemSource
+        {
+            get { return _itemSource; }
+            set { _itemSource = value; }
+        }
+
         private void WindowParts_OnLoaded(object sender, RoutedEventArgs e)
         {
-
             GridViewParts.ItemsSource = Entities.Parts;
         }
 
@@ -63,6 +70,12 @@ namespace SpareParts
                 descriptor.AggregateFunctions.Add(f);
                 this.GridViewParts.GroupDescriptors.Add(descriptor);
             }
+        }
+
+        private void RibbonButtonMachines_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowMachines windowMachines=new WindowMachines();
+            windowMachines.Show();
         }
     }
 }
