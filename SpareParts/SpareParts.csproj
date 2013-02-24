@@ -229,6 +229,9 @@
     <Compile Include="Part.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="WindowAddBrand.xaml.cs">
+      <DependentUpon>WindowAddBrand.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowBrands.xaml.cs">
       <DependentUpon>WindowBrands.xaml</DependentUpon>
     </Compile>
@@ -285,6 +288,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="WindowAddBrand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowBrands.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

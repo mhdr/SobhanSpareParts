@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Data;
 
 namespace SpareParts
 {
@@ -44,6 +47,22 @@ namespace SpareParts
         {
             WindowBrands windowBrands=new WindowBrands();
             windowBrands.Show();
+        }
+
+        private void GridViewParts_OnGrouping(object sender, GridViewGroupingEventArgs e)
+        {
+            if (e.Action == GroupingEventAction.Place)
+            {
+                e.Cancel = true;
+                var c = (ColumnGroupDescriptor)e.GroupDescriptor;
+                CountFunction f = new CountFunction();
+                f.Caption = "Count: ";
+                GroupDescriptor descriptor = new GroupDescriptor();
+                descriptor.Member = c.Column.UniqueName;
+                descriptor.DisplayContent = c.DisplayContent;
+                descriptor.AggregateFunctions.Add(f);
+                this.GridViewParts.GroupDescriptors.Add(descriptor);
+            }
         }
     }
 }

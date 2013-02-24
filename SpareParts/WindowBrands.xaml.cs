@@ -19,7 +19,7 @@ namespace SpareParts
     /// </summary>
     public partial class WindowBrands : Window
     {
-        private SparePartsEntities _entities=new SparePartsEntities();
+        private SparePartsEntities _entities = new SparePartsEntities();
         private Brand _currentBrand = null;
 
         public WindowBrands()
@@ -41,12 +41,22 @@ namespace SpareParts
 
         private void WindowBrands_OnLoaded(object sender, RoutedEventArgs e)
         {
+            BindGridView();
+        }
+
+        public void BindGridView()
+        {
             GridViewBrands.ItemsSource = Entities.Brands;
+        }
+
+        public void BindGridView(Func<Brand, bool> predicate)
+        {
+            GridViewBrands.ItemsSource = Entities.Brands.Where(predicate);
         }
 
         private void GridViewBrands_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangeEventArgs e)
         {
-            CurrentBrand = (Brand) GridViewBrands.SelectedItem;
+            CurrentBrand = (Brand)GridViewBrands.SelectedItem;
 
             if (CurrentBrand == null)
             {
@@ -64,8 +74,9 @@ namespace SpareParts
         {
             Entities.Brands.Remove(CurrentBrand);
             Entities.SaveChanges();
-            Entities=new SparePartsEntities();
-            GridViewBrands.ItemsSource = Entities.Brands;
+
+            Entities = new SparePartsEntities();
+            BindGridView();
         }
     }
 }
