@@ -21,7 +21,6 @@ namespace SpareParts
     public partial class WindowBrands : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private Brand _currentBrand = null;
         private Lib.ObservableBrands _brandsCollection;
         private ListCollectionView _view;
 
@@ -34,12 +33,6 @@ namespace SpareParts
         {
             get { return _entities; }
             set { _entities = value; }
-        }
-
-        public Brand CurrentBrand
-        {
-            get { return _currentBrand; }
-            set { _currentBrand = value; }
         }
 
         public ObservableBrands BrandsCollection
@@ -64,9 +57,7 @@ namespace SpareParts
 
         private void GridViewBrands_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangeEventArgs e)
         {
-            CurrentBrand = (Brand)GridViewBrands.SelectedItem;
-
-            if (CurrentBrand == null)
+            if (View.CurrentItem == null)
             {
                 RibbonButtonDelete.IsEnabled = false;
                 RibbonButtonEdit.IsEnabled = false;

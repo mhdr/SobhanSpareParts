@@ -209,6 +209,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Lib\ObservableBrands.cs" />
+    <Compile Include="Lib\ObservableParts.cs" />
     <Compile Include="Machine.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

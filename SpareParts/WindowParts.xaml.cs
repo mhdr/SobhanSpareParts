@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
@@ -25,8 +26,8 @@ namespace SpareParts
     public partial class WindowParts : Window
     {
         private SparePartsEntities _entities=new SparePartsEntities();
-        private ObservableCollection<Part> _itemSource;  
-
+        private Lib.ObservableParts _partsCollection;
+        private ListCollectionView _view;
         public WindowParts()
         {
             StyleManager.ApplicationTheme = new Office_BlackTheme();
@@ -39,15 +40,25 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public ObservableCollection<Part> ItemSource
+        public ObservableParts PartsCollection
         {
-            get { return _itemSource; }
-            set { _itemSource = value; }
+            get { return _partsCollection; }
+            set { _partsCollection = value; }
         }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
+        }
+
 
         private void WindowParts_OnLoaded(object sender, RoutedEventArgs e)
         {
-            GridViewParts.ItemsSource = Entities.Parts;
+            PartsCollection=new ObservableParts(Entities.Parts,Entities);
+            var partSource = (CollectionViewSource) this.FindResource("PartSource");
+            partSource.Source = PartsCollection;
+            View = (ListCollectionView) partSource.View;
         }
 
         private void RibbonButtonBrands_OnClick(object sender, RoutedEventArgs e)
