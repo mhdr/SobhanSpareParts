@@ -18,12 +18,12 @@
                 <telerik:RadRibbonTab Header="Home" Name="RibbonTabHome" MinWidth="70" HorizontalContentAlignment="Center">
                     <telerik:RadRibbonGroup>
                         <telerik:RadRibbonButton Name="RibbonButtonAdd" Content="Add" MinWidth="75" HorizontalContentAlignment="Center"
-                                                 />
+                                                 Click="RibbonButtonAdd_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
                         <telerik:RadRibbonButton Name="RibbonButtonEdit" Content="Edit" MinWidth="75" HorizontalContentAlignment="Center"
-                                                 IsEnabled="False"/>
+                                                 IsEnabled="False" Click="RibbonButtonEdit_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
@@ -49,5 +49,9 @@
                 </controls:RadGridView.Columns>
             </controls:RadGridView>
         </DockPanel>
+
+        <StatusBar Name="StatusBar1" DockPanel.Dock="Bottom" Height="25" Grid.Row="1">
+
+        </StatusBar>
     </Grid>
 </Window>

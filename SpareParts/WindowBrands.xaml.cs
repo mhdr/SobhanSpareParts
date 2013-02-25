@@ -74,5 +74,20 @@ namespace SpareParts
             View.RemoveAt(View.CurrentPosition);
             Entities.SaveChanges();
         }
+
+        private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowInsertBrand windowInsertBrand=new WindowInsertBrand();
+            windowInsertBrand.BrandsCollection = BrandsCollection;
+            windowInsertBrand.Show();
+        }
+
+        private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowEditBrand windowEditBrand=new WindowEditBrand();
+            windowEditBrand.BrandsCollection = BrandsCollection;
+            windowEditBrand.BrandToEdit = (Brand) View.CurrentItem;
+            windowEditBrand.Show();
+        }
     }
 }
