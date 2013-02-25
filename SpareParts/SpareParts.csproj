@@ -208,6 +208,16 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="WindowEditMachine.xaml.cs">
+      <DependentUpon>WindowEditMachine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowInsertMachine.xaml.cs">
+      <DependentUpon>WindowInsertMachine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\ObservableMachines.cs" />
+    <Compile Include="WindowMachines.xaml.cs">
+      <DependentUpon>WindowMachines.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowEditBrand.xaml.cs">
       <DependentUpon>WindowEditBrand.xaml</DependentUpon>
     </Compile>
@@ -293,6 +303,18 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="WindowEditMachine.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WindowInsertMachine.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WindowMachines.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WindowEditBrand.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

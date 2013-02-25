@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace SpareParts.Lib
 {
-    public class ObservableParts : ObservableCollection<Part>
+    public class ObservableMachines : ObservableCollection<Machine>
     {
         private SparePartsEntities _entities;
-
-        public ObservableParts(IEnumerable<Part> parts,SparePartsEntities entities):base(parts)
-        {
-            Entities = entities;
-        }
 
         public SparePartsEntities Entities
         {
@@ -23,15 +18,21 @@ namespace SpareParts.Lib
             set { _entities = value; }
         }
 
-        protected override void InsertItem(int index, Part item)
+        public ObservableMachines(IEnumerable<Machine> machines, SparePartsEntities entities)
+            : base(machines)
         {
-            Entities.Parts.Add(item);
+            Entities = entities;
+        }
+
+        protected override void InsertItem(int index, SpareParts.Machine item)
+        {
+            Entities.Machines.Add(item);
             base.InsertItem(index, item);
         }
 
         protected override void RemoveItem(int index)
         {
-            Entities.Parts.Remove(this[index]);
+            Entities.Machines.Remove(this[index]);
             base.RemoveItem(index);
         }
 

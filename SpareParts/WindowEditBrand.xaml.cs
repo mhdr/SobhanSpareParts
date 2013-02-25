@@ -62,7 +62,7 @@ namespace SpareParts
             {
                 if (BrandsCollection.Any(x => x.BrandName.ToLower() == TextBoxBrand.Text.ToLower()))
                 {
-                    ShowMessageInStatusbar("the brand is already added");
+                    ShowMessageInStatusbar("the brand is already saved");
                     return;
                 }
 

@@ -85,7 +85,8 @@ namespace SpareParts
 
         private void RibbonButtonMachines_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            WindowMachines windowMachines=new WindowMachines();
+            windowMachines.Show();
         }
     }
 }
