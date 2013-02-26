@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SpareParts.Lib;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
@@ -26,8 +25,7 @@ namespace SpareParts
     public partial class WindowParts : Window
     {
         private SparePartsEntities _entities=new SparePartsEntities();
-        private Lib.ObservableParts _partsCollection;
-        private ListCollectionView _view;
+
         public WindowParts()
         {
             StyleManager.ApplicationTheme = new Office_BlackTheme();
@@ -40,25 +38,14 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public ObservableParts PartsCollection
-        {
-            get { return _partsCollection; }
-            set { _partsCollection = value; }
-        }
-
-        public ListCollectionView View
-        {
-            get { return _view; }
-            set { _view = value; }
-        }
-
-
         private void WindowParts_OnLoaded(object sender, RoutedEventArgs e)
         {
-            PartsCollection=new ObservableParts(Entities.Parts,Entities);
-            var partSource = (CollectionViewSource) this.FindResource("PartSource");
-            partSource.Source = PartsCollection;
-            View = (ListCollectionView) partSource.View;
+            BindGridViewParts();
+        }
+
+        private void BindGridViewParts()
+        {
+            GridViewParts.ItemsSource = Entities.Parts.ToList();
         }
 
         private void RibbonButtonBrands_OnClick(object sender, RoutedEventArgs e)
@@ -87,6 +74,17 @@ namespace SpareParts
         {
             WindowMachines windowMachines=new WindowMachines();
             windowMachines.Show();
+        }
+
+        private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowInsertPart windowInsertPart=new WindowInsertPart();
+            windowInsertPart.Show();
+        }
+
+        private void RibbonButtonRefresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            BindGridViewParts();
         }
     }
 }

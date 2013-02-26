@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -21,8 +20,6 @@ namespace SpareParts
     public partial class WindowBrands : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private Lib.ObservableBrands _brandsCollection;
-        private ListCollectionView _view;
 
         public WindowBrands()
         {
@@ -35,29 +32,19 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public ObservableBrands BrandsCollection
-        {
-            get { return _brandsCollection; }
-            set { _brandsCollection = value; }
-        }
-
-        public ListCollectionView View
-        {
-            get { return _view; }
-            set { _view = value; }
-        }
-
         private void WindowBrands_OnLoaded(object sender, RoutedEventArgs e)
         {
-            BrandsCollection=new ObservableBrands(Entities.Brands,Entities);
-            var brandSource = (CollectionViewSource) this.FindResource("BrandSource");
-            brandSource.Source = BrandsCollection;
-            View = (ListCollectionView) brandSource.View;
+            BindGirdViewBrands();
+        }
+
+        private void BindGirdViewBrands()
+        {
+            GridViewBrands.ItemsSource = Entities.Brands.ToList();
         }
 
         private void GridViewBrands_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangeEventArgs e)
         {
-            if (View.CurrentItem == null)
+            if (GridViewBrands.SelectedItem==null)
             {
                 RibbonButtonDelete.IsEnabled = false;
                 RibbonButtonEdit.IsEnabled = false;
@@ -71,23 +58,35 @@ namespace SpareParts
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            View.RemoveAt(View.CurrentPosition);
+            Entities.Brands.Remove((Brand) GridViewBrands.SelectedItem);
             Entities.SaveChanges();
+            BindGirdViewBrands();
         }
 
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             WindowInsertBrand windowInsertBrand=new WindowInsertBrand();
-            windowInsertBrand.BrandsCollection = BrandsCollection;
+            windowInsertBrand.DataBaseUpdated += windowInsertBrand_DataBaseUpdated;
             windowInsertBrand.Show();
+        }
+
+        void windowInsertBrand_DataBaseUpdated(object sender, EventArgs e)
+        {
+            BindGirdViewBrands();
         }
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
         {
             WindowEditBrand windowEditBrand=new WindowEditBrand();
-            windowEditBrand.BrandsCollection = BrandsCollection;
-            windowEditBrand.BrandToEdit = (Brand) View.CurrentItem;
+            windowEditBrand.BrandToEdit = (Brand) GridViewBrands.SelectedItem;
+            windowEditBrand.DataBaseUpdated += windowEditBrand_DataBaseUpdated;
             windowEditBrand.Show();
+        }
+
+        void windowEditBrand_DataBaseUpdated(object sender, EventArgs e)
+        {
+            Entities = new SparePartsEntities();
+            BindGirdViewBrands();
         }
     }
 }

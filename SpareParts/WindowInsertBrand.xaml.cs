@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -21,8 +20,13 @@ namespace SpareParts
     public partial class WindowInsertBrand : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private Lib.ObservableBrands _brandsCollection;
-        private ListCollectionView _view;
+        public event EventHandler DataBaseUpdated;
+
+        protected virtual void OnDataBaseUpdated()
+        {
+            EventHandler handler = DataBaseUpdated;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
 
         public WindowInsertBrand()
         {
@@ -35,35 +39,25 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public ObservableBrands BrandsCollection
-        {
-            get { return _brandsCollection; }
-            set { _brandsCollection = value; }
-        }
-
-        public ListCollectionView View
-        {
-            get { return _view; }
-            set { _view = value; }
-        }
-
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             ClearStatusbar();
 
             if (TextBoxBrand.Text.Length > 0)
             {
-                if (BrandsCollection.Any(x => x.BrandName.ToLower() == TextBoxBrand.Text.ToLower()))
+                if (Entities.Brands.Any(x => x.BrandName.ToLower() == TextBoxBrand.Text.ToLower()))
                 {
                     ShowMessageInStatusbar("the brand is already added");
                     return;
                 }
 
-                Brand newBrand = (Brand)View.AddNew();
+                Brand newBrand=new Brand();
                 newBrand.BrandName = TextBoxBrand.Text;
-                View.CommitNew();
+                Entities.Brands.Add(newBrand);
+
                 if (Entities.SaveChanges() > 0)
                 {
+                    OnDataBaseUpdated();
                     TextBoxBrand.Text = "";
                     ShowMessageInStatusbar("new brand added");
                 }
@@ -73,12 +67,6 @@ namespace SpareParts
         private void WindowInsertBrand_OnLoaded(object sender, RoutedEventArgs e)
         {
             TextBoxBrand.Focus();
-
-            this.Entities = BrandsCollection.Entities;
-            //BrandsCollection = new ObservableBrands(Entities.Brands, Entities);
-            var brandSource = (CollectionViewSource)this.FindResource("BrandSource");
-            brandSource.Source = BrandsCollection;
-            View = (ListCollectionView)brandSource.View;
         }
 
         private void ShowMessageInStatusbar(string msg)

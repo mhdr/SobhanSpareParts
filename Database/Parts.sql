@@ -16,4 +16,8 @@
 
 GO
 
-CREATE INDEX [IX_Parts_PartName] ON [dbo].[Parts] ([PartName])
+CREATE INDEX [IX_Parts_PartNo] ON [dbo].[Parts] ([PartNo])
+
+GO
+
+CREATE INDEX [IX_Parts_ResolutionPartNo] ON [dbo].[Parts] ([ResolutionPartNo])

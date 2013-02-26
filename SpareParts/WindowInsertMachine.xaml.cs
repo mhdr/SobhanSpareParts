@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -21,8 +20,13 @@ namespace SpareParts
     public partial class WindowInsertMachine : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private Lib.ObservableMachines _machinesCollection;
-        private ListCollectionView _view;
+        public event EventHandler DataBaseUpdated;
+
+        protected virtual void OnDataBaseUpdated()
+        {
+            EventHandler handler = DataBaseUpdated;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
 
         public WindowInsertMachine()
         {
@@ -35,35 +39,25 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public ObservableMachines MachinesCollection
-        {
-            get { return _machinesCollection; }
-            set { _machinesCollection = value; }
-        }
-
-        public ListCollectionView View
-        {
-            get { return _view; }
-            set { _view = value; }
-        }
-
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             ClearStatusbar();
 
             if (TextBoxMachine.Text.Length > 0)
             {
-                if (MachinesCollection.Any(x => x.MachineName.ToLower() == TextBoxMachine.Text.ToLower()))
+                if (Entities.Machines.Any(x => x.MachineName.ToLower() == TextBoxMachine.Text.ToLower()))
                 {
                     ShowMessageInStatusbar("the machine is already added");
                     return;
                 }
 
-                Machine newMachine = (Machine)View.AddNew();
+                Machine newMachine = new Machine();
                 newMachine.MachineName = TextBoxMachine.Text;
-                View.CommitNew();
+                Entities.Machines.Add(newMachine);
+
                 if (Entities.SaveChanges() > 0)
                 {
+                    OnDataBaseUpdated();
                     TextBoxMachine.Text = "";
                     ShowMessageInStatusbar("new machine added");
                 }
@@ -73,12 +67,6 @@ namespace SpareParts
         private void WindowInsertMachine_OnLoaded(object sender, RoutedEventArgs e)
         {
             TextBoxMachine.Focus();
-
-            this.Entities = MachinesCollection.Entities;
-            //MachinesCollection = new ObservableMachines(Entities.Machines, Entities);
-            var machineSource = (CollectionViewSource)this.FindResource("MachinesSource");
-            machineSource.Source = MachinesCollection;
-            View = (ListCollectionView)machineSource.View;
         }
 
         private void ShowMessageInStatusbar(string msg)

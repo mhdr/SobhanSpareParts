@@ -4,9 +4,6 @@
         xmlns:telerik="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.RibbonView"
         xmlns:controls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.GridView"
         Title="Machines" Height="600" Width="800" Loaded="WindowMachines_OnLoaded" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <CollectionViewSource x:Key="MachinesSource"/>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -14,7 +11,7 @@
         </Grid.RowDefinitions>
 
         <DockPanel>
-            <telerik:RadRibbonView Name="RibbonView1" DockPanel.Dock="Top" HorizontalAlignment="Stretch" ApplicationName="Parts">
+            <telerik:RadRibbonView Name="RibbonView1" DockPanel.Dock="Top" HorizontalAlignment="Stretch" ApplicationName="Spare Parts">
                 <telerik:RadRibbonTab Header="Home" Name="RibbonTabHome" MinWidth="70" HorizontalContentAlignment="Center">
                     <telerik:RadRibbonGroup>
                         <telerik:RadRibbonButton Name="RibbonButtonAdd" Content="Add" MinWidth="75" HorizontalContentAlignment="Center"
@@ -39,7 +36,7 @@
                                  EnableColumnVirtualization="False" EnableRowVirtualization="True"
                                  RowDetailsVisibilityMode="Collapsed" HorizontalContentAlignment="Stretch" ShowGroupPanel="True" 
                                   SelectionChanged="GridViewMachines_SelectionChanged"
-                                  ItemsSource="{Binding Source={StaticResource MachinesSource}}">
+                                  >
                 <controls:RadGridView.Columns>
                     <controls:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
@@ -50,8 +47,6 @@
             </controls:RadGridView>
         </DockPanel>
 
-        <StatusBar Name="StatusBar1" DockPanel.Dock="Bottom" Height="25" Grid.Row="1">
-
-        </StatusBar>
+        <StatusBar Name="StatusBar1" DockPanel.Dock="Bottom" Height="25" Grid.Row="1"/>
     </Grid>
 </Window>

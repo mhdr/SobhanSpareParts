@@ -214,15 +214,15 @@
     <Compile Include="WindowInsertMachine.xaml.cs">
       <DependentUpon>WindowInsertMachine.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Lib\ObservableMachines.cs" />
+    <Compile Include="WindowInsertPart.xaml.cs">
+      <DependentUpon>WindowInsertPart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowMachines.xaml.cs">
       <DependentUpon>WindowMachines.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowEditBrand.xaml.cs">
       <DependentUpon>WindowEditBrand.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Lib\ObservableBrands.cs" />
-    <Compile Include="Lib\ObservableParts.cs" />
     <Compile Include="Machine.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -310,6 +310,10 @@
     <Page Include="WindowInsertMachine.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WindowInsertPart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowMachines.xaml">
       <Generator>MSBuild:Compile</Generator>

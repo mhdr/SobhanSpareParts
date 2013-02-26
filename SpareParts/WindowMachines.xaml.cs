@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -21,8 +20,7 @@ namespace SpareParts
     public partial class WindowMachines : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private Lib.ObservableMachines _machinesCollection;
-        private ListCollectionView _view;
+
 
         public WindowMachines()
         {
@@ -35,29 +33,19 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public ObservableMachines MachinesCollection
-        {
-            get { return _machinesCollection; }
-            set { _machinesCollection = value; }
-        }
-
-        public ListCollectionView View
-        {
-            get { return _view; }
-            set { _view = value; }
-        }
-
         private void WindowMachines_OnLoaded(object sender, RoutedEventArgs e)
         {
-            MachinesCollection = new ObservableMachines(Entities.Machines, Entities);
-            var machinesSource = (CollectionViewSource)this.FindResource("MachinesSource");
-            machinesSource.Source = MachinesCollection;
-            View = (ListCollectionView)machinesSource.View;
+            BindGridViewMachines();
+        }
+
+        private void BindGridViewMachines()
+        {
+            GridViewMachines.ItemsSource = Entities.Machines.ToList();
         }
 
         private void GridViewMachines_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangeEventArgs e)
         {
-            if (View.CurrentItem == null)
+            if (GridViewMachines.SelectedItem == null)
             {
                 RibbonButtonDelete.IsEnabled = false;
                 RibbonButtonEdit.IsEnabled = false;
@@ -71,23 +59,35 @@ namespace SpareParts
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            View.RemoveAt(View.CurrentPosition);
+            Entities.Machines.Remove((Machine) GridViewMachines.SelectedItem);
             Entities.SaveChanges();
+            BindGridViewMachines();
         }
 
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             WindowInsertMachine windowInsertMachine = new WindowInsertMachine();
-            windowInsertMachine.MachinesCollection = MachinesCollection;
+            windowInsertMachine.DataBaseUpdated += windowInsertMachine_DataBaseUpdated;
             windowInsertMachine.Show();
+        }
+
+        void windowInsertMachine_DataBaseUpdated(object sender, EventArgs e)
+        {
+            BindGridViewMachines();
         }
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
         {
             WindowEditMachine windowEditMachine = new WindowEditMachine();
-            windowEditMachine.MachinesCollection = MachinesCollection;
-            windowEditMachine.MachineToEdit = (Machine)View.CurrentItem;
+            windowEditMachine.MachineToEdit = (Machine) GridViewMachines.SelectedItem;
+            windowEditMachine.DataBaseUpdated += windowEditMachine_DataBaseUpdated;
             windowEditMachine.Show();
+        }
+
+        void windowEditMachine_DataBaseUpdated(object sender, EventArgs e)
+        {
+            Entities=new SparePartsEntities();
+            BindGridViewMachines();
         }
     }
 }

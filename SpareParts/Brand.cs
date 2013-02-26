@@ -21,6 +21,7 @@ namespace SpareParts
     
         public int BrandId { get; set; }
         public string BrandName { get; set; }
+        public byte[] TimeStamp { get; set; }
     
         public virtual ICollection<Part> Parts { get; set; }
     }

@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -21,8 +20,14 @@ namespace SpareParts
     public partial class WindowEditBrand : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private Lib.ObservableBrands _brandsCollection;
-        private ListCollectionView _view;
+        public event EventHandler DataBaseUpdated;
+
+        protected virtual void OnDataBaseUpdated()
+        {
+            EventHandler handler = DataBaseUpdated;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+
         private Brand _brandToEdit;
 
         public WindowEditBrand()
@@ -34,18 +39,6 @@ namespace SpareParts
         {
             get { return _entities; }
             set { _entities = value; }
-        }
-
-        public ObservableBrands BrandsCollection
-        {
-            get { return _brandsCollection; }
-            set { _brandsCollection = value; }
-        }
-
-        public ListCollectionView View
-        {
-            get { return _view; }
-            set { _view = value; }
         }
 
         public Brand BrandToEdit
@@ -60,20 +53,18 @@ namespace SpareParts
 
             if (TextBoxBrand.Text.Length > 0)
             {
-                if (BrandsCollection.Any(x => x.BrandName.ToLower() == TextBoxBrand.Text.ToLower()))
+                if (Entities.Brands.Any(x => x.BrandName.ToLower() == TextBoxBrand.Text.ToLower()))
                 {
                     ShowMessageInStatusbar("the brand is already saved");
                     return;
                 }
 
-
-                View.EditItem(BrandToEdit);
-                BrandToEdit.BrandName = TextBoxBrand.Text;
-                View.CommitEdit();
-                BrandsCollection.Notify();
+                Brand currentBrand = Entities.Brands.FirstOrDefault(x => x.BrandId == BrandToEdit.BrandId);
+                currentBrand.BrandName = TextBoxBrand.Text;
 
                 if (Entities.SaveChanges() > 0)
                 {
+                    OnDataBaseUpdated();
                     ShowMessageInStatusbar("brand edited");
                     TextBoxBrand.SelectAll();
                     TextBoxBrand.Focus();
@@ -83,12 +74,6 @@ namespace SpareParts
 
         private void WindowInsertBrand_OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.Entities = BrandsCollection.Entities;
-            //BrandsCollection = new ObservableBrands(Entities.Brands, Entities);
-            var brandSource = (CollectionViewSource)this.FindResource("BrandSource");
-            brandSource.Source = BrandsCollection;
-            View = (ListCollectionView)brandSource.View;
-
             TextBoxBrand.Text = BrandToEdit.BrandName;
             TextBoxBrand.SelectAll();
             TextBoxBrand.Focus();

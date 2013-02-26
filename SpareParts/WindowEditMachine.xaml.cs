@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -21,8 +20,14 @@ namespace SpareParts
     public partial class WindowEditMachine : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private Lib.ObservableMachines _machinesCollection;
-        private ListCollectionView _view;
+        public event EventHandler DataBaseUpdated;
+
+        protected virtual void OnDataBaseUpdated()
+        {
+            EventHandler handler = DataBaseUpdated;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+
         private Machine _machineToEdit;
 
         public WindowEditMachine()
@@ -34,18 +39,6 @@ namespace SpareParts
         {
             get { return _entities; }
             set { _entities = value; }
-        }
-
-        public ObservableMachines MachinesCollection
-        {
-            get { return _machinesCollection; }
-            set { _machinesCollection = value; }
-        }
-
-        public ListCollectionView View
-        {
-            get { return _view; }
-            set { _view = value; }
         }
 
         public Machine MachineToEdit
@@ -60,20 +53,18 @@ namespace SpareParts
 
             if (TextBoxMachine.Text.Length > 0)
             {
-                if (MachinesCollection.Any(x => x.MachineName.ToLower() == TextBoxMachine.Text.ToLower()))
+                if (Entities.Machines.Any(x => x.MachineName.ToLower() == TextBoxMachine.Text.ToLower()))
                 {
                     ShowMessageInStatusbar("the machine is already saved");
                     return;
                 }
 
-
-                View.EditItem(MachineToEdit);
-                MachineToEdit.MachineName = TextBoxMachine.Text;
-                View.CommitEdit();
-                MachinesCollection.Notify();
+                Machine currentMachine = Entities.Machines.FirstOrDefault(x => x.MachineId == MachineToEdit.MachineId);
+                currentMachine.MachineName = TextBoxMachine.Text;
 
                 if (Entities.SaveChanges() > 0)
                 {
+                    OnDataBaseUpdated();
                     ShowMessageInStatusbar("machine edited");
                     TextBoxMachine.SelectAll();
                     TextBoxMachine.Focus();
@@ -83,12 +74,6 @@ namespace SpareParts
 
         private void WindowInsertMachine_OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.Entities = MachinesCollection.Entities;
-            //MachinesCollection = new ObservableMachines(Entities.Machines, Entities);
-            var machineSource = (CollectionViewSource)this.FindResource("MachinesSource");
-            machineSource.Source = MachinesCollection;
-            View = (ListCollectionView)machineSource.View;
-
             TextBoxMachine.Text = MachineToEdit.MachineName;
             TextBoxMachine.SelectAll();
             TextBoxMachine.Focus();
