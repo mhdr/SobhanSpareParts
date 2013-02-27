@@ -19,12 +19,12 @@
 
                     <telerik:RadRibbonGroup>
                         <telerik:RadRibbonButton Name="RibbonButtonEdit" Content="Edit" MinWidth="75" HorizontalContentAlignment="Center"
-                                                 />
+                                                 Click="RibbonButtonEdit_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
                         <telerik:RadRibbonButton Name="RibbonButtonDelete" Content="Delete" MinWidth="75" HorizontalContentAlignment="Center"
-                                                 />
+                                                 Click="RibbonButtonDelete_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
@@ -68,7 +68,7 @@
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
-                        DataMemberBinding="{Binding ResolutionPartName}"
+                        DataMemberBinding="{Binding ResolutionPartNo}"
                         MinWidth="100" Header="Resolution" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
@@ -105,6 +105,6 @@
             </telerik:RadGridView>
         </DockPanel>
 
-        <StatusBar Name="StatusBar1" DockPanel.Dock="Bottom" Height="25" Grid.Row="1"/>
+        <StatusBar Name="StatusBar1" DockPanel.Dock="Bottom" Height="25" Grid.Row="1" FontWeight="Bold"/>
     </Grid>
 </Window>

@@ -43,25 +43,36 @@ namespace SpareParts
             GridViewMachines.ItemsSource = Entities.Machines.ToList();
         }
 
-        private void GridViewMachines_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangeEventArgs e)
+        private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
             if (GridViewMachines.SelectedItem == null)
             {
-                RibbonButtonDelete.IsEnabled = false;
-                RibbonButtonEdit.IsEnabled = false;
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            var selectedMachine = GridViewMachines.SelectedItem as Machine;
+            if (Entities.Parts.Any(x => x.MachineId == selectedMachine.MachineId))
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("This machine is in use");
+                return;
+            }
+
+            Entities.Machines.Remove((Machine)GridViewMachines.SelectedItem);
+            if (Entities.SaveChanges() > 0)
+            {
+                BindGridViewMachines();
+                ClearStatusbar();
+                ShowMessageInStatusbar("Machine removed");
+                NotifyOpenWindows();
             }
             else
             {
-                RibbonButtonDelete.IsEnabled = true;
-                RibbonButtonEdit.IsEnabled = true;
+                ClearStatusbar();
+                ShowMessageInStatusbar("Failed");
             }
-        }
-
-        private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
-        {
-            Entities.Machines.Remove((Machine) GridViewMachines.SelectedItem);
-            Entities.SaveChanges();
-            BindGridViewMachines();
         }
 
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
@@ -74,10 +85,18 @@ namespace SpareParts
         void windowInsertMachine_DataBaseUpdated(object sender, EventArgs e)
         {
             BindGridViewMachines();
+            NotifyOpenWindows();
         }
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
         {
+            if (GridViewMachines.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
             WindowEditMachine windowEditMachine = new WindowEditMachine();
             windowEditMachine.MachineToEdit = (Machine) GridViewMachines.SelectedItem;
             windowEditMachine.DataBaseUpdated += windowEditMachine_DataBaseUpdated;
@@ -88,6 +107,33 @@ namespace SpareParts
         {
             Entities=new SparePartsEntities();
             BindGridViewMachines();
+            NotifyOpenWindows();
+        }
+
+        private void ShowMessageInStatusbar(string msg)
+        {
+            StatusBar1.Items.Add(msg);
+        }
+
+        private void ClearStatusbar()
+        {
+            StatusBar1.Items.Clear();
+        }
+
+        private static void NotifyOpenWindows()
+        {
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(WindowInsertPart))
+                {
+                    (window as WindowInsertPart).BindComboBoxMachine();
+                }
+
+                if (window.GetType() == typeof(WindowEditPart))
+                {
+                    (window as WindowEditPart).BindComboBoxMachine();
+                }
+            }
         }
     }
 }

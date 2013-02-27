@@ -25,6 +25,7 @@ namespace SpareParts
     public partial class WindowParts : Window
     {
         private SparePartsEntities _entities=new SparePartsEntities();
+        private ListCollectionView _view;
 
         public WindowParts()
         {
@@ -36,6 +37,12 @@ namespace SpareParts
         {
             get { return _entities; }
             set { _entities = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
         }
 
         private void WindowParts_OnLoaded(object sender, RoutedEventArgs e)
@@ -79,11 +86,73 @@ namespace SpareParts
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             WindowInsertPart windowInsertPart=new WindowInsertPart();
+            windowInsertPart.DataBaseUpdated += windowInsertPart_DataBaseUpdated;
             windowInsertPart.Show();
+        }
+
+        void windowInsertPart_DataBaseUpdated(object sender, EventArgs e)
+        {
+            BindGridViewParts();
         }
 
         private void RibbonButtonRefresh_OnClick(object sender, RoutedEventArgs e)
         {
+            BindGridViewParts();
+        }
+
+        private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GridViewParts.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            var part = GridViewParts.SelectedItem as Part;
+            Entities.Parts.Remove(part);
+
+            if (Entities.SaveChanges() > 0)
+            {
+                BindGridViewParts();
+                ClearStatusbar();
+                ShowMessageInStatusbar("Part removed");
+            }
+            else
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("Failed");       
+            }
+        }
+
+        private void ShowMessageInStatusbar(string msg)
+        {
+            StatusBar1.Items.Add(msg);
+        }
+
+        private void ClearStatusbar()
+        {
+            StatusBar1.Items.Clear();
+        }
+
+        private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GridViewParts.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            WindowEditPart windowEditPart=new WindowEditPart();
+            windowEditPart.PartToEdit = GridViewParts.SelectedItem as Part;
+            windowEditPart.DataBaseUpdated += windowEditPart_DataBaseUpdated;
+            windowEditPart.Show();
+        }
+
+        void windowEditPart_DataBaseUpdated(object sender, EventArgs e)
+        {
+            Entities=new SparePartsEntities();
             BindGridViewParts();
         }
     }

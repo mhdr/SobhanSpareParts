@@ -208,6 +208,9 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="WindowEditPart.xaml.cs">
+      <DependentUpon>WindowEditPart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowEditMachine.xaml.cs">
       <DependentUpon>WindowEditMachine.xaml</DependentUpon>
     </Compile>
@@ -303,6 +306,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="WindowEditPart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WindowEditMachine.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

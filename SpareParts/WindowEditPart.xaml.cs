@@ -15,12 +15,13 @@ using System.Windows.Shapes;
 namespace SpareParts
 {
     /// <summary>
-    /// Interaction logic for WindowInsertPart.xaml
+    /// Interaction logic for WindowEditPart.xaml
     /// </summary>
-    public partial class WindowInsertPart : Window
+    public partial class WindowEditPart : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
         public event EventHandler DataBaseUpdated;
+        private Part _partToEdit;
 
         protected virtual void OnDataBaseUpdated()
         {
@@ -28,7 +29,7 @@ namespace SpareParts
             if (handler != null) handler(this, EventArgs.Empty);
         }
 
-        public WindowInsertPart()
+        public WindowEditPart()
         {
             InitializeComponent();
         }
@@ -39,10 +40,19 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        private void WindowInsertPart_OnLoaded(object sender, RoutedEventArgs e)
+        public Part PartToEdit
+        {
+            get { return _partToEdit; }
+            set { _partToEdit = value; }
+        }
+
+        private void WindowEditPart_OnLoaded(object sender, RoutedEventArgs e)
         {
             BindComboBoxBrand();
             BindComboBoxMachine();
+
+            var selectedPart = Entities.Parts.FirstOrDefault(x => x.PartId == PartToEdit.PartId);
+            LoadPartForEdit(selectedPart);
         }
 
         public void BindComboBoxMachine()
@@ -61,7 +71,6 @@ namespace SpareParts
 
         private void ButtonTryLoad_OnClick(object sender, RoutedEventArgs e)
         {
-            //LoadedPart = PartsCollection.FirstOrDefault(x => x.PartNo == TextBoxPartNo.Text);
             var loadedPart = Entities.Parts.FirstOrDefault(x => x.PartNo == TextBoxPartNo.Text);
             if (loadedPart != null)
             {
@@ -81,6 +90,18 @@ namespace SpareParts
             //TextBoxPartNo.Text = part.PartNo;
             //TextBoxLocation.Text = part.Location;
             //TextBoxTagName.Text = part.TagName;
+            TextBoxResolutionPartNo.Text = part.ResolutionPartNo;
+            TextBoxPartName.Text = part.PartName;
+            TextBoxPartNoOrignal.Text = part.PartNoOrignal;
+            ComboBoxMachine.SelectedItem = part.Machine;
+            ComboBoxBrand.SelectedItem = part.Brand;
+        }
+
+        private void LoadPartForEdit(Part part)
+        {
+            TextBoxPartNo.Text = part.PartNo;
+            TextBoxLocation.Text = part.Location;
+            TextBoxTagName.Text = part.TagName;
             TextBoxResolutionPartNo.Text = part.ResolutionPartNo;
             TextBoxPartName.Text = part.PartName;
             TextBoxPartNoOrignal.Text = part.PartNoOrignal;
@@ -117,31 +138,29 @@ namespace SpareParts
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            Part newPart = new Part();
-            newPart.PartNo = TextBoxPartNo.Text;
-            newPart.Location = TextBoxLocation.Text;
-            newPart.TagName = TextBoxTagName.Text;
-            newPart.ResolutionPartNo = TextBoxResolutionPartNo.Text;
-            newPart.PartName = TextBoxPartName.Text;
-            newPart.PartNoOrignal = TextBoxPartNoOrignal.Text;
+            Part editPart = Entities.Parts.FirstOrDefault(x => x.PartId == PartToEdit.PartId);
+            editPart.PartNo = TextBoxPartNo.Text;
+            editPart.Location = TextBoxLocation.Text;
+            editPart.TagName = TextBoxTagName.Text;
+            editPart.ResolutionPartNo = TextBoxResolutionPartNo.Text;
+            editPart.PartName = TextBoxPartName.Text;
+            editPart.PartNoOrignal = TextBoxPartNoOrignal.Text;
 
             if (ComboBoxMachine.SelectedIndex != -1)
             {
-                newPart.MachineId = (ComboBoxMachine.SelectedItem as Machine).MachineId;
+                editPart.MachineId = (ComboBoxMachine.SelectedItem as Machine).MachineId;
             }
 
             if (ComboBoxBrand.SelectedIndex != -1)
             {
-                newPart.BrandId = (ComboBoxBrand.SelectedItem as Brand).BrandId;
+                editPart.BrandId = (ComboBoxBrand.SelectedItem as Brand).BrandId;
             }
-
-            Entities.Parts.Add(newPart);
 
             if (Entities.SaveChanges() > 0)
             {
                 OnDataBaseUpdated();
                 ClearStatusbar();
-                ShowMessageInStatusbar("New part added");
+                ShowMessageInStatusbar("Part saved");
 
                 if (ToggleButtonRetain.IsChecked == false)
                 {

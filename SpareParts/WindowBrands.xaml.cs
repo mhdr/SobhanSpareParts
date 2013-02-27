@@ -42,25 +42,53 @@ namespace SpareParts
             GridViewBrands.ItemsSource = Entities.Brands.ToList();
         }
 
-        private void GridViewBrands_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangeEventArgs e)
+        private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            if (GridViewBrands.SelectedItem==null)
+            if (GridViewBrands.SelectedItem == null)
             {
-                RibbonButtonDelete.IsEnabled = false;
-                RibbonButtonEdit.IsEnabled = false;
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            var selectedBrand = GridViewBrands.SelectedItem as Brand;
+            if (Entities.Parts.Any(x => x.BrandId == selectedBrand.BrandId))
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("This brand is in use");
+                return;
+            }
+
+            Entities.Brands.Remove((Brand) GridViewBrands.SelectedItem);
+            if (Entities.SaveChanges() > 0)
+            {
+                BindGirdViewBrands();
+                ClearStatusbar();
+                ShowMessageInStatusbar("Barnd removed");
+                NotifyOpenWindows();
             }
             else
             {
-                RibbonButtonDelete.IsEnabled = true;
-                RibbonButtonEdit.IsEnabled = true;
+                ClearStatusbar();
+                ShowMessageInStatusbar("Failed");
             }
+            
         }
 
-        private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
+        private static void NotifyOpenWindows()
         {
-            Entities.Brands.Remove((Brand) GridViewBrands.SelectedItem);
-            Entities.SaveChanges();
-            BindGirdViewBrands();
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof (WindowInsertPart))
+                {
+                    (window as WindowInsertPart).BindComboBoxBrand();
+                }
+
+                if (window.GetType() == typeof (WindowEditPart))
+                {
+                    (window as WindowEditPart).BindComboBoxBrand();
+                }
+            }
         }
 
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
@@ -73,10 +101,18 @@ namespace SpareParts
         void windowInsertBrand_DataBaseUpdated(object sender, EventArgs e)
         {
             BindGirdViewBrands();
+            NotifyOpenWindows();
         }
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
         {
+            if (GridViewBrands.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
             WindowEditBrand windowEditBrand=new WindowEditBrand();
             windowEditBrand.BrandToEdit = (Brand) GridViewBrands.SelectedItem;
             windowEditBrand.DataBaseUpdated += windowEditBrand_DataBaseUpdated;
@@ -87,6 +123,17 @@ namespace SpareParts
         {
             Entities = new SparePartsEntities();
             BindGirdViewBrands();
+            NotifyOpenWindows();
+        }
+
+        private void ShowMessageInStatusbar(string msg)
+        {
+            StatusBar1.Items.Add(msg);
+        }
+
+        private void ClearStatusbar()
+        {
+            StatusBar1.Items.Clear();
         }
     }
 }
