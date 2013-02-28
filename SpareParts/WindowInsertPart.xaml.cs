@@ -47,14 +47,21 @@ namespace SpareParts
 
         public void BindComboBoxMachine()
         {
-            ComboBoxMachine.ItemsSource = Entities.Machines.ToList();
+            var machineQuery = from machine in Entities.Machines
+                               orderby machine.MachineName ascending
+                               select machine;
+            ComboBoxMachine.ItemsSource = machineQuery.ToList();
             ComboBoxMachine.DisplayMemberPath = "MachineName";
             ComboBoxMachine.SelectedValuePath = "MachineId";
         }
 
         public void BindComboBoxBrand()
         {
-            ComboBoxBrand.ItemsSource = Entities.Brands.ToList();
+            var brandQuery = from brand in Entities.Brands
+                             orderby brand.BrandName ascending
+                             select brand;
+
+            ComboBoxBrand.ItemsSource = brandQuery.ToList();
             ComboBoxBrand.DisplayMemberPath = "BrandName";
             ComboBoxBrand.SelectedValuePath = "BrandId";
         }
