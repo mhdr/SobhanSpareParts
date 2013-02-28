@@ -1,7 +1,7 @@
 ﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="SpareParts.WindowInsertPart"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="WindowInsertPart" Height="400" Width="600" Loaded="WindowInsertPart_OnLoaded">
+        Title="Add Part" Height="400" Width="600" Loaded="WindowInsertPart_OnLoaded">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>

@@ -155,5 +155,77 @@ namespace SpareParts
             Entities=new SparePartsEntities();
             BindGridViewParts();
         }
+
+        private void RibbonButtonPartNo_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GridViewParts.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            Clipboard.SetText((GridViewParts.SelectedItem as Part).PartNo);
+        }
+
+        private void RibbonButtonLocation_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GridViewParts.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            Clipboard.SetText((GridViewParts.SelectedItem as Part).Location);
+        }
+
+        private void RibbonButtonTagName_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GridViewParts.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            Clipboard.SetText((GridViewParts.SelectedItem as Part).TagName);
+        }
+
+        private void RibbonButtonResolutionPartNo_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GridViewParts.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            Clipboard.SetText((GridViewParts.SelectedItem as Part).ResolutionPartNo);
+        }
+
+        private void RibbonButtonPartName_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GridViewParts.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            Clipboard.SetText((GridViewParts.SelectedItem as Part).PartName);
+        }
+
+        private void RibbonButtonPartNoOrignal_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (GridViewParts.SelectedItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            Clipboard.SetText((GridViewParts.SelectedItem as Part).PartNoOrignal);
+        }
     }
 }

@@ -208,6 +208,9 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Request.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="WindowEditPart.xaml.cs">
       <DependentUpon>WindowEditPart.xaml</DependentUpon>
     </Compile>
@@ -255,6 +258,9 @@
     </Compile>
     <Compile Include="WindowParts.xaml.cs">
       <DependentUpon>WindowParts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowRequests.xaml.cs">
+      <DependentUpon>WindowRequests.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -339,6 +345,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowParts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowRequests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
