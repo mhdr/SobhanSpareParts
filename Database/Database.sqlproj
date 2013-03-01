@@ -68,7 +68,7 @@
     <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Database.publish.xml" />
-    <None Include="Database_1.publish.xml" />
+    <None Include="SQLExpress2012.publish.xml" />
+    <None Include="LocalDB.publish.xml" />
   </ItemGroup>
 </Project>
