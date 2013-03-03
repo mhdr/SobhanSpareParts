@@ -237,9 +237,6 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Request.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="WindowEditPart.xaml.cs">
       <DependentUpon>WindowEditPart.xaml</DependentUpon>
     </Compile>

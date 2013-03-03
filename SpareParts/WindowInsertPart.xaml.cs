@@ -91,7 +91,7 @@ namespace SpareParts
             TextBoxResolutionPartNo.Text = part.ResolutionPartNo;
             TextBoxPartName.Text = part.PartName;
             TextBoxPartNoOrignal.Text = part.PartNoOrignal;
-            ComboBoxMachine.SelectedItem = part.Machine;
+            //ComboBoxMachine.SelectedItem = part.Machine;
             ComboBoxBrand.SelectedItem = part.Brand;
         }
 
