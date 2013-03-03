@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -20,6 +21,8 @@ namespace SpareParts
     public partial class WindowBrands : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
+        private BrandsCollection _brandsCollection;
+        private ListCollectionView _view;
 
         public WindowBrands()
         {
@@ -32,6 +35,18 @@ namespace SpareParts
             set { _entities = value; }
         }
 
+        public BrandsCollection BrandsCollection
+        {
+            get { return _brandsCollection; }
+            set { _brandsCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
+        }
+
         private void WindowBrands_OnLoaded(object sender, RoutedEventArgs e)
         {
             BindGirdViewBrands();
@@ -39,7 +54,10 @@ namespace SpareParts
 
         private void BindGirdViewBrands()
         {
-            GridViewBrands.ItemsSource = Entities.Brands.ToList();
+            BrandsCollection brandsCollection = new BrandsCollection(Entities.Brands, Entities);
+            var brandsSource = (CollectionViewSource)FindResource("BrandsSource");
+            brandsSource.Source = brandsCollection;
+            View = (ListCollectionView)brandsSource.View;
         }
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
@@ -65,7 +83,7 @@ namespace SpareParts
                 BindGirdViewBrands();
                 ClearStatusbar();
                 ShowMessageInStatusbar("Barnd removed");
-                NotifyOpenWindows();
+                //NotifyOpenWindows();
             }
             else
             {
@@ -75,33 +93,13 @@ namespace SpareParts
             
         }
 
-        private static void NotifyOpenWindows()
-        {
-            foreach (var window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof (WindowInsertPart))
-                {
-                    (window as WindowInsertPart).BindComboBoxBrand();
-                }
-
-                if (window.GetType() == typeof (WindowEditPart))
-                {
-                    (window as WindowEditPart).BindComboBoxBrand();
-                }
-            }
-        }
-
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             WindowInsertBrand windowInsertBrand=new WindowInsertBrand();
-            windowInsertBrand.DataBaseUpdated += windowInsertBrand_DataBaseUpdated;
+            windowInsertBrand.Entities = Entities;
+            windowInsertBrand.BrandsCollection = BrandsCollection;
+            windowInsertBrand.View = View;
             windowInsertBrand.Show();
-        }
-
-        void windowInsertBrand_DataBaseUpdated(object sender, EventArgs e)
-        {
-            BindGirdViewBrands();
-            NotifyOpenWindows();
         }
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
@@ -123,7 +121,7 @@ namespace SpareParts
         {
             Entities = new SparePartsEntities();
             BindGirdViewBrands();
-            NotifyOpenWindows();
+            //NotifyOpenWindows();
         }
 
         private void ShowMessageInStatusbar(string msg)

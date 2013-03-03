@@ -237,6 +237,7 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Lib\BrandsCollection.cs" />
     <Compile Include="WindowEditPart.xaml.cs">
       <DependentUpon>WindowEditPart.xaml</DependentUpon>
     </Compile>

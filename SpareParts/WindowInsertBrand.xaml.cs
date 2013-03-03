@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -19,14 +20,9 @@ namespace SpareParts
     /// </summary>
     public partial class WindowInsertBrand : Window
     {
-        private SparePartsEntities _entities = new SparePartsEntities();
-        public event EventHandler DataBaseUpdated;
-
-        protected virtual void OnDataBaseUpdated()
-        {
-            EventHandler handler = DataBaseUpdated;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
+        private SparePartsEntities _entities;
+        private BrandsCollection _brandsCollection;
+        private ListCollectionView _view;
 
         public WindowInsertBrand()
         {
@@ -37,6 +33,18 @@ namespace SpareParts
         {
             get { return _entities; }
             set { _entities = value; }
+        }
+
+        public BrandsCollection BrandsCollection
+        {
+            get { return _brandsCollection; }
+            set { _brandsCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
         }
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
@@ -51,13 +59,13 @@ namespace SpareParts
                     return;
                 }
 
-                Brand newBrand=new Brand();
+                Brand newBrand = (Brand) View.AddNew();
                 newBrand.BrandName = TextBoxBrand.Text;
-                Entities.Brands.Add(newBrand);
-
+                View.CommitNew();
+                
                 if (Entities.SaveChanges() > 0)
                 {
-                    OnDataBaseUpdated();
+                    NotifyOpenWindows();
                     TextBoxBrand.Text = "";
                     ShowMessageInStatusbar("new brand added");
                 }
@@ -74,9 +82,26 @@ namespace SpareParts
             StatusBar1.Items.Add(msg);
         }
 
+        private static void NotifyOpenWindows()
+        {
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(WindowInsertPart))
+                {
+                    (window as WindowInsertPart).BindComboBoxBrand();
+                }
+
+                if (window.GetType() == typeof(WindowEditPart))
+                {
+                    (window as WindowEditPart).BindComboBoxBrand();
+                }
+            }
+        }
+
         private void ClearStatusbar()
         {
             StatusBar1.Items.Clear();
         }
+
     }
 }
