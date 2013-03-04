@@ -68,8 +68,10 @@ namespace SpareParts
 
         private void ButtonTryLoad_OnClick(object sender, RoutedEventArgs e)
         {
-            //LoadedPart = PartsCollection.FirstOrDefault(x => x.PartNo == TextBoxPartNo.Text);
-            var loadedPart = Entities.Parts.FirstOrDefault(x => x.PartNo == TextBoxPartNo.Text);
+            var partQuery = from part in Entities.Parts
+                            orderby part.PartId descending
+                            select part;
+            var loadedPart = partQuery.FirstOrDefault(x => x.PartNo == TextBoxPartNo.Text);
             if (loadedPart != null)
             {
                 LoadPart(loadedPart);
@@ -92,6 +94,18 @@ namespace SpareParts
             TextBoxPartName.Text = part.PartName;
             TextBoxPartNoOrignal.Text = part.PartNoOrignal;
             //ComboBoxMachine.SelectedItem = part.Machine;
+            ComboBoxBrand.SelectedItem = part.Brand;
+        }
+
+        private void LoadPartFull(Part part)
+        {
+            //TextBoxPartNo.Text = part.PartNo;
+            TextBoxLocation.Text = part.Location;
+            TextBoxTagName.Text = part.TagName;
+            TextBoxResolutionPartNo.Text = part.ResolutionPartNo;
+            TextBoxPartName.Text = part.PartName;
+            TextBoxPartNoOrignal.Text = part.PartNoOrignal;
+            ComboBoxMachine.SelectedItem = part.Machine;
             ComboBoxBrand.SelectedItem = part.Brand;
         }
 
@@ -159,6 +173,26 @@ namespace SpareParts
             {
                 ClearStatusbar();
                 ShowMessageInStatusbar("Failed");
+            }
+        }
+
+        private void ButtonTryFullLoad_OnClick(object sender, RoutedEventArgs e)
+        {
+            var partQuery = from part in Entities.Parts
+                            orderby part.PartId descending
+                            select part;
+            var loadedPart = partQuery.FirstOrDefault(x => x.PartNo == TextBoxPartNo.Text);
+
+            if (loadedPart != null)
+            {
+                LoadPartFull(loadedPart);
+                ClearStatusbar();
+                ShowMessageInStatusbar("Part loaded");
+            }
+            else
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("Part no does not exist");
             }
         }
     }
