@@ -84,7 +84,7 @@ namespace SpareParts
             var loadedPart = partQuery.FirstOrDefault(x => x.PartNo == TextBoxPartNo.Text);
             if (loadedPart != null)
             {
-                LoadPart(loadedPart);
+                LoadPartPartial(loadedPart);
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part loaded");
             }
@@ -95,7 +95,7 @@ namespace SpareParts
             }
         }
 
-        private void LoadPart(Part part)
+        private void LoadPartPartial(Part part)
         {
             //TextBoxPartNo.Text = part.PartNo;
             //TextBoxLocation.Text = part.Location;
