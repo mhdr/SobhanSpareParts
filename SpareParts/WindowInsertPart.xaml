@@ -19,8 +19,10 @@
                 <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left">
                     <TextBox Name="TextBoxPartNo" VerticalAlignment="Center" Width="300"
                                              TabIndex="0"/>
-                    <telerik:RadButton Name="ButtonTryLoad" Content="Partial load" Width="70" Height="25" Margin="30,0,0,0" Click="ButtonTryLoad_OnClick"/>
-                    <telerik:RadButton Name="ButtonTryFullLoad" Content="Full load" Width="70" Height="25" Margin="30,0,0,0" Click="ButtonTryFullLoad_OnClick"/>
+                    <telerik:RadButton Name="ButtonTryLoad" Content="Partial load" Width="70" Height="25" Margin="30,0,0,0" 
+                                       Click="ButtonTryLoad_OnClick"/>
+                    <telerik:RadButton Name="ButtonTryFullLoad" Content="Full load" Width="70" Height="25" Margin="30,0,0,0" 
+                                       Click="ButtonTryFullLoad_OnClick"/>
                 </StackPanel>
             </Grid>
 

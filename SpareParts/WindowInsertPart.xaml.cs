@@ -41,6 +41,8 @@ namespace SpareParts
 
         private void WindowInsertPart_OnLoaded(object sender, RoutedEventArgs e)
         {
+            TextBoxPartNo.Focus();
+
             BindComboBoxBrand();
             BindComboBoxMachine();
         }
@@ -83,6 +85,8 @@ namespace SpareParts
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part no does not exist");
             }
+
+            TextBoxLocation.Focus();
         }
 
         private void LoadPartPartial(Part part)
@@ -176,6 +180,7 @@ namespace SpareParts
                 ClearStatusbar();
                 ShowMessageInStatusbar("New part added");
                 Clear();
+                TextBoxPartNo.Focus();
             }
             else
             {
@@ -202,6 +207,8 @@ namespace SpareParts
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part no does not exist");
             }
+
+            TextBoxLocation.Focus();
         }
 
         private void ButtonLoadLastEntry_OnClick(object sender, RoutedEventArgs e)
