@@ -52,7 +52,10 @@ namespace SpareParts
 
         private void BindGridViewParts()
         {
-            GridViewParts.ItemsSource = Entities.Parts.ToList();
+            var partsQuery = from part in Entities.Parts
+                             orderby part.PartId descending
+                             select part;
+            GridViewParts.ItemsSource = partsQuery.ToList();
         }
 
         private void RibbonButtonBrands_OnClick(object sender, RoutedEventArgs e)
