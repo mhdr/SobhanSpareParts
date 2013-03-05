@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,10 +55,14 @@ namespace SpareParts
 
         private void BindGirdViewBrands()
         {
-            BrandsCollection brandsCollection = new BrandsCollection(Entities.Brands, Entities);
+            var brandsQuery = from brand in Entities.Brands
+                              orderby brand.BrandName ascending
+                              select brand;
+            BrandsCollection brandsCollection = new BrandsCollection(brandsQuery.ToList(), Entities);
             var brandsSource = (CollectionViewSource)FindResource("BrandsSource");
             brandsSource.Source = brandsCollection;
             View = (ListCollectionView)brandsSource.View;
+            View.SortDescriptions.Add(new SortDescription("BrandName",ListSortDirection.Ascending));
         }
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
@@ -112,16 +117,10 @@ namespace SpareParts
             }
 
             WindowEditBrand windowEditBrand=new WindowEditBrand();
-            windowEditBrand.BrandToEdit = (Brand) GridViewBrands.SelectedItem;
-            windowEditBrand.DataBaseUpdated += windowEditBrand_DataBaseUpdated;
+            windowEditBrand.Entities = Entities;
+            windowEditBrand.BrandsCollection = BrandsCollection;
+            windowEditBrand.View = View;
             windowEditBrand.Show();
-        }
-
-        void windowEditBrand_DataBaseUpdated(object sender, EventArgs e)
-        {
-            Entities = new SparePartsEntities();
-            BindGirdViewBrands();
-            //NotifyOpenWindows();
         }
 
         private void ShowMessageInStatusbar(string msg)
