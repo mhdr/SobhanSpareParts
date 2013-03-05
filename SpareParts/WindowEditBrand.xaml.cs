@@ -67,7 +67,6 @@ namespace SpareParts
                 if (Entities.SaveChanges() > 0)
                 {
                     NotifyOpenWindows();
-                    View.MoveCurrentTo(brandToEdit);
                     this.Close();
                 }
             }
