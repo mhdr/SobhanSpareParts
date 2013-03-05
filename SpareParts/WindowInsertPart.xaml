@@ -104,7 +104,8 @@
             </Grid>
 
             <StackPanel Orientation="Horizontal" Margin="0,20,0,5">
-                <telerik:RadToggleButton Name="ToggleButtonRetain" Content="Retain" Width="70" Height="30" Margin="40,0,20,0"/>
+                <telerik:RadButton Name="ButtonLoadLastEntry" Content="LL" Width="70" Height="30" Margin="40,0,20,0"
+                                   ToolTip="Load Last Entry" Click="ButtonLoadLastEntry_OnClick"/>
                 <telerik:RadButton Name="ButtonClear" Content="Clear" Width="70" Height="30" Margin="20,0,20,0"
                                        Click="ButtonClear_OnClick"/>
                 <telerik:RadButton Name="ButtonAdd" Content="Add" Width="70" Height="30" Margin="20,0,20,0"

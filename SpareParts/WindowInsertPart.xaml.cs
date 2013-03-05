@@ -97,9 +97,21 @@ namespace SpareParts
             ComboBoxBrand.SelectedItem = part.Brand;
         }
 
-        private void LoadPartFull(Part part)
+        private void LoadFull(Part part)
         {
             //TextBoxPartNo.Text = part.PartNo;
+            TextBoxLocation.Text = part.Location;
+            TextBoxTagName.Text = part.TagName;
+            TextBoxResolutionPartNo.Text = part.ResolutionPartNo;
+            TextBoxPartName.Text = part.PartName;
+            TextBoxPartNoOrignal.Text = part.PartNoOrignal;
+            ComboBoxMachine.SelectedItem = part.Machine;
+            ComboBoxBrand.SelectedItem = part.Brand;
+        }
+
+        private void LoadPartForEdit(Part part)
+        {
+            TextBoxPartNo.Text = part.PartNo;
             TextBoxLocation.Text = part.Location;
             TextBoxTagName.Text = part.TagName;
             TextBoxResolutionPartNo.Text = part.ResolutionPartNo;
@@ -163,11 +175,7 @@ namespace SpareParts
                 OnDataBaseUpdated();
                 ClearStatusbar();
                 ShowMessageInStatusbar("New part added");
-
-                if (ToggleButtonRetain.IsChecked == false)
-                {
-                    Clear();
-                }
+                Clear();
             }
             else
             {
@@ -185,7 +193,7 @@ namespace SpareParts
 
             if (loadedPart != null)
             {
-                LoadPartFull(loadedPart);
+                LoadFull(loadedPart);
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part loaded");
             }
@@ -193,6 +201,21 @@ namespace SpareParts
             {
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part no does not exist");
+            }
+        }
+
+        private void ButtonLoadLastEntry_OnClick(object sender, RoutedEventArgs e)
+        {
+            var partQuery = from part in Entities.Parts
+                            orderby part.PartId descending
+                            select part;
+            var loadedPart = partQuery.FirstOrDefault();
+
+            if (loadedPart != null)
+            {
+                LoadPartForEdit(loadedPart);
+                ClearStatusbar();
+                ShowMessageInStatusbar("Part loaded");
             }
         }
     }

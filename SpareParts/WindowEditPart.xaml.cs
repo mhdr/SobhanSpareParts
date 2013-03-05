@@ -183,11 +183,18 @@ namespace SpareParts
                 OnDataBaseUpdated();
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part saved");
+                            var partQuery = from part in Entities.Parts
+                            orderby part.PartId descending
+                            select part;
+            var loadedPart = partQuery.FirstOrDefault();
 
-                if (ToggleButtonRetain.IsChecked == false)
-                {
-                    Clear();
-                }
+            if (loadedPart != null)
+            {
+                LoadPartForEdit(loadedPart);
+                ClearStatusbar();
+                ShowMessageInStatusbar("Part loaded");
+                Clear();
+            }
             }
             else
             {
@@ -213,6 +220,21 @@ namespace SpareParts
             {
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part no does not exist");
+            }
+        }
+
+        private void ButtonLoadLastEntry_OnClick(object sender, RoutedEventArgs e)
+        {
+            var partQuery = from part in Entities.Parts
+                            orderby part.PartId descending
+                            select part;
+            var loadedPart = partQuery.FirstOrDefault();
+
+            if (loadedPart != null)
+            {
+                LoadPartForEdit(loadedPart);
+                ClearStatusbar();
+                ShowMessageInStatusbar("Part loaded");
             }
         }
     }
