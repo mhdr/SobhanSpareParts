@@ -183,18 +183,6 @@ namespace SpareParts
                 OnDataBaseUpdated();
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part saved");
-                            var partQuery = from part in Entities.Parts
-                            orderby part.PartId descending
-                            select part;
-            var loadedPart = partQuery.FirstOrDefault();
-
-            if (loadedPart != null)
-            {
-                LoadPartForEdit(loadedPart);
-                ClearStatusbar();
-                ShowMessageInStatusbar("Part loaded");
-                Clear();
-            }
             }
             else
             {
