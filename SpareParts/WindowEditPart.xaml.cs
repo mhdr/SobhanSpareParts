@@ -100,7 +100,7 @@ namespace SpareParts
             //TextBoxPartNo.Text = part.PartNo;
             //TextBoxLocation.Text = part.Location;
             //TextBoxTagName.Text = part.TagName;
-            TextBoxResolutionPartNo.Text = part.ResolutionPartNo;
+            //TextBoxResolutionPartNo.Text = part.ResolutionPartNo;
             TextBoxPartName.Text = part.PartName;
             TextBoxPartNoOrignal.Text = part.PartNoOrignal;
             //ComboBoxMachine.SelectedItem = part.Machine;
