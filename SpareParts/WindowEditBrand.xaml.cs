@@ -21,7 +21,7 @@ namespace SpareParts
     public partial class WindowEditBrand : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private BrandsCollection _brandsCollection;
+        private BrandsObservableCollection _brandsCollection;
         private ListCollectionView _view;
 
         public WindowEditBrand()
@@ -35,7 +35,7 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public BrandsCollection BrandsCollection
+        public BrandsObservableCollection BrandsCollection
         {
             get { return _brandsCollection; }
             set { _brandsCollection = value; }
@@ -59,12 +59,11 @@ namespace SpareParts
                     return;
                 }
 
-                Brand brandToEdit = (Brand) View.CurrentItem;
-                View.EditItem(brandToEdit);
+                BrandWithINotify brandToEdit = (BrandWithINotify)View.CurrentItem;
                 brandToEdit.BrandName = TextBoxBrand.Text;
-                View.CommitEdit();
+                bool result = BrandsCollection.Update(View.CurrentPosition, brandToEdit);
 
-                if (Entities.SaveChanges() > 0)
+                if (result)
                 {
                     NotifyOpenWindows();
                     this.Close();
@@ -74,7 +73,7 @@ namespace SpareParts
 
         private void WindowInsertBrand_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TextBoxBrand.Text = (View.CurrentItem as Brand).BrandName;
+            TextBoxBrand.Text = (View.CurrentItem as BrandWithINotify).BrandName;
             TextBoxBrand.SelectAll();
             TextBoxBrand.Focus();
         }
