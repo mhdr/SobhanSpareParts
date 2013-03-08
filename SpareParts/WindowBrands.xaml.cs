@@ -63,7 +63,6 @@ namespace SpareParts
             brandsSource.Source = BrandsCollection;
             View = (ListCollectionView)brandsSource.View;
             View.SortDescriptions.Add(new SortDescription("BrandName", ListSortDirection.Ascending));
-            View.IsLiveSorting = true;
         }
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
@@ -121,6 +120,7 @@ namespace SpareParts
             windowEditBrand.Entities = Entities;
             windowEditBrand.BrandsCollection = BrandsCollection;
             windowEditBrand.View = View;
+            windowEditBrand.BrandToEdit = (BrandWithINotify) View.CurrentItem;
             windowEditBrand.Show();
         }
 

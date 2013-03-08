@@ -23,6 +23,7 @@ namespace SpareParts
         private SparePartsEntities _entities = new SparePartsEntities();
         private BrandsObservableCollection _brandsCollection;
         private ListCollectionView _view;
+        private BrandWithINotify _brandToEdit;
 
         public WindowEditBrand()
         {
@@ -47,6 +48,12 @@ namespace SpareParts
             set { _view = value; }
         }
 
+        public BrandWithINotify BrandToEdit
+        {
+            get { return _brandToEdit; }
+            set { _brandToEdit = value; }
+        }
+
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             ClearStatusbar();
@@ -59,9 +66,8 @@ namespace SpareParts
                     return;
                 }
 
-                BrandWithINotify brandToEdit = (BrandWithINotify)View.CurrentItem;
-                brandToEdit.BrandName = TextBoxBrand.Text;
-                bool result = BrandsCollection.Update(View.CurrentPosition, brandToEdit);
+                BrandToEdit.BrandName = TextBoxBrand.Text;
+                bool result = BrandsCollection.Update(View.CurrentPosition, BrandToEdit);
 
                 if (result)
                 {

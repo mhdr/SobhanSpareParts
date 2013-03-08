@@ -80,7 +80,8 @@ namespace SpareParts.Lib
 
         public bool Update(int index,BrandWithINotify item)
         {
-            Brand brand = Entities.Brands.FirstOrDefault(x => x.BrandId == item.BrandId);
+            BrandWithINotify brandWithINotify = this[index];
+            Brand brand = Entities.Brands.FirstOrDefault(x => x.BrandId == brandWithINotify.BrandId);
             brand.BrandName = item.BrandName;
 
             if (Entities.SaveChanges() > 0)

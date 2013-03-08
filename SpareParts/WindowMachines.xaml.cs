@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -20,7 +22,8 @@ namespace SpareParts
     public partial class WindowMachines : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-
+        private MachinesObservableCollection _machinesCollection;
+        private ListCollectionView _view;
 
         public WindowMachines()
         {
@@ -33,6 +36,18 @@ namespace SpareParts
             set { _entities = value; }
         }
 
+        public MachinesObservableCollection MachinesCollection
+        {
+            get { return _machinesCollection; }
+            set { _machinesCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
+        }
+
         private void WindowMachines_OnLoaded(object sender, RoutedEventArgs e)
         {
             BindGridViewMachines();
@@ -40,8 +55,17 @@ namespace SpareParts
 
         private void BindGridViewMachines()
         {
-            GridViewMachines.ItemsSource = Entities.Machines.ToList();
+
+            var machinesQuery = from machine in Entities.Machines
+                                orderby machine.MachineName ascending
+                                select machine;
+            MachinesCollection = new MachinesObservableCollection(machinesQuery.ToList(), Entities);
+            var machinesSource = (CollectionViewSource)FindResource("MachinesSource");
+            machinesSource.Source = MachinesCollection;
+            View = (ListCollectionView)machinesSource.View;
+            View.SortDescriptions.Add(new SortDescription("MachineName", ListSortDirection.Ascending));
         }
+
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
@@ -52,7 +76,7 @@ namespace SpareParts
                 return;
             }
 
-            var selectedMachine = GridViewMachines.SelectedItem as Machine;
+            MachineWithNotify selectedMachine = (MachineWithNotify) View.CurrentItem;
             if (Entities.Parts.Any(x => x.MachineId == selectedMachine.MachineId))
             {
                 ClearStatusbar();
@@ -60,10 +84,9 @@ namespace SpareParts
                 return;
             }
 
-            Entities.Machines.Remove((Machine)GridViewMachines.SelectedItem);
-            if (Entities.SaveChanges() > 0)
+            var result = MachinesCollection.Delete(View.CurrentPosition);
+            if (result)
             {
-                BindGridViewMachines();
                 ClearStatusbar();
                 ShowMessageInStatusbar("Machine removed");
                 NotifyOpenWindows();
@@ -78,14 +101,10 @@ namespace SpareParts
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             WindowInsertMachine windowInsertMachine = new WindowInsertMachine();
-            windowInsertMachine.DataBaseUpdated += windowInsertMachine_DataBaseUpdated;
+            windowInsertMachine.Entities = this.Entities;
+            windowInsertMachine.MachinesCollection = this.MachinesCollection;
+            windowInsertMachine.View = this.View;
             windowInsertMachine.Show();
-        }
-
-        void windowInsertMachine_DataBaseUpdated(object sender, EventArgs e)
-        {
-            BindGridViewMachines();
-            NotifyOpenWindows();
         }
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
@@ -98,16 +117,11 @@ namespace SpareParts
             }
 
             WindowEditMachine windowEditMachine = new WindowEditMachine();
-            windowEditMachine.MachineToEdit = (Machine) GridViewMachines.SelectedItem;
-            windowEditMachine.DataBaseUpdated += windowEditMachine_DataBaseUpdated;
+            windowEditMachine.Entities = this.Entities;
+            windowEditMachine.MachinesCollection = this.MachinesCollection;
+            windowEditMachine.View = this.View;
+            windowEditMachine.MachineToEdit = (MachineWithNotify) View.CurrentItem;
             windowEditMachine.Show();
-        }
-
-        void windowEditMachine_DataBaseUpdated(object sender, EventArgs e)
-        {
-            Entities=new SparePartsEntities();
-            BindGridViewMachines();
-            NotifyOpenWindows();
         }
 
         private void ShowMessageInStatusbar(string msg)
