@@ -58,9 +58,9 @@ namespace SpareParts
             var brandsQuery = from brand in Entities.Brands
                               orderby brand.BrandName ascending
                               select brand;
-            BrandsCollection brandsCollection = new BrandsCollection(brandsQuery.ToList(), Entities);
+            BrandsCollection = new BrandsCollection(brandsQuery.ToList(), Entities);
             var brandsSource = (CollectionViewSource)FindResource("BrandsSource");
-            brandsSource.Source = brandsCollection;
+            brandsSource.Source = BrandsCollection;
             View = (ListCollectionView)brandsSource.View;
             View.SortDescriptions.Add(new SortDescription("BrandName",ListSortDirection.Ascending));
         }
@@ -82,7 +82,8 @@ namespace SpareParts
                 return;
             }
 
-            Entities.Brands.Remove((Brand) GridViewBrands.SelectedItem);
+            View.Remove((Brand)GridViewBrands.SelectedItem);
+            
             if (Entities.SaveChanges() > 0)
             {
                 BindGirdViewBrands();
