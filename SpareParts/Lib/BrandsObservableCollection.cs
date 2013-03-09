@@ -19,16 +19,12 @@ namespace SpareParts.Lib
 
         public BrandsObservableCollection(IEnumerable<Brand> brands, SparePartsEntities entities)
         {
-            this.SuppressEntity = true;
-
             foreach (var brand in brands)
             {
                 this.Add(new BrandWithINotify() { BrandId = brand.BrandId, BrandName = brand.BrandName, TimeStamp = brand.TimeStamp });
             }
 
             this.Entities = entities;
-
-            this.SuppressEntity = false;
         }
 
         private SparePartsEntities Entities
@@ -37,30 +33,22 @@ namespace SpareParts.Lib
             set { _entities = value; }
         }
 
-        public bool SuppressEntity { get; set; }
-
-        public bool AddNew(int index,BrandWithINotify item)
+        public bool AddNew(int index, BrandWithINotify item)
         {
-            if (!this.SuppressEntity)
+            Brand newBrand = new Brand();
+            newBrand.BrandName = item.BrandName;
+            Entities.Brands.Add(newBrand);
+
+            if (Entities.SaveChanges() > 0)
             {
-                Brand newBrand = new Brand();
-                newBrand.BrandName = item.BrandName;
-                Entities.Brands.Add(newBrand);
-                
-                if (Entities.SaveChanges() > 0)
-                {
-                    item.BrandId = newBrand.BrandId;
-                    item.TimeStamp = newBrand.TimeStamp;
+                item.BrandId = newBrand.BrandId;
+                item.TimeStamp = newBrand.TimeStamp;
 
-                    base.InsertItem(index,item);
-                    return true;
-                }
-
-                return false;
+                base.InsertItem(index, item);
+                return true;
             }
 
-            base.InsertItem(index, item);
-            return true;
+            return false;
         }
 
         public bool Delete(int index)
@@ -78,7 +66,7 @@ namespace SpareParts.Lib
             return false;
         }
 
-        public bool Update(int index,BrandWithINotify item)
+        public bool Update(int index, BrandWithINotify item)
         {
             BrandWithINotify brandWithINotify = this[index];
             Brand brand = Entities.Brands.FirstOrDefault(x => x.BrandId == brandWithINotify.BrandId);

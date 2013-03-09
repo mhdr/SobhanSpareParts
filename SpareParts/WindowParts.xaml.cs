@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
@@ -26,6 +27,7 @@ namespace SpareParts
     {
         private SparePartsEntities _entities=new SparePartsEntities();
         private ListCollectionView _view;
+        private PartsObservableCollection _partsCollection;
 
         public WindowParts()
         {
@@ -45,6 +47,12 @@ namespace SpareParts
             set { _view = value; }
         }
 
+        public PartsObservableCollection PartsCollection
+        {
+            get { return _partsCollection; }
+            set { _partsCollection = value; }
+        }
+
         private void WindowParts_OnLoaded(object sender, RoutedEventArgs e)
         {
             BindGridViewParts();
@@ -55,7 +63,10 @@ namespace SpareParts
             var partsQuery = from part in Entities.Parts
                              orderby part.PartId descending
                              select part;
-            GridViewParts.ItemsSource = partsQuery.ToList();
+            PartsCollection=new PartsObservableCollection(partsQuery.ToList(),Entities);
+            CollectionViewSource partsSource = (CollectionViewSource) FindResource("PartsSource");
+            partsSource.Source = PartsCollection;
+            View = (ListCollectionView) partsSource.View;
         }
 
         private void RibbonButtonBrands_OnClick(object sender, RoutedEventArgs e)

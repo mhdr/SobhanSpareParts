@@ -17,8 +17,6 @@ namespace SpareParts.Lib
             set { _entities = value; }
         }
 
-        public bool SuppressEntity { get; set; }
-
         public MachinesObservableCollection(IEnumerable<MachineWithNotify> machines, SparePartsEntities entities)
             : base(machines)
         {
@@ -27,8 +25,6 @@ namespace SpareParts.Lib
 
         public MachinesObservableCollection(IEnumerable<Machine> machines, SparePartsEntities entities)
         {
-            this.SuppressEntity = true;
-
             foreach (var machine in machines)
             {
                 MachineWithNotify newMachine = new MachineWithNotify();
@@ -40,31 +36,24 @@ namespace SpareParts.Lib
             }
 
             this.Entities = entities;
-            this.SuppressEntity = false;
         }
 
         public bool AddNew(int index, MachineWithNotify item)
         {
-            if (!this.SuppressEntity)
+            Machine newMachine = new Machine();
+            newMachine.MachineName = item.MachineName;
+            Entities.Machines.Add(newMachine);
+
+            if (Entities.SaveChanges() > 0)
             {
-                Machine newMachine = new Machine();
-                newMachine.MachineName = item.MachineName;
-                Entities.Machines.Add(newMachine);
+                item.MachineId = newMachine.MachineId;
+                item.TimeStamp = newMachine.TimeStamp;
 
-                if (Entities.SaveChanges() > 0)
-                {
-                    item.MachineId = newMachine.MachineId;
-                    item.TimeStamp = newMachine.TimeStamp;
-
-                    base.InsertItem(index, item);
-                    return true;
-                }
-
-                return false;
+                base.InsertItem(index, item);
+                return true;
             }
 
-            base.InsertItem(index, item);
-            return true;
+            return false;
         }
 
         public bool Delete(int index)
