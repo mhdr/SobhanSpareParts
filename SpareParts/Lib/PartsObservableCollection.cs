@@ -37,9 +37,16 @@ namespace SpareParts.Lib
                 partWithNotify.PartNoOrignal = part.PartNoOrignal;
                 partWithNotify.BrandId = part.BrandId;
                 partWithNotify.MachineId = part.MachineId;
-                partWithNotify.BrandName = part.Brand.BrandName;
-                partWithNotify.MachineName = part.Machine.MachineName;
-
+                if (part.Brand != null)
+                {
+                    partWithNotify.BrandName = part.Brand.BrandName;    
+                }
+                
+                if (part.Machine != null)
+                {
+                    partWithNotify.MachineName = part.Machine.MachineName;    
+                }
+                
                 this.Add(partWithNotify);
             }
 

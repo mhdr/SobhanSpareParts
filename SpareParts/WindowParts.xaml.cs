@@ -116,25 +116,22 @@ namespace SpareParts
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            if (GridViewParts.SelectedItem == null)
+            if (View.CurrentItem == null)
             {
                 ClearStatusbar();
                 ShowMessageInStatusbar("First select an item");
                 return;
             }
 
-            var part = GridViewParts.SelectedItem as Part;
-            Entities.Parts.Remove(part);
+            var result= PartsCollection.Delete(View.CurrentPosition);
 
-            if (Entities.SaveChanges() > 0)
+            ClearStatusbar();
+            if (result)
             {
-                BindGridViewParts();
-                ClearStatusbar();
                 ShowMessageInStatusbar("Part removed");
             }
             else
             {
-                ClearStatusbar();
                 ShowMessageInStatusbar("Failed");       
             }
         }
