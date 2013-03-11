@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -20,13 +21,8 @@ namespace SpareParts
     public partial class WindowInsertMachine : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        public event EventHandler DataBaseUpdated;
-
-        protected virtual void OnDataBaseUpdated()
-        {
-            EventHandler handler = DataBaseUpdated;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
+        private MachinesObservableCollection _machinesCollection;
+        private ListCollectionView _view;
 
         public WindowInsertMachine()
         {
@@ -37,6 +33,18 @@ namespace SpareParts
         {
             get { return _entities; }
             set { _entities = value; }
+        }
+
+        public MachinesObservableCollection MachinesCollection
+        {
+            get { return _machinesCollection; }
+            set { _machinesCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
         }
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
@@ -51,13 +59,13 @@ namespace SpareParts
                     return;
                 }
 
-                Machine newMachine = new Machine();
+                MachineWithNotify newMachine = new MachineWithNotify();
                 newMachine.MachineName = TextBoxMachine.Text;
-                Entities.Machines.Add(newMachine);
+                var result= MachinesCollection.AddNew(0, newMachine);
 
-                if (Entities.SaveChanges() > 0)
+                if (result)
                 {
-                    OnDataBaseUpdated();
+                    NotifyOpenWindows();
                     TextBoxMachine.Text = "";
                     ShowMessageInStatusbar("new machine added");
                 }
@@ -77,6 +85,22 @@ namespace SpareParts
         private void ClearStatusbar()
         {
             StatusBar1.Items.Clear();
+        }
+
+        private static void NotifyOpenWindows()
+        {
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(WindowInsertPart))
+                {
+                    (window as WindowInsertPart).BindComboBoxMachine();
+                }
+
+                if (window.GetType() == typeof(WindowEditPart))
+                {
+                    (window as WindowEditPart).BindComboBoxMachine();
+                }
+            }
         }
     }
 }

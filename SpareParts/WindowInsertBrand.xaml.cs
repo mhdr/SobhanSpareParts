@@ -21,7 +21,7 @@ namespace SpareParts
     public partial class WindowInsertBrand : Window
     {
         private SparePartsEntities _entities;
-        private BrandsCollection _brandsCollection;
+        private BrandsObservableCollection _brandsCollection;
         private ListCollectionView _view;
 
         public WindowInsertBrand()
@@ -35,7 +35,7 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public BrandsCollection BrandsCollection
+        public BrandsObservableCollection BrandsCollection
         {
             get { return _brandsCollection; }
             set { _brandsCollection = value; }
@@ -59,11 +59,12 @@ namespace SpareParts
                     return;
                 }
 
-                Brand newBrand = (Brand) View.AddNew();
+
+                BrandWithINotify newBrand = new BrandWithINotify();
                 newBrand.BrandName = TextBoxBrand.Text;
-                View.CommitNew();
-                
-                if (Entities.SaveChanges() > 0)
+                bool result = BrandsCollection.AddNew(0, newBrand);
+
+                if (result)
                 {
                     NotifyOpenWindows();
                     TextBoxBrand.Text = "";

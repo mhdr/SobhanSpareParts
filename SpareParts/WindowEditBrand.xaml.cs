@@ -21,8 +21,9 @@ namespace SpareParts
     public partial class WindowEditBrand : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private BrandsCollection _brandsCollection;
+        private BrandsObservableCollection _brandsCollection;
         private ListCollectionView _view;
+        private BrandWithINotify _brandToEdit;
 
         public WindowEditBrand()
         {
@@ -35,7 +36,7 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public BrandsCollection BrandsCollection
+        public BrandsObservableCollection BrandsCollection
         {
             get { return _brandsCollection; }
             set { _brandsCollection = value; }
@@ -45,6 +46,12 @@ namespace SpareParts
         {
             get { return _view; }
             set { _view = value; }
+        }
+
+        public BrandWithINotify BrandToEdit
+        {
+            get { return _brandToEdit; }
+            set { _brandToEdit = value; }
         }
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
@@ -59,12 +66,10 @@ namespace SpareParts
                     return;
                 }
 
-                Brand brandToEdit = (Brand) View.CurrentItem;
-                View.EditItem(brandToEdit);
-                brandToEdit.BrandName = TextBoxBrand.Text;
-                View.CommitEdit();
+                BrandToEdit.BrandName = TextBoxBrand.Text;
+                bool result = BrandsCollection.Update(View.CurrentPosition, BrandToEdit);
 
-                if (Entities.SaveChanges() > 0)
+                if (result)
                 {
                     NotifyOpenWindows();
                     this.Close();
@@ -74,7 +79,7 @@ namespace SpareParts
 
         private void WindowInsertBrand_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TextBoxBrand.Text = (View.CurrentItem as Brand).BrandName;
+            TextBoxBrand.Text = (View.CurrentItem as BrandWithINotify).BrandName;
             TextBoxBrand.SelectAll();
             TextBoxBrand.Focus();
         }

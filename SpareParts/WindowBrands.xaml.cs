@@ -22,7 +22,7 @@ namespace SpareParts
     public partial class WindowBrands : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        private BrandsCollection _brandsCollection;
+        private BrandsObservableCollection _brandsCollection;
         private ListCollectionView _view;
 
         public WindowBrands()
@@ -36,7 +36,7 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public BrandsCollection BrandsCollection
+        public BrandsObservableCollection BrandsCollection
         {
             get { return _brandsCollection; }
             set { _brandsCollection = value; }
@@ -58,11 +58,11 @@ namespace SpareParts
             var brandsQuery = from brand in Entities.Brands
                               orderby brand.BrandName ascending
                               select brand;
-            BrandsCollection brandsCollection = new BrandsCollection(brandsQuery.ToList(), Entities);
+            BrandsCollection = new BrandsObservableCollection(brandsQuery.ToList(), Entities);
             var brandsSource = (CollectionViewSource)FindResource("BrandsSource");
-            brandsSource.Source = brandsCollection;
+            brandsSource.Source = BrandsCollection;
             View = (ListCollectionView)brandsSource.View;
-            View.SortDescriptions.Add(new SortDescription("BrandName",ListSortDirection.Ascending));
+            View.SortDescriptions.Add(new SortDescription("BrandName", ListSortDirection.Ascending));
         }
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
@@ -74,7 +74,7 @@ namespace SpareParts
                 return;
             }
 
-            var selectedBrand = GridViewBrands.SelectedItem as Brand;
+            var selectedBrand = View.CurrentItem as BrandWithINotify;
             if (Entities.Parts.Any(x => x.BrandId == selectedBrand.BrandId))
             {
                 ClearStatusbar();
@@ -82,25 +82,25 @@ namespace SpareParts
                 return;
             }
 
-            Entities.Brands.Remove((Brand) GridViewBrands.SelectedItem);
-            if (Entities.SaveChanges() > 0)
+            bool result = BrandsCollection.Delete(View.CurrentPosition);
+
+            if (result)
             {
-                BindGirdViewBrands();
                 ClearStatusbar();
                 ShowMessageInStatusbar("Barnd removed");
-                //NotifyOpenWindows();
+                NotifyOpenWindows();
             }
             else
             {
                 ClearStatusbar();
                 ShowMessageInStatusbar("Failed");
             }
-            
+
         }
 
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            WindowInsertBrand windowInsertBrand=new WindowInsertBrand();
+            WindowInsertBrand windowInsertBrand = new WindowInsertBrand();
             windowInsertBrand.Entities = Entities;
             windowInsertBrand.BrandsCollection = BrandsCollection;
             windowInsertBrand.View = View;
@@ -116,10 +116,11 @@ namespace SpareParts
                 return;
             }
 
-            WindowEditBrand windowEditBrand=new WindowEditBrand();
+            WindowEditBrand windowEditBrand = new WindowEditBrand();
             windowEditBrand.Entities = Entities;
             windowEditBrand.BrandsCollection = BrandsCollection;
             windowEditBrand.View = View;
+            windowEditBrand.BrandToEdit = (BrandWithINotify) View.CurrentItem;
             windowEditBrand.Show();
         }
 
@@ -131,6 +132,22 @@ namespace SpareParts
         private void ClearStatusbar()
         {
             StatusBar1.Items.Clear();
+        }
+
+        private static void NotifyOpenWindows()
+        {
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(WindowInsertPart))
+                {
+                    (window as WindowInsertPart).BindComboBoxBrand();
+                }
+
+                if (window.GetType() == typeof(WindowEditPart))
+                {
+                    (window as WindowEditPart).BindComboBoxBrand();
+                }
+            }
         }
     }
 }

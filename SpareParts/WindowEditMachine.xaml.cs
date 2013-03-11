@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -20,15 +21,10 @@ namespace SpareParts
     public partial class WindowEditMachine : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        public event EventHandler DataBaseUpdated;
+        private MachinesObservableCollection _machinesCollection;
+        private ListCollectionView _view;
 
-        protected virtual void OnDataBaseUpdated()
-        {
-            EventHandler handler = DataBaseUpdated;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
-
-        private Machine _machineToEdit;
+        private MachineWithNotify _machineToEdit;
 
         public WindowEditMachine()
         {
@@ -41,10 +37,22 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public Machine MachineToEdit
+        public MachineWithNotify MachineToEdit
         {
             get { return _machineToEdit; }
             set { _machineToEdit = value; }
+        }
+
+        public MachinesObservableCollection MachinesCollection
+        {
+            get { return _machinesCollection; }
+            set { _machinesCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
         }
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
@@ -59,15 +67,13 @@ namespace SpareParts
                     return;
                 }
 
-                Machine currentMachine = Entities.Machines.FirstOrDefault(x => x.MachineId == MachineToEdit.MachineId);
-                currentMachine.MachineName = TextBoxMachine.Text;
+                MachineToEdit.MachineName = TextBoxMachine.Text;
+                var result = MachinesCollection.Update(View.CurrentPosition, MachineToEdit);
 
-                if (Entities.SaveChanges() > 0)
+                if (result)
                 {
-                    OnDataBaseUpdated();
-                    ShowMessageInStatusbar("machine edited");
-                    TextBoxMachine.SelectAll();
-                    TextBoxMachine.Focus();
+                    NotifyOpenWindows();
+                    this.Close();
                 }
             }
         }
@@ -87,6 +93,22 @@ namespace SpareParts
         private void ClearStatusbar()
         {
             StatusBar1.Items.Clear();
+        }
+
+        private static void NotifyOpenWindows()
+        {
+            foreach (var window in Application.Current.Windows)
+            {
+                if (window.GetType() == typeof(WindowInsertPart))
+                {
+                    (window as WindowInsertPart).BindComboBoxMachine();
+                }
+
+                if (window.GetType() == typeof(WindowEditPart))
+                {
+                    (window as WindowEditPart).BindComboBoxMachine();
+                }
+            }
         }
     }
 }

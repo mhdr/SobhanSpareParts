@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Parts" Height="300" Width="300" WindowState="Maximized" WindowStartupLocation="CenterScreen"
         Loaded="WindowParts_OnLoaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="PartsSource"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -83,7 +86,7 @@
                                  EnableColumnVirtualization="True" EnableRowVirtualization="True"
                                  RowDetailsVisibilityMode="Collapsed" HorizontalContentAlignment="Stretch" ShowGroupPanel="True"
                                  Grouping="GridViewParts_OnGrouping" ClipboardCopyMode="Cells"
-                                 >
+                                 ItemsSource="{Binding Source={StaticResource PartsSource}}">
                 <telerik:RadGridView.Columns>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
@@ -124,13 +127,13 @@
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
-                        DataMemberBinding="{Binding Brand.BrandName}"
+                        DataMemberBinding="{Binding BrandName}"
                         MinWidth="300" Header="Brand" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
-                        DataMemberBinding="{Binding Machine.MachineName}"
+                        DataMemberBinding="{Binding MachineName}"
                         MinWidth="100" Header="Machine" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
                 </telerik:RadGridView.Columns>

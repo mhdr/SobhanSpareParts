@@ -241,7 +241,13 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Lib\BrandsCollection.cs" />
+    <Compile Include="Lib\BrandsObservableCollection.cs" />
+    <Compile Include="Lib\BrandWithINotify.cs" />
+    <Compile Include="Lib\MachinesObservableCollection.cs" />
+    <Compile Include="Lib\MachineWithNotify.cs" />
+    <Compile Include="Lib\PartsObservableCollection.cs" />
+    <Compile Include="Lib\PartWithNotify.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="WindowEditPart.xaml.cs">
       <DependentUpon>WindowEditPart.xaml</DependentUpon>
     </Compile>
