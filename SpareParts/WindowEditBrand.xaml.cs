@@ -24,6 +24,7 @@ namespace SpareParts
         private BrandsObservableCollection _brandsCollection;
         private ListCollectionView _view;
         private BrandWithINotify _brandToEdit;
+        private int _index;
 
         public WindowEditBrand()
         {
@@ -54,6 +55,12 @@ namespace SpareParts
             set { _brandToEdit = value; }
         }
 
+        public int Index
+        {
+            get { return _index; }
+            set { _index = value; }
+        }
+
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             ClearStatusbar();
@@ -67,7 +74,7 @@ namespace SpareParts
                 }
 
                 BrandToEdit.BrandName = TextBoxBrand.Text;
-                bool result = BrandsCollection.Update(View.CurrentPosition, BrandToEdit);
+                bool result = BrandsCollection.Update(this.Index, BrandToEdit);
 
                 if (result)
                 {

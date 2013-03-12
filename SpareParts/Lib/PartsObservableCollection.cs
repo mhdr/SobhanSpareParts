@@ -66,6 +66,8 @@ namespace SpareParts.Lib
             part.BrandId = item.BrandId;
             part.MachineId = item.MachineId;
 
+            Entities.Parts.Add(part);
+
             if (Entities.SaveChanges() > 0)
             {
                 item.PartId = part.PartId;

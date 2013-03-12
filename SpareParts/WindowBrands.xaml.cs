@@ -121,6 +121,7 @@ namespace SpareParts
             windowEditBrand.BrandsCollection = BrandsCollection;
             windowEditBrand.View = View;
             windowEditBrand.BrandToEdit = (BrandWithINotify) View.CurrentItem;
+            windowEditBrand.Index = View.CurrentPosition;
             windowEditBrand.Show();
         }
 

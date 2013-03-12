@@ -23,6 +23,7 @@ namespace SpareParts
         private SparePartsEntities _entities = new SparePartsEntities();
         private MachinesObservableCollection _machinesCollection;
         private ListCollectionView _view;
+        private int _index;
 
         private MachineWithNotify _machineToEdit;
 
@@ -55,6 +56,12 @@ namespace SpareParts
             set { _view = value; }
         }
 
+        public int Index
+        {
+            get { return _index; }
+            set { _index = value; }
+        }
+
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
             ClearStatusbar();
@@ -68,7 +75,7 @@ namespace SpareParts
                 }
 
                 MachineToEdit.MachineName = TextBoxMachine.Text;
-                var result = MachinesCollection.Update(View.CurrentPosition, MachineToEdit);
+                var result = MachinesCollection.Update(this.Index, MachineToEdit);
 
                 if (result)
                 {

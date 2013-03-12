@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -20,13 +21,8 @@ namespace SpareParts
     public partial class WindowInsertPart : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        public event EventHandler DataBaseUpdated;
-
-        protected virtual void OnDataBaseUpdated()
-        {
-            EventHandler handler = DataBaseUpdated;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
+        private PartsObservableCollection _partsCollection;
+        private ListCollectionView _view;
 
         public WindowInsertPart()
         {
@@ -37,6 +33,18 @@ namespace SpareParts
         {
             get { return _entities; }
             set { _entities = value; }
+        }
+
+        public PartsObservableCollection PartsCollection
+        {
+            get { return _partsCollection; }
+            set { _partsCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
         }
 
         private void WindowInsertPart_OnLoaded(object sender, RoutedEventArgs e)
@@ -154,7 +162,7 @@ namespace SpareParts
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            Part newPart = new Part();
+            PartWithNotify newPart = new PartWithNotify();
             newPart.PartNo = TextBoxPartNo.Text;
             newPart.Location = TextBoxLocation.Text;
             newPart.TagName = TextBoxTagName.Text;
@@ -165,18 +173,19 @@ namespace SpareParts
             if (ComboBoxMachine.SelectedIndex != -1)
             {
                 newPart.MachineId = (ComboBoxMachine.SelectedItem as Machine).MachineId;
+                newPart.MachineName=(ComboBoxMachine.SelectedItem as Machine).MachineName;
             }
 
             if (ComboBoxBrand.SelectedIndex != -1)
             {
                 newPart.BrandId = (ComboBoxBrand.SelectedItem as Brand).BrandId;
+                newPart.BrandName = (ComboBoxBrand.SelectedItem as Brand).BrandName;
             }
 
-            Entities.Parts.Add(newPart);
+            var result= PartsCollection.AddNew(0, newPart);
 
-            if (Entities.SaveChanges() > 0)
+            if (result)
             {
-                OnDataBaseUpdated();
                 ClearStatusbar();
                 ShowMessageInStatusbar("New part added");
                 Clear();

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -20,14 +21,10 @@ namespace SpareParts
     public partial class WindowEditPart : Window
     {
         private SparePartsEntities _entities = new SparePartsEntities();
-        public event EventHandler DataBaseUpdated;
-        private Part _partToEdit;
-
-        protected virtual void OnDataBaseUpdated()
-        {
-            EventHandler handler = DataBaseUpdated;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
+        private PartsObservableCollection _partsCollection;
+        private ListCollectionView _view;
+        private PartWithNotify _partToEdit;
+        private int _index;
 
         public WindowEditPart()
         {
@@ -40,10 +37,28 @@ namespace SpareParts
             set { _entities = value; }
         }
 
-        public Part PartToEdit
+        public PartWithNotify PartToEdit
         {
             get { return _partToEdit; }
             set { _partToEdit = value; }
+        }
+
+        public PartsObservableCollection PartsCollection
+        {
+            get { return _partsCollection; }
+            set { _partsCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
+        }
+
+        public int Index
+        {
+            get { return _index; }
+            set { _index = value; }
         }
 
         private void WindowEditPart_OnLoaded(object sender, RoutedEventArgs e)
@@ -160,27 +175,29 @@ namespace SpareParts
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            Part editPart = Entities.Parts.FirstOrDefault(x => x.PartId == PartToEdit.PartId);
-            editPart.PartNo = TextBoxPartNo.Text;
-            editPart.Location = TextBoxLocation.Text;
-            editPart.TagName = TextBoxTagName.Text;
-            editPart.ResolutionPartNo = TextBoxResolutionPartNo.Text;
-            editPart.PartName = TextBoxPartName.Text;
-            editPart.PartNoOrignal = TextBoxPartNoOrignal.Text;
+            PartToEdit.PartNo = TextBoxPartNo.Text;
+            PartToEdit.Location = TextBoxLocation.Text;
+            PartToEdit.TagName = TextBoxTagName.Text;
+            PartToEdit.ResolutionPartNo = TextBoxResolutionPartNo.Text;
+            PartToEdit.PartName = TextBoxPartName.Text;
+            PartToEdit.PartNoOrignal = TextBoxPartNoOrignal.Text;
 
             if (ComboBoxMachine.SelectedIndex != -1)
             {
-                editPart.MachineId = (ComboBoxMachine.SelectedItem as Machine).MachineId;
+                PartToEdit.MachineId = (ComboBoxMachine.SelectedItem as Machine).MachineId;
+                PartToEdit.MachineName = (ComboBoxMachine.SelectedItem as Machine).MachineName;
             }
 
             if (ComboBoxBrand.SelectedIndex != -1)
             {
-                editPart.BrandId = (ComboBoxBrand.SelectedItem as Brand).BrandId;
+                PartToEdit.BrandId = (ComboBoxBrand.SelectedItem as Brand).BrandId;
+                PartToEdit.BrandName = (ComboBoxBrand.SelectedItem as Brand).BrandName;
             }
 
-            if (Entities.SaveChanges() > 0)
+            var result= PartsCollection.Update(this.Index, this.PartToEdit);
+
+            if (result)
             {
-                OnDataBaseUpdated();
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part saved");
             }

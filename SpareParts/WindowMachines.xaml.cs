@@ -121,6 +121,7 @@ namespace SpareParts
             windowEditMachine.MachinesCollection = this.MachinesCollection;
             windowEditMachine.View = this.View;
             windowEditMachine.MachineToEdit = (MachineWithNotify) View.CurrentItem;
+            windowEditMachine.Index = View.CurrentPosition;
             windowEditMachine.Show();
         }
 
