@@ -108,6 +108,7 @@ namespace SpareParts
 
         private void RibbonButtonRefresh_OnClick(object sender, RoutedEventArgs e)
         {
+            Entities=new SparePartsEntities();
             BindGridViewParts();
         }
 
