@@ -42,4 +42,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="RequestId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="5c074031-ad3a-411f-8376-f06452c1019e" ChangeDateTime="03/13/2013 06:12:15">
+    <Property Name="ElementName" Value="[dbo].[Requests].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Requests]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RequestId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="52a0b592-ff5a-437a-963a-528633e3eb7e" ChangeDateTime="03/13/2013 06:13:55">
+    <Property Name="ElementName" Value="[dbo].[Requests].[IX_Requests_]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Requests]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[ResolutionPartNo]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="58101df1-0f47-4167-be29-6f4f571cd858" ChangeDateTime="03/13/2013 07:58:32">
+    <Property Name="ElementName" Value="[dbo].[Requests].[PartNoOrignal]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Requests]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PartNoOriginal" />
+  </Operation>
 </Operations>

@@ -5,11 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="76c0c6a879f047d58c18b865b4e3ce79" Name="Diagram1">
-        <EntityTypeShape EntityType="SparePartsModel.Brand" Width="1.5" PointX="2.3924229361081606" PointY="26.048016128152618" />
-        <EntityTypeShape EntityType="SparePartsModel.Machine" Width="1.5" PointX="8.1783983894523224" PointY="26.185096186671917" />
-        <EntityTypeShape EntityType="SparePartsModel.Part" Width="1.5" PointX="10.436346401663657" PointY="25.722033020910821" />
+        <EntityTypeShape EntityType="SparePartsModel.Brand" Width="1.5" PointX="2.125" PointY="3.125" />
+        <EntityTypeShape EntityType="SparePartsModel.Machine" Width="1.5" PointX="7.5" PointY="4.625" />
+        <EntityTypeShape EntityType="SparePartsModel.Part" Width="1.5" PointX="4.75" PointY="0.75" />
         <AssociationConnector Association="SparePartsModel.FK_Parts_Brands" />
         <AssociationConnector Association="SparePartsModel.FK_Parts_Machines" />
+        <EntityTypeShape EntityType="SparePartsModel.Request" Width="1.5" PointX="9.125" PointY="0.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

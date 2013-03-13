@@ -28,5 +28,6 @@ namespace SpareParts
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Machine> Machines { get; set; }
         public DbSet<Part> Parts { get; set; }
+        public DbSet<Request> Requests { get; set; }
     }
 }

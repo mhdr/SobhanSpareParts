@@ -9,6 +9,7 @@
           <EntitySet Name="Brands" EntityType="SparePartsModel.Store.Brands" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Machines" EntityType="SparePartsModel.Store.Machines" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Parts" EntityType="SparePartsModel.Store.Parts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Requests" EntityType="SparePartsModel.Store.Requests" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Parts_Brands" Association="SparePartsModel.Store.FK_Parts_Brands">
             <End Role="Brands" EntitySet="Brands" />
             <End Role="Parts" EntitySet="Parts" />
@@ -47,6 +48,20 @@
           <Property Name="PartNoOrignal" Type="nvarchar" MaxLength="50" />
           <Property Name="BrandId" Type="int" />
           <Property Name="MachineId" Type="int" />
+          <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="ResolutionPartNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="PartNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="PartNoOriginal" Type="nvarchar" MaxLength="50" />
+          <Property Name="RequestDate" Type="datetime2" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="EntranceDate" Type="datetime2" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <Association Name="FK_Parts_Brands">
@@ -89,6 +104,7 @@
             <End Role="Machine" EntitySet="Machines" />
             <End Role="Part" EntitySet="Parts" />
           </AssociationSet>
+          <EntitySet Name="Requests" EntityType="SparePartsModel.Request" />
         </EntityContainer>
         <EntityType Name="Brand">
           <Key>
@@ -149,6 +165,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Type="Int32" Name="RequestId" Nullable="false" />
+          <Property Type="String" Name="ResolutionPartNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PartNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PartNoOriginal" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="7" />
+          <Property Type="Int32" Name="Qty" Nullable="false" />
+          <Property Type="DateTime" Name="EntranceDate" Precision="7" />
+          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="TimeStamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -186,6 +216,21 @@
                 <ScalarProperty Name="TagName" ColumnName="TagName" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="PartId" ColumnName="PartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="SparePartsModel.Request">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EntranceDate" ColumnName="EntranceDate" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="PartNoOriginal" ColumnName="PartNoOriginal" />
+                <ScalarProperty Name="PartNo" ColumnName="PartNo" />
+                <ScalarProperty Name="ResolutionPartNo" ColumnName="ResolutionPartNo" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

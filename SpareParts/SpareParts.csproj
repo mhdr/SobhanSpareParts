@@ -28,7 +28,7 @@
     <UpdateUrl>\\RS\Storage\Department\Technical\Public\Ramezani\SpareParts\</UpdateUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>13</ApplicationRevision>
+    <ApplicationRevision>14</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -247,7 +247,12 @@
     <Compile Include="Lib\MachineWithNotify.cs" />
     <Compile Include="Lib\PartsObservableCollection.cs" />
     <Compile Include="Lib\PartWithNotify.cs" />
+    <Compile Include="Lib\RequestsObservableCollection.cs" />
+    <Compile Include="Lib\RequestWithNotify.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Request.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="WindowEditPart.xaml.cs">
       <DependentUpon>WindowEditPart.xaml</DependentUpon>
     </Compile>
