@@ -301,6 +301,9 @@
     <Compile Include="WindowParts.xaml.cs">
       <DependentUpon>WindowParts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowRequests.xaml.cs">
+      <DependentUpon>WindowRequests.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -385,6 +388,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowParts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowRequests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
