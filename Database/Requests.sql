@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Requests]
 (
-	[RequestId] INT NOT NULL PRIMARY KEY, 
+	[RequestId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [ResolutionPartNo] NVARCHAR(50) NULL, 
     [PartNo] NVARCHAR(50) NULL, 
     [PartNoOriginal] NVARCHAR(50) NULL, 

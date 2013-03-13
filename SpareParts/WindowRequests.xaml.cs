@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SpareParts.Lib;
 
 namespace SpareParts
 {
@@ -19,9 +20,63 @@ namespace SpareParts
     /// </summary>
     public partial class WindowRequests : Window
     {
+        private SparePartsEntities _entities=new SparePartsEntities();
+        private RequestsObservableCollection _requestsCollection;
+        private ListCollectionView _view;
+
         public WindowRequests()
         {
             InitializeComponent();
+        }
+
+        public SparePartsEntities Entities
+        {
+            get { return _entities; }
+            set { _entities = value; }
+        }
+
+        public RequestsObservableCollection RequestsCollection
+        {
+            get { return _requestsCollection; }
+            set { _requestsCollection = value; }
+        }
+
+        public ListCollectionView View
+        {
+            get { return _view; }
+            set { _view = value; }
+        }
+
+        private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void WindowRequests_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            BindGridViewRequests();
+        }
+
+        private void BindGridViewRequests()
+        {
+            var requestQuery = from request in Entities.Requests
+                               orderby request.RequestId descending
+                               select request;
+
+            RequestsCollection = new RequestsObservableCollection(requestQuery.ToList(), Entities);
+            CollectionViewSource requestSource = (CollectionViewSource) FindResource("RequestsSource");
+            requestSource.Source = RequestsCollection;
+            View = (ListCollectionView) requestSource.View;
         }
     }
 }

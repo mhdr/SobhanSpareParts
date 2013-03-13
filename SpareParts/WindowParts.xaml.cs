@@ -233,5 +233,11 @@ namespace SpareParts
 
             Clipboard.SetText((View.CurrentItem as PartWithNotify).PartNoOrignal);
         }
+
+        private void RibbonButtonRequests_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowRequests windowRequests=new WindowRequests();
+            windowRequests.Show();
+        }
     }
 }

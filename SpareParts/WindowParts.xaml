@@ -78,6 +78,13 @@
                                                  Click="RibbonButtonPartNoOrignal_OnClick"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
+
+                <telerik:RadRibbonTab Header="Requests" Name="RibbonTabRequests" MinWidth="70" HorizontalContentAlignment="Center">
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonButton Name="RibbonButtonRequests" Content="Requests" MinWidth="75" HorizontalContentAlignment="Center"
+                                                 Click="RibbonButtonRequests_OnClick"/>
+                    </telerik:RadRibbonGroup>
+                </telerik:RadRibbonTab>
             </telerik:RadRibbonView>
 
             <telerik:RadGridView Name="GridViewParts" HorizontalAlignment="Stretch" IsSynchronizedWithCurrentItem="True"
