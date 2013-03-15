@@ -59,7 +59,24 @@ namespace SpareParts
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
+            if (View.CurrentItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
 
+            var result = RequestsCollection.Delete(View.CurrentPosition);
+
+            ClearStatusbar();
+            if (result)
+            {
+                ShowMessageInStatusbar("Request removed");
+            }
+            else
+            {
+                ShowMessageInStatusbar("Failed");
+            }
         }
 
         private void WindowRequests_OnLoaded(object sender, RoutedEventArgs e)
@@ -77,6 +94,16 @@ namespace SpareParts
             CollectionViewSource requestSource = (CollectionViewSource) FindResource("RequestsSource");
             requestSource.Source = RequestsCollection;
             View = (ListCollectionView) requestSource.View;
+        }
+
+        private void ShowMessageInStatusbar(string msg)
+        {
+            StatusBar1.Items.Add(msg);
+        }
+
+        private void ClearStatusbar()
+        {
+            StatusBar1.Items.Clear();
         }
     }
 }

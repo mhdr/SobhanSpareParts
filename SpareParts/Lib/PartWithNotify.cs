@@ -133,6 +133,26 @@ namespace SpareParts.Lib
             }
         }
 
+        public int PendingRequestsResolutionPartNo
+        {
+            get { return _pendingRequestsResolutionPartNo; }
+            set
+            {
+                _pendingRequestsResolutionPartNo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int PendingRequestsPartNo
+        {
+            get { return _pendingRequestsPartNo; }
+            set
+            {
+                _pendingRequestsPartNo = value;
+                OnPropertyChanged();
+            }
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -152,5 +172,8 @@ namespace SpareParts.Lib
         private byte[] _timeStamp;
         private string _brandName;
         private string _machineName;
+
+        private int _pendingRequestsResolutionPartNo = -1;
+        private int _pendingRequestsPartNo = -1;
     }
 }

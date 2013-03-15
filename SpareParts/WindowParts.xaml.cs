@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +26,7 @@ namespace SpareParts
     /// </summary>
     public partial class WindowParts : Window
     {
-        private SparePartsEntities _entities=new SparePartsEntities();
+        private SparePartsEntities _entities = new SparePartsEntities();
         private ListCollectionView _view;
         private PartsObservableCollection _partsCollection;
 
@@ -63,15 +64,15 @@ namespace SpareParts
             var partsQuery = from part in Entities.Parts
                              orderby part.PartId descending
                              select part;
-            PartsCollection=new PartsObservableCollection(partsQuery.ToList(),Entities);
-            CollectionViewSource partsSource = (CollectionViewSource) FindResource("PartsSource");
+            PartsCollection = new PartsObservableCollection(partsQuery.ToList(), Entities);
+            CollectionViewSource partsSource = (CollectionViewSource)FindResource("PartsSource");
             partsSource.Source = PartsCollection;
-            View = (ListCollectionView) partsSource.View;
+            View = (ListCollectionView)partsSource.View;
         }
 
         private void RibbonButtonBrands_OnClick(object sender, RoutedEventArgs e)
         {
-            WindowBrands windowBrands=new WindowBrands();
+            WindowBrands windowBrands = new WindowBrands();
             windowBrands.Show();
         }
 
@@ -93,13 +94,13 @@ namespace SpareParts
 
         private void RibbonButtonMachines_OnClick(object sender, RoutedEventArgs e)
         {
-            WindowMachines windowMachines=new WindowMachines();
+            WindowMachines windowMachines = new WindowMachines();
             windowMachines.Show();
         }
 
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            WindowInsertPart windowInsertPart=new WindowInsertPart();
+            WindowInsertPart windowInsertPart = new WindowInsertPart();
             windowInsertPart.Entities = this.Entities;
             windowInsertPart.PartsCollection = PartsCollection;
             windowInsertPart.View = this.View;
@@ -108,7 +109,7 @@ namespace SpareParts
 
         private void RibbonButtonRefresh_OnClick(object sender, RoutedEventArgs e)
         {
-            Entities=new SparePartsEntities();
+            Entities = new SparePartsEntities();
             BindGridViewParts();
         }
 
@@ -121,7 +122,7 @@ namespace SpareParts
                 return;
             }
 
-            var result= PartsCollection.Delete(View.CurrentPosition);
+            var result = PartsCollection.Delete(View.CurrentPosition);
 
             ClearStatusbar();
             if (result)
@@ -130,7 +131,7 @@ namespace SpareParts
             }
             else
             {
-                ShowMessageInStatusbar("Failed");       
+                ShowMessageInStatusbar("Failed");
             }
         }
 
@@ -153,7 +154,7 @@ namespace SpareParts
                 return;
             }
 
-            WindowEditPart windowEditPart=new WindowEditPart();
+            WindowEditPart windowEditPart = new WindowEditPart();
             windowEditPart.Entities = this.Entities;
             windowEditPart.PartsCollection = PartsCollection;
             windowEditPart.View = this.View;
@@ -236,8 +237,40 @@ namespace SpareParts
 
         private void RibbonButtonRequests_OnClick(object sender, RoutedEventArgs e)
         {
-            WindowRequests windowRequests=new WindowRequests();
+            WindowRequests windowRequests = new WindowRequests();
             windowRequests.Show();
+        }
+
+        private void RibbonButtonAnalyzeRequests_OnClick(object sender, RoutedEventArgs e)
+        {
+            Thread thread = new Thread(AnalyzeRequests);
+            thread.Start();
+        }
+
+        private void AnalyzeRequests()
+        {
+            if (PartsCollection.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var part in PartsCollection)
+            {
+                if (part.ResolutionPartNo != null)
+                {
+                    var requestsResolutionPartNo = Entities.Requests.Where(x => x.EntranceDate == null & x.ResolutionPartNo == part.ResolutionPartNo);
+                    int qtyResolutionPartNo = Enumerable.Sum(requestsResolutionPartNo, request => request.Qty);
+                    part.PendingRequestsResolutionPartNo = qtyResolutionPartNo;
+                }
+
+                if (part.PartNo != null)
+                {
+                    var requestsPartNo = Entities.Requests.Where(x => x.EntranceDate == null & x.PartNo == part.PartNo);
+                    int qtyPartNo = Enumerable.Sum(requestsPartNo, request => request.Qty);
+                    part.PendingRequestsPartNo = qtyPartNo;
+                }
+
+            }
         }
     }
 }

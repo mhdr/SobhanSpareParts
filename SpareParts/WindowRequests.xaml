@@ -1,7 +1,8 @@
 ﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="SpareParts.WindowRequests"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="WindowRequests" Height="300" Width="300" Loaded="WindowRequests_OnLoaded">
+        Title="WindowRequests" Height="300" Width="300" Loaded="WindowRequests_OnLoaded"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>
         <CollectionViewSource x:Key="RequestsSource"/>
     </Window.Resources>
@@ -41,49 +42,49 @@
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding RequestId}"
-                        MinWidth="400" Header="Id" HeaderTextAlignment="Center">
+                        MinWidth="100" Header="Id" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding ResolutionPartNo}"
-                        MinWidth="400" Header="Resolution" HeaderTextAlignment="Center">
+                        MinWidth="100" Header="Resolution" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartNo}"
-                        MinWidth="400" Header="Part No" HeaderTextAlignment="Center">
+                        MinWidth="100" Header="Part No" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartNoOriginal}"
-                        MinWidth="400" Header="Part No Original" HeaderTextAlignment="Center">
+                        MinWidth="100" Header="Part No Original" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding RequestDate}"
-                        MinWidth="400" Header="Request Date" HeaderTextAlignment="Center">
+                        MinWidth="150" Header="Request Date" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding Qty}"
-                        MinWidth="400" Header="Qty" HeaderTextAlignment="Center">
+                        MinWidth="100" Header="Qty" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding EntranceDate}"
-                        MinWidth="400" Header="Entrance Date" HeaderTextAlignment="Center">
+                        MinWidth="150" Header="Entrance Date" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding Description}"
-                        MinWidth="400" Header="Description" HeaderTextAlignment="Center">
+                        MinWidth="200" Header="Description" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>

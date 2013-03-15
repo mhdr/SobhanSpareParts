@@ -84,6 +84,11 @@
                         <telerik:RadRibbonButton Name="RibbonButtonRequests" Content="Requests" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonRequests_OnClick"/>
                     </telerik:RadRibbonGroup>
+
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonButton Name="RibbonButtonAnalyzeRequests" Content="Analyze" MinWidth="75" HorizontalContentAlignment="Center"
+                                                 Click="RibbonButtonAnalyzeRequests_OnClick"/>
+                    </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
             </telerik:RadRibbonView>
 
@@ -142,6 +147,18 @@
                         TextAlignment="Center"
                         DataMemberBinding="{Binding MachineName}"
                         MinWidth="100" Header="Machine" HeaderTextAlignment="Center">
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        TextAlignment="Center"
+                        DataMemberBinding="{Binding PendingRequestsResolutionPartNo}"
+                        MinWidth="200" Header="Pending Requests - Resolution Part No" HeaderTextAlignment="Center">
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        TextAlignment="Center"
+                        DataMemberBinding="{Binding PendingRequestsPartNo}"
+                        MinWidth="200" Header="Pending Requests - Part No" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
