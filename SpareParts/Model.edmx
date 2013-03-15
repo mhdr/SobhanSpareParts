@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SparePartsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SparePartsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SparePartsModelStoreContainer">
           <EntitySet Name="Brands" EntityType="SparePartsModel.Store.Brands" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Machines" EntityType="SparePartsModel.Store.Machines" store:Type="Tables" Schema="dbo" />
@@ -54,7 +54,7 @@
           <Key>
             <PropertyRef Name="RequestId" />
           </Key>
-          <Property Name="RequestId" Type="int" Nullable="false" />
+          <Property Name="RequestId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ResolutionPartNo" Type="nvarchar" MaxLength="50" />
           <Property Name="PartNo" Type="nvarchar" MaxLength="50" />
           <Property Name="PartNoOriginal" Type="nvarchar" MaxLength="50" />
@@ -88,7 +88,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SparePartsModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -96,89 +97,89 @@
           <EntitySet Name="Brands" EntityType="SparePartsModel.Brand" />
           <EntitySet Name="Machines" EntityType="SparePartsModel.Machine" />
           <EntitySet Name="Parts" EntityType="SparePartsModel.Part" />
+          <EntitySet Name="Requests" EntityType="SparePartsModel.Request" />
           <AssociationSet Name="FK_Parts_Brands" Association="SparePartsModel.FK_Parts_Brands">
-            <End Role="Brand" EntitySet="Brands" />
-            <End Role="Part" EntitySet="Parts" />
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Parts" EntitySet="Parts" />
           </AssociationSet>
           <AssociationSet Name="FK_Parts_Machines" Association="SparePartsModel.FK_Parts_Machines">
-            <End Role="Machine" EntitySet="Machines" />
-            <End Role="Part" EntitySet="Parts" />
+            <End Role="Machines" EntitySet="Machines" />
+            <End Role="Parts" EntitySet="Parts" />
           </AssociationSet>
-          <EntitySet Name="Requests" EntityType="SparePartsModel.Request" />
         </EntityContainer>
         <EntityType Name="Brand">
           <Key>
             <PropertyRef Name="BrandId" />
           </Key>
-          <Property Type="Int32" Name="BrandId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="BrandName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Binary" Name="TimeStamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Parts" Relationship="SparePartsModel.FK_Parts_Brands" FromRole="Brand" ToRole="Part" />
+          <Property Name="BrandId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Parts" Relationship="SparePartsModel.FK_Parts_Brands" FromRole="Brands" ToRole="Parts" />
         </EntityType>
         <EntityType Name="Machine">
           <Key>
             <PropertyRef Name="MachineId" />
           </Key>
-          <Property Type="Int32" Name="MachineId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="MachineName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Binary" Name="TimeStamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Parts" Relationship="SparePartsModel.FK_Parts_Machines" FromRole="Machine" ToRole="Part" />
+          <Property Name="MachineId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="MachineName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Parts" Relationship="SparePartsModel.FK_Parts_Machines" FromRole="Machines" ToRole="Parts" />
         </EntityType>
         <EntityType Name="Part">
           <Key>
             <PropertyRef Name="PartId" />
           </Key>
-          <Property Type="Int32" Name="PartId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Location" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="TagName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ResolutionPartNo" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PartNo" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PartName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PartNoOrignal" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="BrandId" />
-          <Property Type="Int32" Name="MachineId" />
-          <Property Type="Binary" Name="TimeStamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Brand" Relationship="SparePartsModel.FK_Parts_Brands" FromRole="Part" ToRole="Brand" />
-          <NavigationProperty Name="Machine" Relationship="SparePartsModel.FK_Parts_Machines" FromRole="Part" ToRole="Machine" />
+          <Property Name="PartId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TagName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ResolutionPartNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PartNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PartName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PartNoOrignal" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="BrandId" Type="Int32" />
+          <Property Name="MachineId" Type="Int32" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Brand" Relationship="SparePartsModel.FK_Parts_Brands" FromRole="Parts" ToRole="Brands" />
+          <NavigationProperty Name="Machine" Relationship="SparePartsModel.FK_Parts_Machines" FromRole="Parts" ToRole="Machines" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ResolutionPartNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PartNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PartNoOriginal" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="EntranceDate" Type="DateTime" Precision="7" />
+          <Property Name="Description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
         </EntityType>
         <Association Name="FK_Parts_Brands">
-          <End Type="SparePartsModel.Brand" Role="Brand" Multiplicity="0..1" />
-          <End Type="SparePartsModel.Part" Role="Part" Multiplicity="*" />
+          <End Role="Brands" Type="SparePartsModel.Brand" Multiplicity="0..1" />
+          <End Role="Parts" Type="SparePartsModel.Part" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Brand">
+            <Principal Role="Brands">
               <PropertyRef Name="BrandId" />
             </Principal>
-            <Dependent Role="Part">
+            <Dependent Role="Parts">
               <PropertyRef Name="BrandId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Parts_Machines">
-          <End Type="SparePartsModel.Machine" Role="Machine" Multiplicity="0..1" />
-          <End Type="SparePartsModel.Part" Role="Part" Multiplicity="*" />
+          <End Role="Machines" Type="SparePartsModel.Machine" Multiplicity="0..1" />
+          <End Role="Parts" Type="SparePartsModel.Part" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Machine">
+            <Principal Role="Machines">
               <PropertyRef Name="MachineId" />
             </Principal>
-            <Dependent Role="Part">
+            <Dependent Role="Parts">
               <PropertyRef Name="MachineId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Request">
-          <Key>
-            <PropertyRef Name="RequestId" />
-          </Key>
-          <Property Type="Int32" Name="RequestId" Nullable="false" />
-          <Property Type="String" Name="ResolutionPartNo" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PartNo" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PartNoOriginal" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="RequestDate" Nullable="false" Precision="7" />
-          <Property Type="Int32" Name="Qty" Nullable="false" />
-          <Property Type="DateTime" Name="EntranceDate" Precision="7" />
-          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Binary" Name="TimeStamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -188,49 +189,49 @@
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="SparePartsModel.Brand">
               <MappingFragment StoreEntitySet="Brands">
-                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
-                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
                 <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Machines">
             <EntityTypeMapping TypeName="SparePartsModel.Machine">
               <MappingFragment StoreEntitySet="Machines">
-                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
-                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
                 <ScalarProperty Name="MachineId" ColumnName="MachineId" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Parts">
             <EntityTypeMapping TypeName="SparePartsModel.Part">
               <MappingFragment StoreEntitySet="Parts">
-                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
-                <ScalarProperty Name="MachineId" ColumnName="MachineId" />
-                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
-                <ScalarProperty Name="PartNoOrignal" ColumnName="PartNoOrignal" />
-                <ScalarProperty Name="PartName" ColumnName="PartName" />
-                <ScalarProperty Name="PartNo" ColumnName="PartNo" />
-                <ScalarProperty Name="ResolutionPartNo" ColumnName="ResolutionPartNo" />
-                <ScalarProperty Name="TagName" ColumnName="TagName" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="PartId" ColumnName="PartId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="ResolutionPartNo" ColumnName="ResolutionPartNo" />
+                <ScalarProperty Name="PartNo" ColumnName="PartNo" />
+                <ScalarProperty Name="PartName" ColumnName="PartName" />
+                <ScalarProperty Name="PartNoOrignal" ColumnName="PartNoOrignal" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="MachineId" ColumnName="MachineId" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Requests">
             <EntityTypeMapping TypeName="SparePartsModel.Request">
               <MappingFragment StoreEntitySet="Requests">
-                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="EntranceDate" ColumnName="EntranceDate" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-                <ScalarProperty Name="PartNoOriginal" ColumnName="PartNoOriginal" />
-                <ScalarProperty Name="PartNo" ColumnName="PartNo" />
-                <ScalarProperty Name="ResolutionPartNo" ColumnName="ResolutionPartNo" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="ResolutionPartNo" ColumnName="ResolutionPartNo" />
+                <ScalarProperty Name="PartNo" ColumnName="PartNo" />
+                <ScalarProperty Name="PartNoOriginal" ColumnName="PartNoOriginal" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="EntranceDate" ColumnName="EntranceDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

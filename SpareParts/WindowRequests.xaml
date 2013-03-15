@@ -48,22 +48,23 @@
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding ResolutionPartNo}"
-                        MinWidth="100" Header="Resolution" HeaderTextAlignment="Center">
+                        MinWidth="150" Header="Resolution" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartNo}"
-                        MinWidth="100" Header="Part No" HeaderTextAlignment="Center">
+                        MinWidth="150" Header="Part No" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartNoOriginal}"
-                        MinWidth="100" Header="Part No Original" HeaderTextAlignment="Center">
+                        MinWidth="200" Header="Part No Original" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
+                        DataFormatString="{} {0:dd, MMM, yyyy}"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding RequestDate}"
                         MinWidth="150" Header="Request Date" HeaderTextAlignment="Center">
@@ -76,6 +77,7 @@
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
+                        DataFormatString="{} {0:dd, MMM, yyyy}"                        
                         TextAlignment="Center"
                         DataMemberBinding="{Binding EntranceDate}"
                         MinWidth="150" Header="Entrance Date" HeaderTextAlignment="Center">
@@ -84,7 +86,7 @@
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding Description}"
-                        MinWidth="200" Header="Description" HeaderTextAlignment="Center">
+                        MinWidth="300" Header="Description" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>

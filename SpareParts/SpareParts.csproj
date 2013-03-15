@@ -249,28 +249,6 @@
     <Compile Include="Lib\PartWithNotify.cs" />
     <Compile Include="Lib\RequestsObservableCollection.cs" />
     <Compile Include="Lib\RequestWithNotify.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Request.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WindowEditPart.xaml.cs">
-      <DependentUpon>WindowEditPart.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WindowEditMachine.xaml.cs">
-      <DependentUpon>WindowEditMachine.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WindowInsertMachine.xaml.cs">
-      <DependentUpon>WindowInsertMachine.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WindowInsertPart.xaml.cs">
-      <DependentUpon>WindowInsertPart.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WindowMachines.xaml.cs">
-      <DependentUpon>WindowMachines.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WindowEditBrand.xaml.cs">
-      <DependentUpon>WindowEditBrand.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Machine.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -291,6 +269,31 @@
     </Compile>
     <Compile Include="Part.cs">
       <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Request.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WindowEditPart.xaml.cs">
+      <DependentUpon>WindowEditPart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowEditMachine.xaml.cs">
+      <DependentUpon>WindowEditMachine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowInsertMachine.xaml.cs">
+      <DependentUpon>WindowInsertMachine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowInsertPart.xaml.cs">
+      <DependentUpon>WindowInsertPart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowInsertRequest.xaml.cs">
+      <DependentUpon>WindowInsertRequest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowMachines.xaml.cs">
+      <DependentUpon>WindowMachines.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowEditBrand.xaml.cs">
+      <DependentUpon>WindowEditBrand.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowBrands.xaml.cs">
       <DependentUpon>WindowBrands.xaml</DependentUpon>
@@ -368,6 +371,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WindowInsertPart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowInsertRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

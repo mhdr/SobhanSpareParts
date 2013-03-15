@@ -49,7 +49,11 @@ namespace SpareParts
 
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
-
+            WindowInsertRequest windowInsertRequest=new WindowInsertRequest();
+            windowInsertRequest.Entities = Entities;
+            windowInsertRequest.RequestsCollection = RequestsCollection;
+            windowInsertRequest.View = View;
+            windowInsertRequest.Show();
         }
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)

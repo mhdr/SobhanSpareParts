@@ -46,6 +46,7 @@ namespace SpareParts.Lib
             Request request=new Request();
             request.ResolutionPartNo = item.ResolutionPartNo;
             request.PartNo = item.PartNo;
+            request.PartNoOriginal = item.PartNoOriginal;
             request.RequestDate = item.RequestDate;
             request.Qty = item.Qty;
             request.EntranceDate = item.EntranceDate;
