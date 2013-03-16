@@ -256,14 +256,14 @@ namespace SpareParts
 
             foreach (var part in PartsCollection)
             {
-                if (part.ResolutionPartNo != null)
+                if (!string.IsNullOrEmpty(part.ResolutionPartNo))
                 {
                     var requestsResolutionPartNo = Entities.Requests.Where(x => x.EntranceDate == null & x.ResolutionPartNo == part.ResolutionPartNo);
                     int qtyResolutionPartNo = Enumerable.Sum(requestsResolutionPartNo, request => request.Qty);
                     part.PendingRequestsResolutionPartNo = qtyResolutionPartNo;
                 }
 
-                if (part.PartNo != null)
+                if (!string.IsNullOrEmpty(part.PartNo))
                 {
                     var requestsPartNo = Entities.Requests.Where(x => x.EntranceDate == null & x.PartNo == part.PartNo);
                     int qtyPartNo = Enumerable.Sum(requestsPartNo, request => request.Qty);

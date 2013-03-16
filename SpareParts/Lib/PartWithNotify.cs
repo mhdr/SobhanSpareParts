@@ -173,7 +173,7 @@ namespace SpareParts.Lib
         private string _brandName;
         private string _machineName;
 
-        private int _pendingRequestsResolutionPartNo = -1;
-        private int _pendingRequestsPartNo = -1;
+        private int _pendingRequestsResolutionPartNo;
+        private int _pendingRequestsPartNo;
     }
 }
