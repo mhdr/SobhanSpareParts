@@ -28,7 +28,7 @@
     <UpdateUrl>\\RS\Storage\Department\Technical\Public\Ramezani\SpareParts\</UpdateUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationRevision>16</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -241,6 +241,9 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="WindowEditRequest.xaml.cs">
+      <DependentUpon>WindowEditRequest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lib\BrandsObservableCollection.cs" />
     <Compile Include="Lib\BrandWithINotify.cs" />
     <Compile Include="Lib\MachinesObservableCollection.cs" />
@@ -358,6 +361,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="WindowEditRequest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WindowEditPart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

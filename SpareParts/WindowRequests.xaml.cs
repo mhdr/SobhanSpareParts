@@ -58,7 +58,20 @@ namespace SpareParts
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
         {
+            if (View.CurrentItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
 
+            WindowEditRequest windowEditRequest=new WindowEditRequest();
+            windowEditRequest.Entities = Entities;
+            windowEditRequest.RequestsCollection = RequestsCollection;
+            windowEditRequest.View = View;
+            windowEditRequest.Index = View.CurrentPosition;
+            windowEditRequest.RequestToEdit = (RequestWithNotify) View.CurrentItem;
+            windowEditRequest.Show();
         }
 
         private void RibbonButtonDelete_OnClick(object sender, RoutedEventArgs e)
@@ -95,7 +108,7 @@ namespace SpareParts
                                select request;
 
             RequestsCollection = new RequestsObservableCollection(requestQuery.ToList(), Entities);
-            CollectionViewSource requestSource = (CollectionViewSource) FindResource("RequestsSource");
+            CollectionViewSource requestSource = (CollectionViewSource)FindResource("RequestsSource");
             requestSource.Source = RequestsCollection;
             View = (ListCollectionView) requestSource.View;
         }
