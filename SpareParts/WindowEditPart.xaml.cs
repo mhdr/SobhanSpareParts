@@ -161,6 +161,8 @@ namespace SpareParts
             TextBoxPartNoOrignal.Text = "";
             ComboBoxMachine.SelectedIndex = -1;
             ComboBoxBrand.SelectedIndex = -1;
+
+            TextBoxPartNo.Focus();
         }
 
         private void ShowMessageInStatusbar(string msg)
