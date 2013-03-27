@@ -87,14 +87,13 @@ namespace SpareParts
                 LoadPartPartial(loadedPart);
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part loaded");
+                TextBoxLocation.Focus();
             }
             else
             {
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part no does not exist");
             }
-
-            TextBoxLocation.Focus();
         }
 
         private void LoadPartPartial(Part part)
@@ -212,14 +211,13 @@ namespace SpareParts
                 LoadFull(loadedPart);
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part loaded");
+                TextBoxLocation.Focus();
             }
             else
             {
                 ClearStatusbar();
                 ShowMessageInStatusbar("Part no does not exist");
             }
-
-            TextBoxLocation.Focus();
         }
 
         private void ButtonLoadLastEntry_OnClick(object sender, RoutedEventArgs e)
