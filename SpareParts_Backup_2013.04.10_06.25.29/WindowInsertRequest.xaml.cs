@@ -16,17 +16,15 @@ using SpareParts.Lib;
 namespace SpareParts
 {
     /// <summary>
-    /// Interaction logic for WindowEditRequest.xaml
+    /// Interaction logic for WindowInsertRequest.xaml
     /// </summary>
-    public partial class WindowEditRequest : Window
+    public partial class WindowInsertRequest : Window
     {
         private SparePartsEntities _entities;
         private RequestsObservableCollection _requestsCollection;
         private ListCollectionView _view;
-        private RequestWithNotify _requestToEdit;
-        private int _index;
 
-        public WindowEditRequest()
+        public WindowInsertRequest()
         {
             InitializeComponent();
         }
@@ -47,18 +45,6 @@ namespace SpareParts
         {
             get { return _view; }
             set { _view = value; }
-        }
-
-        public RequestWithNotify RequestToEdit
-        {
-            get { return _requestToEdit; }
-            set { _requestToEdit = value; }
-        }
-
-        public int Index
-        {
-            get { return _index; }
-            set { _index = value; }
         }
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
@@ -84,36 +70,27 @@ namespace SpareParts
                 return;
             }
 
-            RequestToEdit.ResolutionPartNo = TextBoxResolutionPartNo.Text;
-            RequestToEdit.PartNo = TextBoxPartNo.Text;
-            RequestToEdit.PartNoOriginal = TextBoxPartNoOriginal.Text;
-            RequestToEdit.RequestDate = (DateTime)DatePickerRequestDate.SelectedValue;
-            RequestToEdit.Qty = (int)NumericUpDownQty.Value;
-            RequestToEdit.EntranceDate = DatePickerEntranceDate.SelectedValue;
-            RequestToEdit.Description = TextBoxDescription.Text;
-            RequestToEdit.RequestStatus = (RequestStatus)ComboBoxRequestStatus.SelectedIndex;
-            var result = RequestsCollection.Update(Index, RequestToEdit);
+            RequestWithNotify requestWithNotify=new RequestWithNotify();
+            requestWithNotify.ResolutionPartNo = TextBoxResolutionPartNo.Text;
+            requestWithNotify.PartNo = TextBoxPartNo.Text;
+            requestWithNotify.PartNoOriginal = TextBoxPartNoOriginal.Text;
+            requestWithNotify.RequestDate = (DateTime) DatePickerRequestDate.SelectedValue;
+            requestWithNotify.Qty = (int) NumericUpDownQty.Value;
+            requestWithNotify.EntranceDate = DatePickerEntranceDate.SelectedValue;
+            requestWithNotify.Description = TextBoxDescription.Text;
+
+            requestWithNotify.RequestStatus = (RequestStatus) ComboBoxRequestStatus.SelectedIndex;
+
+            var result= RequestsCollection.AddNew(0, requestWithNotify);
 
             if (result)
             {
-                ShowMessageInStatusbar("request saved");
+                ShowMessageInStatusbar("new requestd added");
             }
             else
             {
                 ShowMessageInStatusbar("Failed");
             }
-        }
-
-        private void LoadRequest(RequestWithNotify item)
-        {
-            TextBoxResolutionPartNo.Text = item.ResolutionPartNo;
-            TextBoxPartNo.Text = item.PartNo;
-            TextBoxPartNoOriginal.Text = item.ResolutionPartNo;
-            DatePickerRequestDate.SelectedValue = item.RequestDate;
-            NumericUpDownQty.Value = item.Qty;
-            DatePickerEntranceDate.SelectedValue = item.EntranceDate;
-            TextBoxDescription.Text = item.Description;
-            ComboBoxRequestStatus.SelectedIndex = (int) item.RequestStatus;
         }
 
         private void ButtonClear_OnClick(object sender, RoutedEventArgs e)
@@ -122,7 +99,7 @@ namespace SpareParts
             TextBoxPartNo.Text = null;
             TextBoxPartNoOriginal.Text = null;
             DatePickerRequestDate.SelectedValue = null;
-            NumericUpDownQty.Value = 0;
+            NumericUpDownQty.Value = null;
             DatePickerEntranceDate.SelectedValue = null;
             TextBoxDescription.Text = null;
         }
@@ -135,11 +112,6 @@ namespace SpareParts
         private void ClearStatusbar()
         {
             StatusBar1.Items.Clear();
-        }
-
-        private void WindowEditRequest_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            LoadRequest(this.RequestToEdit);
         }
     }
 }

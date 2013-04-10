@@ -16,24 +16,46 @@
             <telerik:RadRibbonView Name="RibbonView1" DockPanel.Dock="Top" HorizontalAlignment="Stretch" ApplicationName="Spare Parts">
                 <telerik:RadRibbonTab Header="Home" Name="RibbonTabHome" MinWidth="70" HorizontalContentAlignment="Center">
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonAdd" Content="Add" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonAdd" Content="Add" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonAdd_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonEdit" Content="Edit" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonEdit" Content="Edit" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonEdit_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonDelete" Content="Delete" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonDelete" Content="Delete" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonDelete_OnClick"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
                 
+                <telerik:RadRibbonTab Header="Status" Name="RadRibbonTabStatus" MinWidth="70" HorizontalContentAlignment="Center">
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonToggleButton Name="RibbonToggleButtonInitialize" Content="Initialize" 
+                                                       MinWidth="75" HorizontalContentAlignment="Center"
+                                                       Click="RibbonToggleButtonInitialize_OnClick"/>
+                    </telerik:RadRibbonGroup>
+
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonToggleButton Name="RibbonToggleButtonPending" Content="Pending" 
+                                                       MinWidth="75" HorizontalContentAlignment="Center"
+                                                       Click="RibbonToggleButtonPending_OnClick"/>
+                    </telerik:RadRibbonGroup>
+
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonToggleButton Name="RibbonToggleButtonInProgress" Content="In Progress" 
+                                                       MinWidth="75" HorizontalContentAlignment="Center"
+                                                       Click="RibbonToggleButtonInProgress_OnClick"/>
+                    </telerik:RadRibbonGroup>
+
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonToggleButton Name="RibbonToggleButtonCompleted" Content="Completed" 
+                                                       MinWidth="75" HorizontalContentAlignment="Center"
+                                                       Click="RibbonToggleButtonCompleted_OnClick"/>
+                    </telerik:RadRibbonGroup>
+                </telerik:RadRibbonTab>
             </telerik:RadRibbonView>
 
             <telerik:RadGridView Name="GridViewRequests" HorizontalAlignment="Stretch" IsSynchronizedWithCurrentItem="True"
@@ -41,7 +63,8 @@
                                  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                  EnableColumnVirtualization="False" EnableRowVirtualization="True"
                                  RowDetailsVisibilityMode="Collapsed" HorizontalContentAlignment="Stretch" ShowGroupPanel="True" 
-                                  ItemsSource="{Binding Source={StaticResource RequestsSource}}">
+                                  ItemsSource="{Binding Source={StaticResource RequestsSource}}"
+                                 SelectionChanged="GridViewRequests_OnSelectionChanged">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"

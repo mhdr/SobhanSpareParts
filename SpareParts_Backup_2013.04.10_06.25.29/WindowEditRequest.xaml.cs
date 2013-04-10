@@ -122,7 +122,7 @@ namespace SpareParts
             TextBoxPartNo.Text = null;
             TextBoxPartNoOriginal.Text = null;
             DatePickerRequestDate.SelectedValue = null;
-            NumericUpDownQty.Value = 0;
+            NumericUpDownQty.Value = null;
             DatePickerEntranceDate.SelectedValue = null;
             TextBoxDescription.Text = null;
         }

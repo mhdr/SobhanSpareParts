@@ -16,38 +16,32 @@
             <telerik:RadRibbonView Name="RibbonView1" DockPanel.Dock="Top" HorizontalAlignment="Stretch" ApplicationName="Spare Parts">
                 <telerik:RadRibbonTab Header="Home" Name="RibbonTabHome" MinWidth="70" HorizontalContentAlignment="Center">
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonAdd" Content="Add" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonAdd" Content="Add" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonAdd_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonEdit" Content="Edit" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonEdit" Content="Edit" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonEdit_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonDelete" Content="Delete" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonDelete" Content="Delete" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonDelete_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonBrands" Content="Brands" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonBrands" Content="Brands" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonBrands_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonMachines" Content="Machines" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonMachines" Content="Machines" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonMachines_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonRefresh" Content="Refresh" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonRefresh" Content="Refresh" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonRefresh_OnClick"/>
                     </telerik:RadRibbonGroup>
 
@@ -55,76 +49,45 @@
 
                 <telerik:RadRibbonTab Header="Copy" Name="RibbonTabCopy" MinWidth="70" HorizontalContentAlignment="Center">
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonPartNo" Content="Part no" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonPartNo" Content="Part no" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonPartNo_OnClick"/>
                     </telerik:RadRibbonGroup>
-
+                    
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonLocation" Content="Location" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonLocation" Content="Location" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonLocation_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonTagName" Content="Tag Name" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonTagName" Content="Tag Name" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonTagName_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonResolutionPartNo" Content="Resolution Part no" MinWidth="120" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonResolutionPartNo" Content="Resolution Part no" MinWidth="120" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonResolutionPartNo_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonPartName" Content="Part Name" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonPartName" Content="Part Name" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonPartName_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonPartNoOrignal" Content="Orignal Part no" MinWidth="110" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonPartNoOrignal" Content="Orignal Part no" MinWidth="110" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonPartNoOrignal_OnClick"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
 
                 <telerik:RadRibbonTab Header="Requests" Name="RibbonTabRequests" MinWidth="70" HorizontalContentAlignment="Center">
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonRequests" Content="Requests" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonRequests" Content="Requests" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonRequests_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonAddRequest" Content="Add" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                                 Click="RibbonButtonAddRequest_OnClick"/>
-                    </telerik:RadRibbonGroup>
-
-                    <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonAnalyzeRequests" Content="Analyze" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonAnalyzeRequests" Content="Analyze" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonAnalyzeRequests_OnClick"/>
-                    </telerik:RadRibbonGroup>
-
-                    <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonDropDownButton Content="Filter" MinWidth="75">
-                            <telerik:RadRibbonDropDownButton.DropDownContent>
-                                <telerik:RadContextMenu>
-                                    <telerik:RadMenuItem Header="Resolution Part No" Name="MenuItemFilterByResolutionPartNo"
-                                                     Click="MenuItemFilterByResolutionPartNo_OnClick"/>
-
-                                    <telerik:RadMenuItem Header="Part No" Name="MenuItemFilterByPartNo"
-                                                     Click="MenuItemFilterByPartNo_OnClick"/>
-
-                                    <telerik:RadMenuItem Header="Original Part No" Name="MenuItemFilterByPartNoOriginal"
-                                                     Click="MenuItemFilterByPartNoOriginal_OnClick"/>
-                                </telerik:RadContextMenu>
-                            </telerik:RadRibbonDropDownButton.DropDownContent>
-                        </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
             </telerik:RadRibbonView>

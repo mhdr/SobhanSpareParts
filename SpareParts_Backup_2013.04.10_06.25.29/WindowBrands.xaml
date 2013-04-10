@@ -17,20 +17,17 @@
             <telerik:RadRibbonView Name="RibbonView1" DockPanel.Dock="Top" HorizontalAlignment="Stretch" ApplicationName="Spare Parts">
                 <telerik:RadRibbonTab Header="Home" Name="RibbonTabHome" MinWidth="70" HorizontalContentAlignment="Center">
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonAdd" Content="Add" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonAdd" Content="Add" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonAdd_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonEdit" Content="Edit" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonEdit" Content="Edit" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonEdit_OnClick"/>
                     </telerik:RadRibbonGroup>
 
                     <telerik:RadRibbonGroup>
-                        <telerik:RadRibbonButton Name="RibbonButtonDelete" Content="Delete" MinWidth="75" 
-                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        <telerik:RadRibbonButton Name="RibbonButtonDelete" Content="Delete" MinWidth="75" HorizontalContentAlignment="Center"
                                                  Click="RibbonButtonDelete_OnClick"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>

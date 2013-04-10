@@ -23,6 +23,9 @@ namespace SpareParts
         private SparePartsEntities _entities;
         private RequestsObservableCollection _requestsCollection;
         private ListCollectionView _view;
+        private string _partNo;
+        private string _resolutionPartNo;
+        private string _partNoOrignal;
 
         public WindowInsertRequest()
         {
@@ -45,6 +48,24 @@ namespace SpareParts
         {
             get { return _view; }
             set { _view = value; }
+        }
+
+        public string PartNo
+        {
+            get { return _partNo; }
+            set { _partNo = value; }
+        }
+
+        public string ResolutionPartNo
+        {
+            get { return _resolutionPartNo; }
+            set { _resolutionPartNo = value; }
+        }
+
+        public string PartNoOrignal
+        {
+            get { return _partNoOrignal; }
+            set { _partNoOrignal = value; }
         }
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
@@ -99,7 +120,7 @@ namespace SpareParts
             TextBoxPartNo.Text = null;
             TextBoxPartNoOriginal.Text = null;
             DatePickerRequestDate.SelectedValue = null;
-            NumericUpDownQty.Value = null;
+            NumericUpDownQty.Value = 0;
             DatePickerEntranceDate.SelectedValue = null;
             TextBoxDescription.Text = null;
         }
@@ -112,6 +133,13 @@ namespace SpareParts
         private void ClearStatusbar()
         {
             StatusBar1.Items.Clear();
+        }
+
+        private void WindowInsertRequest_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            TextBoxPartNo.Text = this.PartNo;
+            TextBoxPartNoOriginal.Text = this.PartNoOrignal;
+            TextBoxResolutionPartNo.Text = this.ResolutionPartNo;
         }
     }
 }

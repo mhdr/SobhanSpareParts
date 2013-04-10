@@ -24,13 +24,6 @@ namespace SpareParts
         private SparePartsEntities _entities = new SparePartsEntities();
         private RequestsObservableCollection _requestsCollection;
         private ListCollectionView _view;
-        public event EventHandler WindowLoaded;
-
-        protected virtual void OnWindowLoaded()
-        {
-            EventHandler handler = WindowLoaded;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
 
         public WindowRequests()
         {
@@ -57,30 +50,12 @@ namespace SpareParts
 
         private void RibbonButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            OpenWindowInsertRequest();
-        }
-
-        public void OpenWindowInsertRequest()
-        {
             WindowInsertRequest windowInsertRequest = new WindowInsertRequest();
             windowInsertRequest.Entities = Entities;
             windowInsertRequest.RequestsCollection = RequestsCollection;
             windowInsertRequest.View = View;
             windowInsertRequest.Show();
         }
-
-        public void OpenWindowInsertRequest(PartWithNotify part)
-        {
-            WindowInsertRequest windowInsertRequest = new WindowInsertRequest();
-            windowInsertRequest.Entities = Entities;
-            windowInsertRequest.RequestsCollection = RequestsCollection;
-            windowInsertRequest.View = View;
-            windowInsertRequest.PartNo = part.PartNo;
-            windowInsertRequest.PartNoOrignal = part.PartNoOrignal;
-            windowInsertRequest.ResolutionPartNo = part.ResolutionPartNo;
-            windowInsertRequest.Show();
-        }
-
 
         private void RibbonButtonEdit_OnClick(object sender, RoutedEventArgs e)
         {
@@ -125,7 +100,6 @@ namespace SpareParts
         private void WindowRequests_OnLoaded(object sender, RoutedEventArgs e)
         {
             BindGridViewRequests();
-            OnWindowLoaded();
         }
 
         private void BindGridViewRequests()
@@ -150,28 +124,85 @@ namespace SpareParts
             StatusBar1.Items.Clear();
         }
 
-        public void FilterPartNo(string partNo)
+        private void RibbonToggleButtonInitialize_OnClick(object sender, RoutedEventArgs e)
         {
-            var partNoColumn = this.GridViewRequests.Columns["PartNo"];
-            partNoColumn.ColumnFilterDescriptor.Clear();
-            var partNoFilter = partNoColumn.ColumnFilterDescriptor;
-            partNoFilter.DistinctFilter.AddDistinctValue(partNo);
+            RequestWithNotify requestWithNotify = (RequestWithNotify) View.CurrentItem;
+            requestWithNotify.RequestStatus=RequestStatus.Initialize;
+            RequestsCollection.Update(View.CurrentPosition, requestWithNotify);
+
+            CheckToggleButtonStatus();
         }
 
-        public void FilterPartNoOriginal(string partNo)
+        private void RibbonToggleButtonPending_OnClick(object sender, RoutedEventArgs e)
         {
-            var partNoColumn = this.GridViewRequests.Columns["PartNoOriginal"];
-            partNoColumn.ColumnFilterDescriptor.Clear();
-            var partNoFilter = partNoColumn.ColumnFilterDescriptor;
-            partNoFilter.DistinctFilter.AddDistinctValue(partNo);
+            RequestWithNotify requestWithNotify = (RequestWithNotify)View.CurrentItem;
+            requestWithNotify.RequestStatus = RequestStatus.Pending;
+            RequestsCollection.Update(View.CurrentPosition, requestWithNotify);
+
+            CheckToggleButtonStatus();
         }
 
-        public void FilterResultionPartNo(string partNo)
+        private void RibbonToggleButtonInProgress_OnClick(object sender, RoutedEventArgs e)
         {
-            var partNoColumn = this.GridViewRequests.Columns["ResolutionPartNo"];
-            partNoColumn.ColumnFilterDescriptor.Clear();
-            var partNoFilter = partNoColumn.ColumnFilterDescriptor;
-            partNoFilter.DistinctFilter.AddDistinctValue(partNo);
+            RequestWithNotify requestWithNotify = (RequestWithNotify)View.CurrentItem;
+            requestWithNotify.RequestStatus = RequestStatus.InProgress;
+            RequestsCollection.Update(View.CurrentPosition, requestWithNotify);
+
+            CheckToggleButtonStatus();
+        }
+
+        private void RibbonToggleButtonCompleted_OnClick(object sender, RoutedEventArgs e)
+        {
+            RequestWithNotify requestWithNotify = (RequestWithNotify)View.CurrentItem;
+            requestWithNotify.RequestStatus = RequestStatus.Completed;
+            RequestsCollection.Update(View.CurrentPosition, requestWithNotify);
+
+            CheckToggleButtonStatus();
+        }
+
+        private void GridViewRequests_OnSelectionChanged(object sender, SelectionChangeEventArgs e)
+        {
+            CheckToggleButtonStatus();
+        }
+
+        private void CheckToggleButtonStatus()
+        {
+            RequestWithNotify request = (RequestWithNotify) View.CurrentItem;
+
+            if (request == null)
+            {
+                return;
+            }
+
+            switch (request.RequestStatus)
+            {
+                case RequestStatus.Initialize:
+                    RibbonToggleButtonInitialize.IsChecked = true;
+                    RibbonToggleButtonPending.IsChecked = false;
+                    RibbonToggleButtonInProgress.IsChecked = false;
+                    RibbonToggleButtonCompleted.IsChecked = false;
+                    break;
+
+                case RequestStatus.Pending:
+                    RibbonToggleButtonInitialize.IsChecked = false;
+                    RibbonToggleButtonPending.IsChecked = true;
+                    RibbonToggleButtonInProgress.IsChecked = false;
+                    RibbonToggleButtonCompleted.IsChecked = false;
+                    break;
+                case RequestStatus.InProgress:
+                    RibbonToggleButtonInitialize.IsChecked = false;
+                    RibbonToggleButtonPending.IsChecked = false;
+                    RibbonToggleButtonInProgress.IsChecked = true;
+                    RibbonToggleButtonCompleted.IsChecked = false;
+                    break;
+
+                case RequestStatus.Completed:
+                    RibbonToggleButtonInitialize.IsChecked = false;
+                    RibbonToggleButtonPending.IsChecked = false;
+                    RibbonToggleButtonInProgress.IsChecked = false;
+                    RibbonToggleButtonCompleted.IsChecked = true;
+                    break;
+            }
         }
     }
 }

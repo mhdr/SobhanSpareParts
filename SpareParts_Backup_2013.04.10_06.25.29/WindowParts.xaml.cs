@@ -15,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SpareParts.Lib;
-using Telerik.Windows;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
@@ -244,9 +243,8 @@ namespace SpareParts
 
         private void RibbonButtonAnalyzeRequests_OnClick(object sender, RoutedEventArgs e)
         {
-            //Thread thread = new Thread(AnalyzeRequests);
-            //thread.Start();
-            AnalyzeRequests();
+            Thread thread = new Thread(AnalyzeRequests);
+            thread.Start();
         }
 
         private void AnalyzeRequests()
@@ -272,177 +270,6 @@ namespace SpareParts
                     part.PendingRequestsPartNo = qtyPartNo;
                 }
 
-            }
-        }
-
-        private void RibbonButtonAddRequest_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (View.CurrentItem == null)
-            {
-                return;
-            }
-
-            PartWithNotify partWithNotify = (PartWithNotify)View.CurrentItem;
-            bool isWindowRequestOpen = false;
-            WindowRequests windowRequests = null;
-
-            foreach (var window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(WindowRequests))
-                {
-                    isWindowRequestOpen =true;
-                    windowRequests = (WindowRequests) window;
-                    windowRequests.Activate();
-                    windowRequests.OpenWindowInsertRequest(partWithNotify);
-                    break;
-                }
-            }
-
-            if (isWindowRequestOpen==false)
-            {
-                windowRequests = new WindowRequests();
-                windowRequests.WindowLoaded += windowRequests_WindowLoaded;
-                windowRequests.Show();
-            }
-        }
-
-        void windowRequests_WindowLoaded(object sender, EventArgs e)
-        {
-            PartWithNotify partWithNotify = (PartWithNotify)View.CurrentItem;
-            WindowRequests windowRequests = (WindowRequests) sender;
-            windowRequests.OpenWindowInsertRequest(partWithNotify);
-        }
-
-        void windowRequests_WindowLoaded_PartNoFilter(object sender, EventArgs e)
-        {
-            PartWithNotify partWithNotify = (PartWithNotify)View.CurrentItem;
-            WindowRequests windowRequests = (WindowRequests)sender;
-            windowRequests.FilterPartNo(partWithNotify.PartNo);
-        }
-
-
-        void windowRequests_WindowLoaded_FilterPartNoOriginal(object sender, EventArgs e)
-        {
-            PartWithNotify partWithNotify = (PartWithNotify)View.CurrentItem;
-            WindowRequests windowRequests = (WindowRequests)sender;
-            windowRequests.FilterPartNoOriginal(partWithNotify.PartNoOrignal);
-        }
-
-        void windowRequests_WindowLoaded_FilterResultionPartNo(object sender, EventArgs e)
-        {
-            PartWithNotify partWithNotify = (PartWithNotify)View.CurrentItem;
-            WindowRequests windowRequests = (WindowRequests)sender;
-            windowRequests.FilterResultionPartNo(partWithNotify.ResolutionPartNo);
-        }
-
-        private void MenuItemFilterByResolutionPartNo_OnClick(object sender, RadRoutedEventArgs e)
-        {
-            if (View.CurrentItem == null)
-            {
-                return;
-            }
-
-            PartWithNotify partWithNotify = (PartWithNotify)View.CurrentItem;
-
-            if (string.IsNullOrEmpty(partWithNotify.ResolutionPartNo))
-            {
-                return;
-            }
-
-            bool isWindowRequestOpen = false;
-            WindowRequests windowRequests = null;
-
-            foreach (var window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(WindowRequests))
-                {
-                    isWindowRequestOpen = true;
-                    windowRequests = (WindowRequests)window;
-                    windowRequests.FilterPartNo(partWithNotify.PartNo);
-                    windowRequests.Activate();
-                    break;
-                }
-            }
-
-            if (isWindowRequestOpen == false)
-            {
-                windowRequests = new WindowRequests();
-                windowRequests.WindowLoaded += windowRequests_WindowLoaded_FilterResultionPartNo;
-                windowRequests.Show();
-            }
-        }
-
-        private void MenuItemFilterByPartNo_OnClick(object sender, RadRoutedEventArgs e)
-        {
-            if (View.CurrentItem == null)
-            {
-                return;
-            }
-
-            PartWithNotify partWithNotify = (PartWithNotify)View.CurrentItem;
-
-            if (string.IsNullOrEmpty(partWithNotify.PartNo))
-            {
-                return;
-            }
-
-            bool isWindowRequestOpen = false;
-            WindowRequests windowRequests = null;
-
-            foreach (var window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(WindowRequests))
-                {
-                    isWindowRequestOpen = true;
-                    windowRequests = (WindowRequests)window;
-                    windowRequests.FilterPartNo(partWithNotify.PartNo);
-                    windowRequests.Activate();
-                    break;
-                }
-            }
-
-            if (isWindowRequestOpen == false)
-            {
-                windowRequests = new WindowRequests();
-                windowRequests.WindowLoaded += windowRequests_WindowLoaded_PartNoFilter;
-                windowRequests.Show();
-            }
-        }
-
-        private void MenuItemFilterByPartNoOriginal_OnClick(object sender, RadRoutedEventArgs e)
-        {
-            if (View.CurrentItem == null)
-            {
-                return;
-            }
-
-            PartWithNotify partWithNotify = (PartWithNotify)View.CurrentItem;
-
-            if (string.IsNullOrEmpty(partWithNotify.PartNoOrignal))
-            {
-                return;
-            }
-
-            bool isWindowRequestOpen = false;
-            WindowRequests windowRequests = null;
-
-            foreach (var window in Application.Current.Windows)
-            {
-                if (window.GetType() == typeof(WindowRequests))
-                {
-                    isWindowRequestOpen = true;
-                    windowRequests = (WindowRequests)window;
-                    windowRequests.FilterPartNo(partWithNotify.PartNo);
-                    windowRequests.Activate();
-                    break;
-                }
-            }
-
-            if (isWindowRequestOpen == false)
-            {
-                windowRequests = new WindowRequests();
-                windowRequests.WindowLoaded += windowRequests_WindowLoaded_FilterPartNoOriginal;
-                windowRequests.Show();
             }
         }
     }
