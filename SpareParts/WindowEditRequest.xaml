@@ -1,7 +1,7 @@
 ﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="SpareParts.WindowEditRequest"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Edit Request" Height="383" Width="614" Loaded="WindowEditRequest_OnLoaded">
+        Title="Edit Request" Height="425" Width="614" Loaded="WindowEditRequest_OnLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -61,6 +61,22 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <TextBlock Text="Request Status" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <telerik:RadComboBox Name="ComboBoxRequestStatus" VerticalAlignment="Center" Width="300" Grid.Column="1"
+                                     HorizontalAlignment="Left" TabIndex="0" SelectedIndex="0">
+                    <telerik:RadComboBoxItem Content="Initialize"/>
+                    <telerik:RadComboBoxItem Content="Pending" />
+                    <telerik:RadComboBoxItem Content="In Progress"/>
+                    <telerik:RadComboBoxItem Content="Completed"/>
+                </telerik:RadComboBox>
+            </Grid>
+
+            <Grid Margin="0,5,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
                 <TextBlock Text="Qty" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <telerik:RadNumericUpDown Name="NumericUpDownQty" VerticalAlignment="Center" Width="300" Grid.Column="1" HorizontalAlignment="Left"
                                              TabIndex="0" IsInteger="True"/>
@@ -89,7 +105,7 @@
             </Grid>
 
             <StackPanel Orientation="Horizontal" Margin="0,20,0,5">
-                <telerik:RadButton Name="ButtonAdd" Content="Add" Width="70" Height="30" Margin="20,0,20,0"
+                <telerik:RadButton Name="ButtonAdd" Content="Save" Width="70" Height="30" Margin="20,0,20,0"
                                        Click="ButtonAdd_OnClick"/>
                 <telerik:RadButton Name="ButtonClear" Content="Clear" Width="70" Height="30" Margin="20,0,20,0"
                                        Click="ButtonClear_OnClick"/>

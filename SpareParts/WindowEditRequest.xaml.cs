@@ -91,6 +91,7 @@ namespace SpareParts
             RequestToEdit.Qty = (int)NumericUpDownQty.Value;
             RequestToEdit.EntranceDate = DatePickerEntranceDate.SelectedValue;
             RequestToEdit.Description = TextBoxDescription.Text;
+            RequestToEdit.RequestStatus = (RequestStatus)ComboBoxRequestStatus.SelectedIndex;
             var result = RequestsCollection.Update(Index, RequestToEdit);
 
             if (result)
@@ -112,6 +113,7 @@ namespace SpareParts
             NumericUpDownQty.Value = item.Qty;
             DatePickerEntranceDate.SelectedValue = item.EntranceDate;
             TextBoxDescription.Text = item.Description;
+            ComboBoxRequestStatus.SelectedIndex = (int) item.RequestStatus;
         }
 
         private void ButtonClear_OnClick(object sender, RoutedEventArgs e)

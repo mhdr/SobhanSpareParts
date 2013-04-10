@@ -78,6 +78,9 @@ namespace SpareParts
             requestWithNotify.Qty = (int) NumericUpDownQty.Value;
             requestWithNotify.EntranceDate = DatePickerEntranceDate.SelectedValue;
             requestWithNotify.Description = TextBoxDescription.Text;
+
+            requestWithNotify.RequestStatus = (RequestStatus) ComboBoxRequestStatus.SelectedIndex;
+
             var result= RequestsCollection.AddNew(0, requestWithNotify);
 
             if (result)
