@@ -169,6 +169,11 @@ namespace SpareParts
         {
             RequestWithNotify request = (RequestWithNotify) View.CurrentItem;
 
+            if (request == null)
+            {
+                return;
+            }
+
             switch (request.RequestStatus)
             {
                 case RequestStatus.Initialize:
