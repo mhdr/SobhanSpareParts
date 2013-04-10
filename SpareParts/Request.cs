@@ -23,5 +23,6 @@ namespace SpareParts
         public Nullable<System.DateTime> EntranceDate { get; set; }
         public string Description { get; set; }
         public byte[] TimeStamp { get; set; }
+        public int RequestStatus { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace SpareParts.Lib
         private int _qty;
         private Nullable<System.DateTime> _entranceDate;
         private string _description;
+        private RequestStatus _requestStatus;
         private byte[] _timeStamp;
 
         public int RequestId
@@ -105,6 +106,16 @@ namespace SpareParts.Lib
         {
             get { return _timeStamp; }
             set { _timeStamp = value; }
+        }
+
+        public RequestStatus RequestStatus
+        {
+            get { return _requestStatus; }
+            set
+            {
+                _requestStatus = value;
+                OnPropertyChanged();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

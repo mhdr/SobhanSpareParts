@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SparePartsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SparePartsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SparePartsModelStoreContainer">
           <EntitySet Name="Brands" EntityType="SparePartsModel.Store.Brands" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Machines" EntityType="SparePartsModel.Store.Machines" store:Type="Tables" Schema="dbo" />
@@ -61,6 +61,7 @@
           <Property Name="RequestDate" Type="datetime2" Nullable="false" />
           <Property Name="Qty" Type="int" Nullable="false" />
           <Property Name="EntranceDate" Type="datetime2" />
+          <Property Name="RequestStatus" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
@@ -88,8 +89,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SparePartsModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -155,6 +155,7 @@
           <Property Name="EntranceDate" Type="DateTime" Precision="7" />
           <Property Name="Description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
+          <Property Type="Int32" Name="RequestStatus" Nullable="false" />
         </EntityType>
         <Association Name="FK_Parts_Brands">
           <End Role="Brands" Type="SparePartsModel.Brand" Multiplicity="0..1" />
@@ -223,6 +224,7 @@
           <EntitySetMapping Name="Requests">
             <EntityTypeMapping TypeName="SparePartsModel.Request">
               <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="ResolutionPartNo" ColumnName="ResolutionPartNo" />
                 <ScalarProperty Name="PartNo" ColumnName="PartNo" />

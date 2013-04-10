@@ -35,6 +35,7 @@ namespace SpareParts.Lib
                 requestWithNotify.EntranceDate = request.EntranceDate;
                 requestWithNotify.Description = request.Description;
                 requestWithNotify.TimeStamp = request.TimeStamp;
+                requestWithNotify.RequestStatus = (RequestStatus) request.RequestStatus;
                 this.Add(requestWithNotify);
             }
 
@@ -51,6 +52,7 @@ namespace SpareParts.Lib
             request.Qty = item.Qty;
             request.EntranceDate = item.EntranceDate;
             request.Description = item.Description;
+            request.RequestStatus = (int) item.RequestStatus;
 
             Entities.Requests.Add(request);
 
@@ -92,6 +94,7 @@ namespace SpareParts.Lib
             request.Qty = item.Qty;
             request.EntranceDate = item.EntranceDate;
             request.Description = item.Description;
+            request.RequestStatus = (int) item.RequestStatus;
 
             if (Entities.SaveChanges() > 0)
             {

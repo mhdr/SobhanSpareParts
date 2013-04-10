@@ -28,7 +28,7 @@
     <UpdateUrl>\\RS\Storage\Department\Technical\Public\Ramezani\SpareParts\</UpdateUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>19</ApplicationRevision>
+    <ApplicationRevision>20</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -241,6 +241,7 @@
     <Compile Include="Brand.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Enums.cs" />
     <Compile Include="WindowEditRequest.xaml.cs">
       <DependentUpon>WindowEditRequest.xaml</DependentUpon>
     </Compile>

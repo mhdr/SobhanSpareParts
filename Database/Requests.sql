@@ -7,8 +7,9 @@
     [RequestDate] DATETIME2 NOT NULL, 
     [Qty] INT NOT NULL, 
     [EntranceDate] DATETIME2 NULL, 
+	[RequestStatus] INT NOT NULL,
     [Description] NVARCHAR(50) NULL, 
-    [TimeStamp] TIMESTAMP NOT NULL 
+    [TimeStamp] TIMESTAMP NOT NULL  
 )
 
 GO
