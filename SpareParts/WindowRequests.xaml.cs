@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using OfficeOpenXml;
 using SpareParts.Lib;
 using Telerik.Windows.Controls;
 
@@ -172,6 +174,16 @@ namespace SpareParts
             partNoColumn.ColumnFilterDescriptor.Clear();
             var partNoFilter = partNoColumn.ColumnFilterDescriptor;
             partNoFilter.DistinctFilter.AddDistinctValue(partNo);
+        }
+
+        private void RibbonButtonExcel_OnClick(object sender, RoutedEventArgs e)
+        {
+            FileInfo fileInfo=new FileInfo(@"C:\export.xls");
+            ExcelPackage excelPackage=new ExcelPackage(fileInfo);
+            var ws = excelPackage.Workbook.Worksheets.Add("Parts");
+           
+            
+            excelPackage.Save();
         }
     }
 }

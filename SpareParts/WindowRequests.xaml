@@ -34,6 +34,14 @@
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
                 
+                <telerik:RadRibbonTab Name="RibbonTabExport" Header="Export" MinWidth="70" HorizontalContentAlignment="Center">
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonButton Name="RibbonButtonExcel" Content="Excel" MinWidth="75"
+                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                 Click="RibbonButtonExcel_OnClick"/>
+                    </telerik:RadRibbonGroup>
+                </telerik:RadRibbonTab>
+                
             </telerik:RadRibbonView>
 
             <telerik:RadGridView Name="GridViewRequests" HorizontalAlignment="Stretch" IsSynchronizedWithCurrentItem="True"
