@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using SpareParts.Lib;
 using Telerik.Windows.Controls;
 
@@ -181,7 +182,7 @@ namespace SpareParts
         {
             FileInfo fileInfo = null;
             SaveFileDialog saveFileDialog=new SaveFileDialog();
-            saveFileDialog.Filter = "*.xls|*.xlsx";
+            saveFileDialog.Filter = "Excel Workbook| *.xls;*.xlsx";
             if (saveFileDialog.ShowDialog() == true)
             {
                 fileInfo=new FileInfo(saveFileDialog.FileName);
@@ -189,10 +190,22 @@ namespace SpareParts
 
             ExcelPackage excelPackage=new ExcelPackage(fileInfo);
             var ws = excelPackage.Workbook.Worksheets.Add("Parts");
-            ws.Cells["A1"].Value = "A1";
-            ws.Cells["B1"].Value = "B1";
-            ws.Cells["A1:B1"].Style.Font.Bold = true;
+            ws.View.RightToLeft = true;
+            ws.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            ws.Cells["A1"].Value = "نام قطعه";
+            ws.Cells["B1"].Value = "شماره فنی";
+            ws.Cells["C1"].Value = "شرکت سازنده";
+            ws.Cells["D1"].Value = "شماره فنی شرکت سازنده";
+            ws.Cells["E1"].Value = "دستگاه";
+            ws.Cells["F1"].Value = "تعداد";
+
+            ws.Cells["A1:F1"].Style.Font.Bold = true;
+
+
             excelPackage.Save();
+
+            
         }
     }
 }
