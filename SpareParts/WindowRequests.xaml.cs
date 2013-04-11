@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using OfficeOpenXml;
 using SpareParts.Lib;
 using Telerik.Windows.Controls;
@@ -178,11 +179,19 @@ namespace SpareParts
 
         private void RibbonButtonExcel_OnClick(object sender, RoutedEventArgs e)
         {
-            FileInfo fileInfo=new FileInfo(@"C:\export.xls");
+            FileInfo fileInfo = null;
+            SaveFileDialog saveFileDialog=new SaveFileDialog();
+            saveFileDialog.Filter = "*.xls|*.xlsx";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                fileInfo=new FileInfo(saveFileDialog.FileName);
+            }
+
             ExcelPackage excelPackage=new ExcelPackage(fileInfo);
             var ws = excelPackage.Workbook.Worksheets.Add("Parts");
-           
-            
+            ws.Cells["A1"].Value = "A1";
+            ws.Cells["B1"].Value = "B1";
+            ws.Cells["A1:B1"].Style.Font.Bold = true;
             excelPackage.Save();
         }
     }
