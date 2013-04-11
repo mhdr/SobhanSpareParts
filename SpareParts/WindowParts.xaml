@@ -89,6 +89,18 @@
                                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                                  Click="RibbonButtonPartNoOrignal_OnClick"/>
                     </telerik:RadRibbonGroup>
+
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonButton Name="RibbonButtonCopyBrand" Content="Brand" MinWidth="75" 
+                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                 Click="RibbonButtonCopyBrand_OnClick"/>
+                    </telerik:RadRibbonGroup>
+
+                    <telerik:RadRibbonGroup>
+                        <telerik:RadRibbonButton Name="RibbonButtonCopyMachine" Content="Machine" MinWidth="75" 
+                                                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                 Click="RibbonButtonCopyMachine_OnClick"/>
+                    </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
 
                 <telerik:RadRibbonTab Header="Requests" Name="RibbonTabRequests" MinWidth="70" HorizontalContentAlignment="Center">

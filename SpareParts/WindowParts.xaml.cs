@@ -478,5 +478,29 @@ namespace SpareParts
                 GridViewParts.RowDetailsVisibilityMode = GridViewRowDetailsVisibilityMode.Collapsed;
             }
         }
+
+        private void RibbonButtonCopyBrand_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            Clipboard.SetText((View.CurrentItem as PartWithNotify).BrandName);
+        }
+
+        private void RibbonButtonCopyMachine_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                ClearStatusbar();
+                ShowMessageInStatusbar("First select an item");
+                return;
+            }
+
+            Clipboard.SetText((View.CurrentItem as PartWithNotify).MachineName);
+        }
     }
 }
