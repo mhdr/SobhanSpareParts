@@ -92,6 +92,13 @@
                 </telerik:RadRibbonTab>
 
                 <telerik:RadRibbonTab Header="Requests" Name="RibbonTabRequests" MinWidth="70" HorizontalContentAlignment="Center">
+                    
+                    <telerik:RadRibbonGroup>
+                        <CheckBox Name="CheckBoxShowRequestDetails" Content="Details" MinWidth="75"
+                                  HorizontalContentAlignment="Center" VerticalAlignment="Center"
+                                  Click="CheckBoxShowRequestDetails_OnClick"/>
+                    </telerik:RadRibbonGroup>
+                    
                     <telerik:RadRibbonGroup>
                         <telerik:RadRibbonButton Name="RibbonButtonRequests" Content="Requests" MinWidth="75" 
                                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
@@ -128,77 +135,81 @@
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
             </telerik:RadRibbonView>
-
-            <telerik:RadGridView Name="GridViewParts" HorizontalAlignment="Stretch" IsSynchronizedWithCurrentItem="True"
+            
+                <telerik:RadGridView Name="GridViewParts" HorizontalAlignment="Stretch" IsSynchronizedWithCurrentItem="True"
                                  DataLoadMode="Asynchronous" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserInsertRows="False"
                                  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                  EnableColumnVirtualization="True" EnableRowVirtualization="True"
                                  RowDetailsVisibilityMode="Collapsed" HorizontalContentAlignment="Stretch" ShowGroupPanel="True"
                                  Grouping="GridViewParts_OnGrouping" ClipboardCopyMode="Cells"
-                                 ItemsSource="{Binding Source={StaticResource PartsSource}}">
-                <telerik:RadGridView.Columns>
+                                 ItemsSource="{Binding Source={StaticResource PartsSource}}"
+                                 >
+                    <telerik:RadGridView.RowDetailsTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="Bold" Margin="5,2,10,2">Resolution Part No :</TextBlock>
+                                    <TextBlock Margin="0,2" Text="{Binding PendingRequestsResolutionPartNo}"/>
+                                </StackPanel>
 
-                    <telerik:GridViewDataColumn IsReadOnly="True"
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="Bold" Margin="5,2,10,2">Part No :</TextBlock>
+                                    <TextBlock Margin="0,2" Text="{Binding PendingRequestsPartNo}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadGridView.RowDetailsTemplate>
+                    <telerik:RadGridView.Columns>
+
+                        <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding Location}"
                         MinWidth="100" Header="Location" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
+                        </telerik:GridViewDataColumn>
 
-                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding TagName}"
                         MinWidth="100" Header="Tag Name" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
+                        </telerik:GridViewDataColumn>
 
-                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding ResolutionPartNo}"
                         MinWidth="100" Header="Resolution" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
+                        </telerik:GridViewDataColumn>
 
-                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartNo}"
                         MinWidth="100" Header="Part no" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
+                        </telerik:GridViewDataColumn>
 
-                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartName}"
                         MinWidth="300" Header="Part Name" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
+                        </telerik:GridViewDataColumn>
 
-                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartNoOrignal}"
                         MinWidth="200" Header="Original Part no" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
+                        </telerik:GridViewDataColumn>
 
-                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding BrandName}"
                         MinWidth="300" Header="Brand" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
+                        </telerik:GridViewDataColumn>
 
-                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding MachineName}"
                         MinWidth="100" Header="Machine" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
-
-                    <telerik:GridViewDataColumn IsReadOnly="True"
-                        TextAlignment="Center"
-                        DataMemberBinding="{Binding PendingRequestsResolutionPartNo}"
-                        MinWidth="200" Header="Pending Requests - Resolution Part No" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
-
-                    <telerik:GridViewDataColumn IsReadOnly="True"
-                        TextAlignment="Center"
-                        DataMemberBinding="{Binding PendingRequestsPartNo}"
-                        MinWidth="200" Header="Pending Requests - Part No" HeaderTextAlignment="Center">
-                    </telerik:GridViewDataColumn>
-                </telerik:RadGridView.Columns>
-            </telerik:RadGridView>
+                        </telerik:GridViewDataColumn>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>            
         </DockPanel>
 
         <StatusBar Name="StatusBar1" DockPanel.Dock="Bottom" Height="25" Grid.Row="1" FontWeight="Bold"/>

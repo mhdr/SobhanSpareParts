@@ -256,6 +256,25 @@ namespace SpareParts
                 return;
             }
 
+            //Parallel.ForEach(PartsCollection, part =>
+            //    {
+            //        if (!string.IsNullOrEmpty(part.ResolutionPartNo))
+            //        {
+            //            var requestsResolutionPartNo = Entities.Requests.Where(x => x.EntranceDate == null & x.ResolutionPartNo == part.ResolutionPartNo);
+            //            int qtyResolutionPartNo = Enumerable.Sum(requestsResolutionPartNo, request => request.Qty);
+            //            part.PendingRequestsResolutionPartNo = qtyResolutionPartNo;
+            //        }
+
+            //        if (!string.IsNullOrEmpty(part.PartNo))
+            //        {
+            //            var requestsPartNo = Entities.Requests.Where(x => x.EntranceDate == null & x.PartNo == part.PartNo);
+            //            int qtyPartNo = Enumerable.Sum(requestsPartNo, request => request.Qty);
+            //            part.PendingRequestsPartNo = qtyPartNo;
+            //        }
+            //    });
+
+            GridViewParts.IsBusy = true;
+
             foreach (var part in PartsCollection)
             {
                 if (!string.IsNullOrEmpty(part.ResolutionPartNo))
@@ -273,6 +292,8 @@ namespace SpareParts
                 }
 
             }
+
+            GridViewParts.IsBusy = false;
         }
 
         private void RibbonButtonAddRequest_OnClick(object sender, RoutedEventArgs e)
@@ -443,6 +464,18 @@ namespace SpareParts
                 windowRequests = new WindowRequests();
                 windowRequests.WindowLoaded += windowRequests_WindowLoaded_FilterPartNoOriginal;
                 windowRequests.Show();
+            }
+        }
+
+        private void CheckBoxShowRequestDetails_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (CheckBoxShowRequestDetails.IsChecked == true)
+            {
+                GridViewParts.RowDetailsVisibilityMode = GridViewRowDetailsVisibilityMode.Visible;
+            }
+            else
+            {
+                GridViewParts.RowDetailsVisibilityMode = GridViewRowDetailsVisibilityMode.Collapsed;
             }
         }
     }
