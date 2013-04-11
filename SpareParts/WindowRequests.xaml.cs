@@ -178,17 +178,22 @@ namespace SpareParts
             partNoFilter.DistinctFilter.AddDistinctValue(partNo);
         }
 
-        private void RibbonButtonExcel_OnClick(object sender, RoutedEventArgs e)
+        private void RibbonButtonExportInitializes_OnClick(object sender, RoutedEventArgs e)
         {
             FileInfo fileInfo = null;
-            SaveFileDialog saveFileDialog=new SaveFileDialog();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Excel Workbook| *.xls;*.xlsx";
             if (saveFileDialog.ShowDialog() == true)
             {
-                fileInfo=new FileInfo(saveFileDialog.FileName);
+                fileInfo = new FileInfo(saveFileDialog.FileName);
             }
 
-            ExcelPackage excelPackage=new ExcelPackage(fileInfo);
+            if (fileInfo.Exists)
+            {
+                fileInfo.Delete();
+            }
+
+            ExcelPackage excelPackage = new ExcelPackage(fileInfo);
             var ws = excelPackage.Workbook.Worksheets.Add("Parts");
             ws.View.RightToLeft = true;
             ws.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -199,13 +204,54 @@ namespace SpareParts
             ws.Cells["D1"].Value = "شماره فنی شرکت سازنده";
             ws.Cells["E1"].Value = "دستگاه";
             ws.Cells["F1"].Value = "تعداد";
-
             ws.Cells["A1:F1"].Style.Font.Bold = true;
 
+            var requests = RequestsCollection.Where(x => x.RequestStatus == RequestStatus.Initialize);
+
+            int i = 2;
+            foreach (var requestWithNotify in requests)
+            {
+                IEnumerable<Part> parts = null;
+                Part firstPart = null;
+
+                string partNo = "";
+
+                if (requestWithNotify.PartNo.Length > 0)
+                {
+                    parts = Entities.Parts.Where(x => x.PartNo == requestWithNotify.PartNo);
+                    partNo = requestWithNotify.PartNo;
+                }
+                else if (requestWithNotify.ResolutionPartNo.Length > 0)
+                {
+                    parts = Entities.Parts.Where(x => x.ResolutionPartNo == requestWithNotify.ResolutionPartNo);
+                    partNo = requestWithNotify.ResolutionPartNo;
+                }
+                else if (requestWithNotify.PartNoOriginal.Length > 0)
+                {
+                    parts = Entities.Parts.Where(x => x.PartNoOrignal == requestWithNotify.PartNoOriginal);
+                    partNo = requestWithNotify.PartNoOriginal;
+                }
+
+                firstPart = parts.FirstOrDefault();
+
+                ws.Cells[string.Format("A{0}", i)].Value = firstPart.PartName;
+                ws.Cells[string.Format("B{0}", i)].Value = partNo;
+                ws.Cells[string.Format("C{0}", i)].Value = firstPart.Brand.BrandName;
+                ws.Cells[string.Format("D{0}", i)].Value = firstPart.PartNoOrignal;
+
+                var machines = from part in parts
+                               select part.Machine.MachineName;
+                var machinesDistinct = machines.Distinct();
+
+                string machinesComma = string.Join(",", machinesDistinct);
+
+                ws.Cells[string.Format("E{0}", i)].Value = machinesComma;
+                ws.Cells[string.Format("F{0}", i)].Value = requestWithNotify.Qty;
+                i++;
+            }
 
             excelPackage.Save();
 
-            
         }
     }
 }
