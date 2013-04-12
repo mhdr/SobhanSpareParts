@@ -467,18 +467,6 @@ namespace SpareParts
             }
         }
 
-        private void CheckBoxShowRequestDetails_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (CheckBoxShowRequestDetails.IsChecked == true)
-            {
-                GridViewParts.RowDetailsVisibilityMode = GridViewRowDetailsVisibilityMode.Visible;
-            }
-            else
-            {
-                GridViewParts.RowDetailsVisibilityMode = GridViewRowDetailsVisibilityMode.Collapsed;
-            }
-        }
-
         private void RibbonButtonCopyBrand_OnClick(object sender, RoutedEventArgs e)
         {
             if (View.CurrentItem == null)
@@ -501,6 +489,31 @@ namespace SpareParts
             }
 
             Clipboard.SetText((View.CurrentItem as PartWithNotify).MachineName);
+        }
+
+        private void RibbonToggleButtonShowDetials_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (RibbonToggleButtonShowDetials.IsChecked == true)
+            {
+                GridViewParts.RowDetailsVisibilityMode = GridViewRowDetailsVisibilityMode.Visible;
+            }
+            else
+            {
+                GridViewParts.RowDetailsVisibilityMode = GridViewRowDetailsVisibilityMode.Collapsed;
+            }
+        }
+
+        private void RibbonButtonStatistics_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                return;
+            }
+
+            WindowDetails windowDetails = new WindowDetails();
+            windowDetails.Show();
+            windowDetails.Part = (PartWithNotify)View.CurrentItem;
+            windowDetails.Calculate();
         }
     }
 }
