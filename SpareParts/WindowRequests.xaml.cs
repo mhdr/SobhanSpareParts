@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ using Microsoft.Win32;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using SpareParts.Lib;
+using Telerik.Windows;
 using Telerik.Windows.Controls;
 
 namespace SpareParts
@@ -251,6 +253,86 @@ namespace SpareParts
             }
 
             excelPackage.Save();
+        }
+
+        private void MenuItemInitialize_OnClick(object sender, RadRoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                return;
+            }
+            var requests = GridViewRequests.SelectedItems;
+
+            foreach (var request in requests)
+            {
+                RequestWithNotify requestWithNotify = (RequestWithNotify) request;
+                Request currentRequest =
+                    Entities.Requests.FirstOrDefault(x => x.RequestId == requestWithNotify.RequestId);
+                if (currentRequest != null) currentRequest.RequestStatus = (int) RequestStatus.Initialize;
+            }
+
+            Entities.SaveChanges();
+            BindGridViewRequests();
+        }
+
+        private void MenuItemPending_OnClick(object sender, RadRoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                return;
+            }
+            var requests = GridViewRequests.SelectedItems;
+
+            foreach (var request in requests)
+            {
+                RequestWithNotify requestWithNotify = (RequestWithNotify)request;
+                Request currentRequest =
+                    Entities.Requests.FirstOrDefault(x => x.RequestId == requestWithNotify.RequestId);
+                if (currentRequest != null) currentRequest.RequestStatus = (int)RequestStatus.Pending;
+            }
+
+            Entities.SaveChanges();
+            BindGridViewRequests();
+        }
+
+        private void MenuItemInProgress_OnClick(object sender, RadRoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                return;
+            }
+            var requests = GridViewRequests.SelectedItems;
+
+            foreach (var request in requests)
+            {
+                RequestWithNotify requestWithNotify = (RequestWithNotify)request;
+                Request currentRequest =
+                    Entities.Requests.FirstOrDefault(x => x.RequestId == requestWithNotify.RequestId);
+                if (currentRequest != null) currentRequest.RequestStatus = (int)RequestStatus.InProgress;
+            }
+
+            Entities.SaveChanges();
+            BindGridViewRequests();
+        }
+
+        private void MenuItemCompleted_OnClick(object sender, RadRoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                return;
+            }
+            var requests = GridViewRequests.SelectedItems;
+
+            foreach (var request in requests)
+            {
+                RequestWithNotify requestWithNotify = (RequestWithNotify)request;
+                Request currentRequest =
+                    Entities.Requests.FirstOrDefault(x => x.RequestId == requestWithNotify.RequestId);
+                if (currentRequest != null) currentRequest.RequestStatus = (int)RequestStatus.Completed;
+            }
+
+            Entities.SaveChanges();
+            BindGridViewRequests();
         }
     }
 }
