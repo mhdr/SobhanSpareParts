@@ -22,6 +22,7 @@ namespace SpareParts
         public int MachineId { get; set; }
         public string MachineName { get; set; }
         public byte[] TimeStamp { get; set; }
+        public Nullable<int> MachineCode { get; set; }
     
         public virtual ICollection<Part> Parts { get; set; }
     }

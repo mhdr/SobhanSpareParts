@@ -2,5 +2,6 @@
 (
 	[MachineId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [MachineName] NVARCHAR(50) NOT NULL, 
-    [TimeStamp] TIMESTAMP NOT NULL
+	[MachineCode] INT NULL,
+    [TimeStamp] TIMESTAMP NOT NULL, 
 )

@@ -197,16 +197,18 @@ namespace SpareParts
 
             ExcelPackage excelPackage = new ExcelPackage(fileInfo);
             var ws = excelPackage.Workbook.Worksheets.Add("Parts");
-            ws.View.RightToLeft = true;
+            //ws.View.RightToLeft = true;
             ws.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-            ws.Cells["A1"].Value = "نام قطعه";
-            ws.Cells["B1"].Value = "شماره فنی";
-            ws.Cells["C1"].Value = "شرکت سازنده";
-            ws.Cells["D1"].Value = "شماره فنی شرکت سازنده";
-            ws.Cells["E1"].Value = "دستگاه";
-            ws.Cells["F1"].Value = "تعداد";
-            ws.Cells["A1:F1"].Style.Font.Bold = true;
+            ws.Cells["A1"].Value = "Part Name";
+            ws.Cells["B1"].Value = "Part no";
+            ws.Cells["C1"].Value = "Brand";
+            ws.Cells["D1"].Value = "Original Part no";
+            ws.Cells["E1"].Value = "Machine";
+            ws.Cells["F1"].Value = "Machine Code";
+            ws.Cells["G1"].Value = "Qty";
+            
+            ws.Cells["A1:G1"].Style.Font.Bold = true;
 
             var requests = RequestsCollection.Where(x => x.RequestStatus == RequestStatus.Initialize);
 
@@ -247,8 +249,14 @@ namespace SpareParts
 
                 string machinesComma = string.Join(",", machinesDistinct);
 
+                var machinesCode = from part2 in parts
+                                   select part2.Machine.MachineCode;
+                var machinesCodeDistinct = machinesCode.Distinct();
+                string machinesCodeComma = string.Join(",", machinesCodeDistinct);
+
                 ws.Cells[string.Format("E{0}", i)].Value = machinesComma;
-                ws.Cells[string.Format("F{0}", i)].Value = requestWithNotify.Qty;
+                ws.Cells[string.Format("F{0}", i)].Value = machinesCodeComma;
+                ws.Cells[string.Format("G{0}", i)].Value = requestWithNotify.Qty;
                 i++;
             }
 

@@ -33,6 +33,7 @@
           </Key>
           <Property Name="MachineId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MachineName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="MachineCode" Type="int" />
           <Property Name="TimeStamp" Type="timestamp" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Parts">
@@ -124,6 +125,7 @@
           <Property Name="MachineName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" p1:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Parts" Relationship="SparePartsModel.FK_Parts_Machines" FromRole="Machines" ToRole="Parts" />
+          <Property Type="Int32" Name="MachineCode" />
         </EntityType>
         <EntityType Name="Part">
           <Key>
@@ -199,6 +201,7 @@
           <EntitySetMapping Name="Machines">
             <EntityTypeMapping TypeName="SparePartsModel.Machine">
               <MappingFragment StoreEntitySet="Machines">
+                <ScalarProperty Name="MachineCode" ColumnName="MachineCode" />
                 <ScalarProperty Name="MachineId" ColumnName="MachineId" />
                 <ScalarProperty Name="MachineName" ColumnName="MachineName" />
                 <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
