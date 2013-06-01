@@ -296,6 +296,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Lib\Enums.cs" />
+    <Compile Include="Lib\GridRequestsStyle.cs" />
     <Compile Include="WindowDetails.xaml.cs">
       <DependentUpon>WindowDetails.xaml</DependentUpon>
     </Compile>
@@ -340,6 +341,9 @@
     </Compile>
     <Compile Include="WindowEditMachine.xaml.cs">
       <DependentUpon>WindowEditMachine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowExportToExcel.xaml.cs">
+      <DependentUpon>WindowExportToExcel.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowInsertMachine.xaml.cs">
       <DependentUpon>WindowInsertMachine.xaml</DependentUpon>
@@ -434,6 +438,10 @@
     <Page Include="WindowEditMachine.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WindowExportToExcel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowInsertMachine.xaml">
       <Generator>MSBuild:Compile</Generator>

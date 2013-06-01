@@ -180,89 +180,6 @@ namespace SpareParts
             partNoFilter.DistinctFilter.AddDistinctValue(partNo);
         }
 
-        private void RibbonButtonExportInitializes_OnClick(object sender, RoutedEventArgs e)
-        {
-            FileInfo fileInfo = null;
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Excel Workbook| *.xls;*.xlsx";
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                fileInfo = new FileInfo(saveFileDialog.FileName);
-            }
-
-            if (fileInfo.Exists)
-            {
-                fileInfo.Delete();
-            }
-
-            ExcelPackage excelPackage = new ExcelPackage(fileInfo);
-            var ws = excelPackage.Workbook.Worksheets.Add("Parts");
-            //ws.View.RightToLeft = true;
-            ws.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            ws.Cells["A1"].Value = "Part Name";
-            ws.Cells["B1"].Value = "Part no";
-            ws.Cells["C1"].Value = "Brand";
-            ws.Cells["D1"].Value = "Original Part no";
-            ws.Cells["E1"].Value = "Machine";
-            ws.Cells["F1"].Value = "Machine Code";
-            ws.Cells["G1"].Value = "Qty";
-            
-            ws.Cells["A1:G1"].Style.Font.Bold = true;
-
-            var requests = RequestsCollection.Where(x => x.RequestStatus == RequestStatus.Initialize);
-
-            int i = 2;
-            foreach (var requestWithNotify in requests)
-            {
-                IEnumerable<Part> parts = null;
-                Part firstPart = null;
-
-                string partNo = "";
-
-                if (requestWithNotify.PartNo.Length > 0)
-                {
-                    parts = Entities.Parts.Where(x => x.PartNo == requestWithNotify.PartNo);
-                    partNo = requestWithNotify.PartNo;
-                }
-                else if (requestWithNotify.ResolutionPartNo.Length > 0)
-                {
-                    parts = Entities.Parts.Where(x => x.ResolutionPartNo == requestWithNotify.ResolutionPartNo);
-                    partNo = requestWithNotify.ResolutionPartNo;
-                }
-                else if (requestWithNotify.PartNoOriginal.Length > 0)
-                {
-                    parts = Entities.Parts.Where(x => x.PartNoOrignal == requestWithNotify.PartNoOriginal);
-                    partNo = requestWithNotify.PartNoOriginal;
-                }
-
-                firstPart = parts.FirstOrDefault();
-
-                ws.Cells[string.Format("A{0}", i)].Value = firstPart.PartName;
-                ws.Cells[string.Format("B{0}", i)].Value = partNo;
-                ws.Cells[string.Format("C{0}", i)].Value = firstPart.Brand.BrandName;
-                ws.Cells[string.Format("D{0}", i)].Value = firstPart.PartNoOrignal;
-
-                var machines = from part in parts
-                               select part.Machine.MachineName;
-                var machinesDistinct = machines.Distinct();
-
-                string machinesComma = string.Join(",", machinesDistinct);
-
-                var machinesCode = from part2 in parts
-                                   select part2.Machine.MachineCode;
-                var machinesCodeDistinct = machinesCode.Distinct();
-                string machinesCodeComma = string.Join(",", machinesCodeDistinct);
-
-                ws.Cells[string.Format("E{0}", i)].Value = machinesComma;
-                ws.Cells[string.Format("F{0}", i)].Value = machinesCodeComma;
-                ws.Cells[string.Format("G{0}", i)].Value = requestWithNotify.Qty;
-                i++;
-            }
-
-            excelPackage.Save();
-        }
-
         private void MenuItemInitialize_OnClick(object sender, RadRoutedEventArgs e)
         {
             if (View.CurrentItem == null)
@@ -341,6 +258,133 @@ namespace SpareParts
 
             Entities.SaveChanges();
             BindGridViewRequests();
+        }
+
+        private void RibbonButtonAddToExport_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                return;
+            }
+            var requests = GridViewRequests.SelectedItems;
+
+            foreach (var request in requests)
+            {
+                RequestWithNotify requestWithNotify = (RequestWithNotify)request;
+
+                int index = RequestsCollection.IndexOf(requestWithNotify);
+
+                requestWithNotify.Export = true;
+            }
+
+            
+        }
+
+        private void RibbonButtonRemoveFromExport_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (View.CurrentItem == null)
+            {
+                return;
+            }
+            var requests = GridViewRequests.SelectedItems;
+
+            foreach (var request in requests)
+            {
+                RequestWithNotify requestWithNotify = (RequestWithNotify)request;
+
+                requestWithNotify.Export = false;
+            }
+        }
+
+        private void RibbonButtonClearExport_OnClick(object sender, RoutedEventArgs e)
+        {
+            foreach (var r in RequestsCollection)
+            {
+                r.Export = false;
+            }
+        }
+
+        private void RibbonButtonExportToExcel_OnClick(object sender, RoutedEventArgs e)
+        {
+            FileInfo fileInfo = null;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel Workbook| *.xls;*.xlsx";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                fileInfo = new FileInfo(saveFileDialog.FileName);
+            }
+
+            if (fileInfo.Exists)
+            {
+                fileInfo.Delete();
+            }
+
+            ExcelPackage excelPackage = new ExcelPackage(fileInfo);
+            var ws = excelPackage.Workbook.Worksheets.Add("Parts");
+            //ws.View.RightToLeft = true;
+            ws.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            ws.Cells["A1"].Value = "Part Name";
+            ws.Cells["B1"].Value = "Part no";
+            ws.Cells["C1"].Value = "Brand";
+            ws.Cells["D1"].Value = "Original Part no";
+            ws.Cells["E1"].Value = "Machine";
+            ws.Cells["F1"].Value = "Machine Code";
+            ws.Cells["G1"].Value = "Qty";
+
+            ws.Cells["A1:G1"].Style.Font.Bold = true;
+
+            var requests = RequestsCollection.Where(x => x.Export == true);
+
+            int i = 2;
+            foreach (var requestWithNotify in requests)
+            {
+                IEnumerable<Part> parts = null;
+                Part firstPart = null;
+
+                string partNo = "";
+
+                if (requestWithNotify.PartNo.Length > 0)
+                {
+                    parts = Entities.Parts.Where(x => x.PartNo == requestWithNotify.PartNo);
+                    partNo = requestWithNotify.PartNo;
+                }
+                else if (requestWithNotify.ResolutionPartNo.Length > 0)
+                {
+                    parts = Entities.Parts.Where(x => x.ResolutionPartNo == requestWithNotify.ResolutionPartNo);
+                    partNo = requestWithNotify.ResolutionPartNo;
+                }
+                else if (requestWithNotify.PartNoOriginal.Length > 0)
+                {
+                    parts = Entities.Parts.Where(x => x.PartNoOrignal == requestWithNotify.PartNoOriginal);
+                    partNo = requestWithNotify.PartNoOriginal;
+                }
+
+                firstPart = parts.FirstOrDefault();
+
+                ws.Cells[string.Format("A{0}", i)].Value = firstPart.PartName;
+                ws.Cells[string.Format("B{0}", i)].Value = partNo;
+                ws.Cells[string.Format("C{0}", i)].Value = firstPart.Brand.BrandName;
+                ws.Cells[string.Format("D{0}", i)].Value = firstPart.PartNoOrignal;
+
+                var machines = from part in parts
+                               select part.Machine.MachineName;
+                var machinesDistinct = machines.Distinct();
+
+                string machinesComma = string.Join(",", machinesDistinct);
+
+                var machinesCode = from part2 in parts
+                                   select part2.Machine.MachineCode;
+                var machinesCodeDistinct = machinesCode.Distinct();
+                string machinesCodeComma = string.Join(",", machinesCodeDistinct);
+
+                ws.Cells[string.Format("E{0}", i)].Value = machinesComma;
+                ws.Cells[string.Format("F{0}", i)].Value = machinesCodeComma;
+                ws.Cells[string.Format("G{0}", i)].Value = requestWithNotify.Qty;
+                i++;
+            }
+
+            excelPackage.Save();
         }
     }
 }

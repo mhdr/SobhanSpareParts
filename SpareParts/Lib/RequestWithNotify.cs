@@ -21,6 +21,7 @@ namespace SpareParts.Lib
         private string _description;
         private RequestStatus _requestStatus;
         private byte[] _timeStamp;
+        private bool _export;
 
         public int RequestId
         {
@@ -114,6 +115,16 @@ namespace SpareParts.Lib
             set
             {
                 _requestStatus = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Export
+        {
+            get { return _export; }
+            set
+            {
+                _export = value;
                 OnPropertyChanged();
             }
         }
