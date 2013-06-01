@@ -48,6 +48,12 @@
                         DataMemberBinding="{Binding MachineName}"
                         MinWidth="400" Header="Machine" HeaderTextAlignment="Center">
                     </controls:GridViewDataColumn>
+
+                    <controls:GridViewDataColumn IsReadOnly="True"
+                        TextAlignment="Center"
+                        DataMemberBinding="{Binding MachineCode}"
+                        MinWidth="100" Header="Machine Code" HeaderTextAlignment="Center">
+                    </controls:GridViewDataColumn>
                 </controls:RadGridView.Columns>
             </controls:RadGridView>
         </DockPanel>

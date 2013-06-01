@@ -68,13 +68,15 @@ namespace SpareParts
 
             if (TextBoxMachine.Text.Length > 0)
             {
-                if (Entities.Machines.Any(x => x.MachineName.ToLower() == TextBoxMachine.Text.ToLower()))
-                {
-                    ShowMessageInStatusbar("the machine is already saved");
-                    return;
-                }
+                // TODO 
+                //if (Entities.Machines.Any(x => x.MachineName.ToLower() == TextBoxMachine.Text.ToLower()))
+                //{
+                //    ShowMessageInStatusbar("the machine is already saved");
+                //    return;
+                //}
 
                 MachineToEdit.MachineName = TextBoxMachine.Text;
+                MachineToEdit.MachineCode = Convert.ToInt32(TextBoxMachineCode.Text);
                 var result = MachinesCollection.Update(this.Index, MachineToEdit);
 
                 if (result)
@@ -88,6 +90,7 @@ namespace SpareParts
         private void WindowInsertMachine_OnLoaded(object sender, RoutedEventArgs e)
         {
             TextBoxMachine.Text = MachineToEdit.MachineName;
+            TextBoxMachineCode.Text = MachineToEdit.MachineCode.ToString();
             TextBoxMachine.SelectAll();
             TextBoxMachine.Focus();
         }

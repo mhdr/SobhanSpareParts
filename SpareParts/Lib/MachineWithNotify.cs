@@ -13,6 +13,7 @@ namespace SpareParts.Lib
     {
         private int _machineId;
         private string _machineName;
+        private int _machineCode;
         private byte[] _timeStamp;
 
         public int MachineId
@@ -41,6 +42,16 @@ namespace SpareParts.Lib
             set
             {
                 _timeStamp = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int MachineCode
+        {
+            get { return _machineCode; }
+            set
+            {
+                _machineCode = value;
                 OnPropertyChanged();
             }
         }

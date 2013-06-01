@@ -61,12 +61,14 @@ namespace SpareParts
 
                 MachineWithNotify newMachine = new MachineWithNotify();
                 newMachine.MachineName = TextBoxMachine.Text;
+                newMachine.MachineCode = Convert.ToInt32(TextBoxMachineCode.Text);
                 var result= MachinesCollection.AddNew(0, newMachine);
 
                 if (result)
                 {
                     NotifyOpenWindows();
                     TextBoxMachine.Text = "";
+                    TextBoxMachineCode.Text = "";
                     ShowMessageInStatusbar("new machine added");
                 }
             }

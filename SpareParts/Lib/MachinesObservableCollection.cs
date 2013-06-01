@@ -30,6 +30,7 @@ namespace SpareParts.Lib
                 MachineWithNotify newMachine = new MachineWithNotify();
                 newMachine.MachineId = machine.MachineId;
                 newMachine.MachineName = machine.MachineName;
+                if (machine.MachineCode != null) newMachine.MachineCode = (int) machine.MachineCode;
                 newMachine.TimeStamp = machine.TimeStamp;
 
                 this.Add(newMachine);
@@ -42,6 +43,7 @@ namespace SpareParts.Lib
         {
             Machine newMachine = new Machine();
             newMachine.MachineName = item.MachineName;
+            newMachine.MachineCode = item.MachineCode;
             Entities.Machines.Add(newMachine);
 
             if (Entities.SaveChanges() > 0)
@@ -76,6 +78,7 @@ namespace SpareParts.Lib
             MachineWithNotify machineWithNotify = this[index];
             Machine machine = Entities.Machines.FirstOrDefault(x => x.MachineId == machineWithNotify.MachineId);
             machine.MachineName = item.MachineName;
+            machine.MachineCode = item.MachineCode;
 
             if (Entities.SaveChanges() > 0)
             {

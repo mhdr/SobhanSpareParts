@@ -15,11 +15,23 @@
             </Grid.RowDefinitions>
 
             <Grid>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Machine" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                    <TextBox Grid.Column="1" Name="TextBoxMachine" VerticalAlignment="Center" Width="300" Margin="10,0,0,0"
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Machine" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Name="TextBoxMachine" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="5,0,0,0"
                              TabIndex="0"/>
-                </StackPanel>
+
+                <TextBlock Text="Machine Code" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Name="TextBoxMachineCode" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="5,0,0,0"
+                             TabIndex="0"/>
             </Grid>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal">
