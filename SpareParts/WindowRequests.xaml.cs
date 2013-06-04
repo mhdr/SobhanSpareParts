@@ -314,7 +314,7 @@ namespace SpareParts
                 fileInfo = new FileInfo(saveFileDialog.FileName);
             }
 
-            if (fileInfo.Exists)
+            if (fileInfo != null && fileInfo.Exists)
             {
                 fileInfo.Delete();
             }
@@ -344,17 +344,17 @@ namespace SpareParts
 
                 string partNo = "";
 
-                if (requestWithNotify.PartNo.Length > 0)
+                if (!string.IsNullOrEmpty(requestWithNotify.PartNo))
                 {
                     parts = Entities.Parts.Where(x => x.PartNo == requestWithNotify.PartNo);
                     partNo = requestWithNotify.PartNo;
                 }
-                else if (requestWithNotify.ResolutionPartNo.Length > 0)
+                else if (!string.IsNullOrEmpty(requestWithNotify.ResolutionPartNo))
                 {
                     parts = Entities.Parts.Where(x => x.ResolutionPartNo == requestWithNotify.ResolutionPartNo);
                     partNo = requestWithNotify.ResolutionPartNo;
                 }
-                else if (requestWithNotify.PartNoOriginal.Length > 0)
+                else if (!string.IsNullOrEmpty(requestWithNotify.PartNoOriginal))
                 {
                     parts = Entities.Parts.Where(x => x.PartNoOrignal == requestWithNotify.PartNoOriginal);
                     partNo = requestWithNotify.PartNoOriginal;
