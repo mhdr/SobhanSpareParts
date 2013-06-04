@@ -97,25 +97,37 @@
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding RequestId}"
-                        MinWidth="100" Header="Id" HeaderTextAlignment="Center">
+                        MinWidth="50" Header="Id" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding ResolutionPartNo}"
-                        MinWidth="150" Header="Resolution" HeaderTextAlignment="Center">
+                        MinWidth="100" Header="Resolution" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartNo}"
-                        MinWidth="150" Header="Part No" HeaderTextAlignment="Center">
+                        MinWidth="100" Header="Part No" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
                         TextAlignment="Center"
                         DataMemberBinding="{Binding PartNoOriginal}"
-                        MinWidth="200" Header="Part No Original" HeaderTextAlignment="Center">
+                        MinWidth="100" Header="Part No Original" HeaderTextAlignment="Center">
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        TextAlignment="Center"
+                        DataMemberBinding="{Binding PartName}"
+                        MinWidth="300" Header="Part Name" HeaderTextAlignment="Center">
+                    </telerik:GridViewDataColumn>
+
+                    <telerik:GridViewDataColumn IsReadOnly="True"
+                        TextAlignment="Center"
+                        DataMemberBinding="{Binding Machines}"
+                        MinWidth="300" Header="Machines" HeaderTextAlignment="Center">
                     </telerik:GridViewDataColumn>
 
                     <telerik:GridViewDataColumn IsReadOnly="True"
