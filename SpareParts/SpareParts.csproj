@@ -29,7 +29,7 @@
     <InstallUrl>\\RS\Storage\Department\Technical\Public\Ramezani\SpareParts\</InstallUrl>
     <UpdateUrl>\\RS\Storage\Department\Technical\Public\Ramezani\SpareParts\</UpdateUrl>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>33</ApplicationRevision>
+    <ApplicationRevision>34</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
