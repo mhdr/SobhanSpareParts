@@ -53,18 +53,18 @@ namespace SpareParts
             {
                 countPartNo = Entities.Parts.Count(x => x.PartNo == Part.PartNo);    
             }
-	        
-            if (Part.ResolutionPartNo.Length > 0)
+
+            if (!string.IsNullOrEmpty(Part.ResolutionPartNo))
             {
                 countResolutionPartNo = Entities.Parts.Count(x => x.ResolutionPartNo == Part.ResolutionPartNo);    
             }
 
-            if (Part.PartNoOrignal.Length > 0)
+            if (!string.IsNullOrEmpty(Part.PartNoOrignal))
             {
                 countPartNoOriginal = Entities.Parts.Count(x => x.PartNoOrignal == Part.PartNoOrignal);    
             }
 	        
-	        if (Part.PartName.Length > 0)
+	        if (!string.IsNullOrEmpty(Part.PartName))
 	        {
                 countPartName = Entities.Parts.Count(x => x.PartName == Part.PartName);    
 	        }
